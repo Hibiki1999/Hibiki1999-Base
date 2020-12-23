@@ -16,8 +16,8 @@ Game::Game()
 void Game::Init()
 {
 	Image::Init();//画像を読み込む
-	scenes = m_title;//タイトルシーンを読み込む
-	scenes->Init();//読み込まれるシーンの初期化
+	Game::ChangeScene(m_title);
+	
 }
 
 void Game::Update()
@@ -33,4 +33,5 @@ void Game::Draw()
 void Game::ChangeScene(Scene* scene)//シーンを変えるときに、他所に呼ばれる
 {
 	scenes = scene;//呼ばれ先の次のシーンを定義
+	scenes->Init();//読み込まれるシーンの初期化
 }
