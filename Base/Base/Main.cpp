@@ -27,7 +27,7 @@ static int fpsFrameCount = 0;
 ///</summary>
 static float CurrentFPS;
 
-static void GameDraw(Game game)
+static void GameDraw(Game &game)
 {
 	ClearDrawScreen();
 	game.Draw();
