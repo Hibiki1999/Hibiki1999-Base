@@ -1,7 +1,8 @@
-
 #include "Scene/Parent/Scene.h"
 #include <DxLib.h>
 #include "Resource/Image/Image.h"
+#include "Library/MyLib/Input.h"
+#include "Library/MyLib/MyRandom.h"
 
 class Title;
 class Play;

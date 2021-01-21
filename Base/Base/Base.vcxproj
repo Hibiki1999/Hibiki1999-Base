@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Library\MyLib\Input.cpp" />
+    <ClCompile Include="Library\MyLib\MyMath.cpp" />
+    <ClCompile Include="Library\MyLib\MyRandom.cpp" />
     <ClCompile Include="Scene\Child\Ending\Ending.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Resource\Image\Image.cpp" />
@@ -159,6 +162,12 @@
     <ClCompile Include="Scene\Child\Title\Title.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Parent\GameObject.h" />
+    <ClInclude Include="Library\MyLib\Input.h" />
+    <ClInclude Include="Library\MyLib\MyMath.h" />
+    <ClInclude Include="Library\MyLib\MyRandom.h" />
+    <ClInclude Include="Library\NotMyLib\DataCSV.h" />
+    <ClInclude Include="Library\NotMyLib\GameManager.h" />
     <ClInclude Include="Scene\Child\Ending\Ending.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Resource\Image\Image.h" />

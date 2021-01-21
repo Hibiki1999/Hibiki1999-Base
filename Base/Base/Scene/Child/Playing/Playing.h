@@ -1,7 +1,12 @@
-#pragma once
+#ifndef PLAYING_H_
+#define PLAYING_H_
 
 #include "../../Parent/Scene.h"
 #include "DxLib.h"
+#include "../../../Library/NotMyLib/GameManager.h"
+
+#include <algorithm>
+#include <memory>
 
 class Game;
 
@@ -16,7 +21,11 @@ public:
 
 	void Draw() override;
 
+	GameManager& gm = GameManager::GetInstance();
+
 private:
 	int x = 0;
 	Game* m_game;
 };
+#endif
+
