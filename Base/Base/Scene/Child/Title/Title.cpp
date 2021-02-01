@@ -23,5 +23,5 @@ void Title::Update()
 
 void Title::Draw()
 {
-	DrawString(0, 0, "title", GetColor(255, 255, 255));
+	DrawString(0, 0, "titleÉVÅ[ÉìÇ≈Ç∑ÅB", GetColor(255, 255, 255));
 }

@@ -151,23 +151,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Library\MyLib\Camera.cpp" />
     <ClCompile Include="Library\MyLib\Input.cpp" />
     <ClCompile Include="Library\MyLib\MyMath.cpp" />
     <ClCompile Include="Library\MyLib\MyRandom.cpp" />
+    <ClCompile Include="Library\MyLib\Screen.cpp" />
     <ClCompile Include="Scene\Child\Ending\Ending.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Resource\Image\Image.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Scene\Child\Playing\Playing.cpp" />
     <ClCompile Include="Scene\Child\Title\Title.cpp" />
+    <ClCompile Include="Resource\Sound\Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Parent\GameObject.h" />
+    <ClInclude Include="Library\MyLib\Camera.h" />
     <ClInclude Include="Library\MyLib\Input.h" />
     <ClInclude Include="Library\MyLib\MyMath.h" />
     <ClInclude Include="Library\MyLib\MyRandom.h" />
     <ClInclude Include="Library\NotMyLib\DataCSV.h" />
     <ClInclude Include="Library\NotMyLib\GameManager.h" />
+    <ClInclude Include="Resource\Map\Map.h" />
     <ClInclude Include="Scene\Child\Ending\Ending.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Resource\Image\Image.h" />
@@ -177,6 +182,7 @@
     <ClInclude Include="Library\NotMyLib\Singleton.h" />
     <ClInclude Include="Library\NotMyLib\Timer.h" />
     <ClInclude Include="Scene\Child\Title\Title.h" />
+    <ClInclude Include="Resource\Sound\Sound.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

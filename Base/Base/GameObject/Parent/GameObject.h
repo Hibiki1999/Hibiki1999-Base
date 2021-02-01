@@ -14,15 +14,28 @@ public:
 
 	float x = 0;
 	float y = 0;
+	float vx = 0;
+	float vy = 0;
+
 	bool isDead = false;
 
-protected:
 	int imageWidth = 0;
 	int imageHeight = 0;
 	int hitboxOffsetLeft = 0;
 	int hitboxOffsetRight = 0;
 	int hitboxOffsetTop = 0;
 	int hitboxOffsetBottom = 0;
+
+	float rotaGraphShiftX = 0;
+	float rotaGraphShiftY = 0;
+
+	float prevX = 0;
+	float prevY = 0;
+
+	float prevLeft = 0;
+	float prevRight = 0;
+	float prevTop = 0;
+	float prevBottom = 0;
 
 	GameObject()
 	{
@@ -32,44 +45,100 @@ protected:
 	{
 	}
 
+	// 当たり判定の左端を取得
 	virtual float GetLeft()
 	{
-		return x + hitboxOffsetLeft;
+		return (x - rotaGraphShiftX) + hitboxOffsetLeft;
 	}
 
+	// 左端を指定することにより位置を設定する
 	virtual void SetLeft(float left)
 	{
-		x = left - hitboxOffsetLeft;
+		x = left - hitboxOffsetLeft + rotaGraphShiftX;
 	}
 
+	// 右端を取得
 	virtual float GetRight()
 	{
-		return x + imageWidth - hitboxOffsetRight;
+		return (x - rotaGraphShiftX) + imageWidth - hitboxOffsetRight;
 	}
 
+	// 右端を指定することにより位置を設定する
 	virtual void SetRight(float right)
 	{
-		x = right + hitboxOffsetRight - imageWidth;
+		x = right + hitboxOffsetRight - imageWidth + rotaGraphShiftX;
 	}
 
+	// 上端を取得
 	virtual float GetTop()
 	{
-		return y + hitboxOffsetTop;
+		return (y - rotaGraphShiftY) + hitboxOffsetTop;
 	}
 
+	// 上端を指定することにより位置を設定する
 	virtual void SetTop(float top)
 	{
-		y = top - hitboxOffsetTop;
+		y = top - hitboxOffsetTop + rotaGraphShiftY;
 	}
 
+	// 下端を取得する
 	virtual float GetBottom()
 	{
-		return y + imageHeight - hitboxOffsetBottom;
+		return (y - rotaGraphShiftY) + imageHeight - hitboxOffsetBottom;
 	}
 
+	// 下端を指定することにより位置を設定する
 	virtual void SetBottom(float bottom)
 	{
-		y = bottom + hitboxOffsetBottom - imageHeight;
+		y = bottom + hitboxOffsetBottom - imageHeight + rotaGraphShiftY;
+	}
+
+	// 雲に乗る系のための1フレーム前処理関数群
+	// 1フレーム前からの移動量（x方向）
+	virtual float GetDeltaX()
+	{
+		return x - prevX;
+	}
+
+	// 1フレーム前からの移動量（y方向）
+	virtual float GetDeltaY()
+	{
+		return y - prevY;
+	}
+
+	// 1フレーム前の左端を取得する
+	virtual float GetPrevLeft()
+	{
+		return prevLeft;
+	}
+
+	// 1フレーム前の右端を取得する
+	virtual float GetPrevRight()
+	{
+		return prevRight;
+	}
+
+	// 1フレーム前の上端を取得する
+	virtual float GetPrevTop()
+	{
+		return prevTop;
+	}
+
+	// 1フレーム前の下端を取得する
+	virtual float GetPrevBottom()
+	{
+		return prevBottom;
+	}
+
+	// 1フレーム前の場所と当たり判定を記憶する
+	virtual void StorePostionAndHitBox()
+	{
+		prevX = x;
+		prevY = y;
+		prevLeft = GetLeft();
+		prevRight = GetRight();
+		prevTop = GetTop();
+		prevBottom = GetBottom();
 	}
 
 	virtual void Update() = 0;

@@ -40,9 +40,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 	SetWaitVSyncFlag(GetRefreshRate() == TargetFPS ? TRUE : FALSE);
-	ChangeWindowMode(TRUE);//非全画面にセット
+	ChangeWindowMode(!Screen::FullScreen);//非全画面にセット
 	SetGraphMode(Screen::Width, Screen::Height, 32);//画面サイズ指定
-	SetMainWindowText("GameTitle");
+	SetMainWindowText(Screen::Title.c_str());
 	SetOutApplicationLogValidFlag(FALSE);//Log.txtを生成しないように設定
 	SetAlwaysRunFlag(TRUE);
 

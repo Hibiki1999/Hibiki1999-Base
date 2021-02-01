@@ -18,12 +18,14 @@ void Game::Init()
 	Input::Init();//ゲームパットを読み込む
 	MyRandom::Init();//乱数を読み込む
 	Image::Init();//画像を読み込む
+	Sound::Load();//サウンドを読み込む
 	Game::ChangeScene(m_title);
 	
 }
 
 void Game::Update()
 {
+	Input::Update();
 	scenes->Update();//読み込まれるシーンの毎秒60回更新
 }
 

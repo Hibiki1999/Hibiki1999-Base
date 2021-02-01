@@ -24,8 +24,6 @@ struct DataCSV
 		return Data[index];//“Ç‚ÝŽæ‚è
 	}
 
-
-
 	std::size_t size()
 	{
 		return Data.size();

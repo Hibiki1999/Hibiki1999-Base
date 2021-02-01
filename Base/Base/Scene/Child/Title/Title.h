@@ -1,4 +1,7 @@
-#pragma once
+#ifndef TITLE_H_
+#define TITLE_H_
+
+#include <memory>
 
 #include "../../Parent/Scene.h"
 #include "DxLib.h"
@@ -22,3 +25,5 @@ private:
 
 	Game* m_game;//タイトルにゲームのシーン変え機能を使えるようにするために定義
 };
+
+#endif // !TITLE_H_

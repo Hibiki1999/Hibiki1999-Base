@@ -4,6 +4,7 @@
 #include "../../Parent/Scene.h"
 #include "DxLib.h"
 #include "../../../Library/NotMyLib/GameManager.h"
+#include"../../../Resource/Map/Map.h"
 
 #include <algorithm>
 #include <memory>
@@ -24,8 +25,10 @@ public:
 	GameManager& gm = GameManager::GetInstance();
 
 private:
-	int x = 0;
 	Game* m_game;
+
+	int x, y = 0;
+
 };
 #endif
 
