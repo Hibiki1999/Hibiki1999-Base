@@ -15,19 +15,19 @@ void Playing::Init()
 
 void Playing::Update()
 {
-	if (Input::GetButton(PAD_INPUT_DOWN))
+	if (Input::GetButton(Pad::All,PAD_INPUT_DOWN))
 	{
 		y+=5;
 	}
-	if (Input::GetButton(PAD_INPUT_UP))
+	if (Input::GetButton(Pad::All,PAD_INPUT_UP))
 	{
 		y-=5;
 	}
-	if (Input::GetButton(PAD_INPUT_RIGHT))
+	if (Input::GetButton(Pad::All,PAD_INPUT_RIGHT))
 	{
 		x+=5;
 	}
-	if (Input::GetButton(PAD_INPUT_LEFT))
+	if (Input::GetButton(Pad::All,PAD_INPUT_LEFT))
 	{
 		x-=5;
 	}
