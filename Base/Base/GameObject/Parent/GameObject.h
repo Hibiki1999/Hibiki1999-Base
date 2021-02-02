@@ -5,6 +5,10 @@
 
 #include "../../Library/Mylib/MyMath.h"
 #include "../../Library/Mylib/Screen.h"
+#include "../../Library/Mylib/Input.h"
+#include "../../Library/NotMyLib/GameManager.h"
+#include"../../Resource/Image/Image.h"
+#include "../../Library/MyLib/MyRandom.h"
 
 class GameObject
 {

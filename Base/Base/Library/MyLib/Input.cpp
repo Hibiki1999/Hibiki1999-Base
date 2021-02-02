@@ -2,14 +2,19 @@
 
 int Input::prevStates[]; // 1フレーム前の状態
 int Input::currentStates[]; // 現在の状態
+int Input::mouseX{ 0 };
+int Input::mouseY{ 0 };
+int Input::prevMouseX{ 0 };
+int Input::prevMouseY{ 0 };
+
+XINPUT_STATE Input::input[4];
 
 std::unordered_map<int, int> Input::padDic; // パッド番号からDXの定義への辞書
 
 void Input::InitPadDictionary()
 {
 	// 辞書配列で対応関係の辞書を作成しておく
-	padDic[(int)Pad::Key] = DX_INPUT_KEY;
-	padDic[(int)Pad::One] = DX_INPUT_PAD1;
+	padDic[(int)Pad::One] = DX_INPUT_KEY_PAD1;
 	padDic[(int)Pad::Two] = DX_INPUT_PAD2;
 	padDic[(int)Pad::Three] = DX_INPUT_PAD3;
 	padDic[(int)Pad::Four] = DX_INPUT_PAD4;
@@ -22,6 +27,7 @@ void Input::Init()
 		// キー状態をゼロリセット
 	for (int i = 0; i < (int)Pad::NUM; i++)
 		prevStates[i] = currentStates[i] = 0;
+
 }
 
 // 最新の入力状況に更新する処理。
@@ -33,6 +39,12 @@ void Input::Update()
 		prevStates[i] = currentStates[i];
 		currentStates[i] = GetJoypadInputState(padDic[i]);
 	}
+
+	for (int i = 0; i < (int)Pad::NUM; i++)GetJoypadXInputState(padDic[i], &input[i]);
+
+	prevMouseX = mouseX;
+	prevMouseY = mouseY;
+	GetMousePoint(&mouseX, &mouseY);//今のマウスの座標を取得
 }
 
 // ボタンが押されているか？
@@ -78,4 +90,14 @@ bool Input::GetButtonUp(Pad pad, int buttonId)
 	}
 	// 1フレーム前は押されていて、かつ今は押されている場合はtrueを返却
 	return ((prevStates[(int)pad] & buttonId) & ~(currentStates[(int)pad] & buttonId)) != 0;
+}
+
+bool Input::IsMouseMoving()
+{
+	return ((prevMouseX != mouseX) && (prevMouseY != mouseY));//動いてるならTrueを返す
+}
+
+bool Input::IsRStickMoving(Pad pad)
+{
+	return((input[(int)pad].ThumbRX != 0) && (input[(int)pad].ThumbRY != 0));//動いてるならTrueを返す
 }

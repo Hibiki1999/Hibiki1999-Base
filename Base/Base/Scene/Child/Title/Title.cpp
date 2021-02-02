@@ -13,11 +13,9 @@ void Title::Init()
 
 void Title::Update()
 {
-	++x;
-	if (x >= 60)
+	if (Input::GetButton(Pad::Key, PAD_INPUT_1))
 	{
-		x = 0;
-		m_game->ChangeScene(m_game->m_play);//シーンを変える(目標シーンはプレイシーン)
+		Game::ChangeScene(m_game->m_play);
 	}
 }
 

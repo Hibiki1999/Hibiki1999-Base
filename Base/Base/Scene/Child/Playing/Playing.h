@@ -28,7 +28,6 @@ private:
 	Game* m_game;
 
 	int x, y = 0;
-
 };
 #endif
 

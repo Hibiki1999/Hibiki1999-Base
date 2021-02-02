@@ -5,7 +5,6 @@ Playing::Playing(Game* game)
 {
 	m_game = game;
 	gm.map = std::make_shared<Map>(0, "stage1");
-
 }
 
 void Playing::Init()
@@ -39,5 +38,4 @@ void Playing::Draw()
 {
 	gm.map->DrawTerrain();
 	DrawString(0, 0, "Play", GetColor(255, 255, 255));
-
 }

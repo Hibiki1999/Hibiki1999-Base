@@ -54,6 +54,19 @@ public:
 		return ((left1 < right2) && (right1 > left2) && (top1 < bottom2) && (bottom1 > top2));
 	}
 
+	/// <summary>
+/// 点から点への角度（ラジアン）を求める。
+/// </summary>
+/// <param name="fromX">始点x</param>
+/// <param name="fromY">始点y</param>
+/// <param name="toX">終点x</param>
+/// <param name="toY">終点y</param>
+/// <returns></returns>
+	 static float PointToPointAngle(float fromX, float fromY, float toX, float toY)
+	{
+		return (float)atan2(toY - fromY, toX - fromX);
+	}
+
 }; // 【注意】セミコロン抜けで【宣言が必要ですエラー】
 
 #endif // 【宣言が必要ですエラーは上のセミコロン抜け】
