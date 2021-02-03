@@ -13,13 +13,11 @@ void Title::Init()
 
 void Title::Update()
 {
-	if (Input::GetButton(Pad::Key, PAD_INPUT_1))
-	{
-		Game::ChangeScene(m_game->m_play);
-	}
+	if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))Game::ChangeScene(m_game->m_play);
+
 }
 
 void Title::Draw()
 {
-	DrawString(0, 0, "titleシーンです。", GetColor(255, 255, 255));
+	DrawString(0, 0, "titleシーン。ZキーでPlayシーンの移る。", GetColor(255, 255, 255));
 }

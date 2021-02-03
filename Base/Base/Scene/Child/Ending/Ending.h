@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ENDING_H_
+#define ENDING_H_
+
 #include "../../Parent/Scene.h"
 #include "DxLib.h"
 
@@ -6,16 +8,21 @@ class Game;
 
 class Ending :public Scene
 {
-private:
-	int x = 0;
-	Game* m_game;
-
 public:
 	Ending(Game* game);
+
+	~Ending() {};
 
 	void Init() override;
 
 	void Update() override;
 
 	void Draw() override;
+
+private:
+
+	Game* m_game;
 };
+
+#endif // !ENDING_H_
+

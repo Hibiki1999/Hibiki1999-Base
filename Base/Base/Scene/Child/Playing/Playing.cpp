@@ -9,33 +9,15 @@ Playing::Playing(Game* game)
 
 void Playing::Init()
 {
-	Camera::LookAt(x, y);
+
 }
 
 void Playing::Update()
 {
-	if (Input::GetButton(Pad::All,PAD_INPUT_DOWN))
-	{
-		y+=5;
-	}
-	if (Input::GetButton(Pad::All,PAD_INPUT_UP))
-	{
-		y-=5;
-	}
-	if (Input::GetButton(Pad::All,PAD_INPUT_RIGHT))
-	{
-		x+=5;
-	}
-	if (Input::GetButton(Pad::All,PAD_INPUT_LEFT))
-	{
-		x-=5;
-	}
-	Camera::LookAt(x, y);
-	gm.map->Scroll(x, y);
+	if (Input::GetButtonDown(Pad::All, PAD_INPUT_1)) Game::ChangeScene(m_game->m_ending);
 }
 
 void Playing::Draw()
 {
-	gm.map->DrawTerrain();
-	DrawString(0, 0, "Play", GetColor(255, 255, 255));
+	DrawString(0, 0, "Playシーン。ZキーでEndingシーンに移る。", GetColor(255, 255, 255));
 }

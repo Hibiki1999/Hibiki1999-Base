@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SCENE_H_
+#define SCENE_H_
+
 #include <stdio.h>
 
 class Scene
@@ -14,6 +16,6 @@ public:
 
 	//更新したシーンを描画
 	virtual void Draw() = 0;
-
-
 };
+
+#endif // !SCENE_H_

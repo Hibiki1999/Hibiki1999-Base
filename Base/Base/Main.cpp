@@ -5,8 +5,8 @@
 #include <windows.system.threading.h>
 
 #include "Game.h"
-#include "Library/MyLib/Screen.h"
-#include "Library/NotMyLib/Timer.h"
+#include "Library/Screen/Screen.h"
+#include "Library/NotChangingLibrary/Timer.h"
 
 //
 //‚±‚±‚Å•Ï”‚ğ—pˆÓ

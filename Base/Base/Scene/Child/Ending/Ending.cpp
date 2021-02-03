@@ -13,15 +13,10 @@ void Ending::Init()
 
 void Ending::Update()
 {
-	++x;
-	if (x > 60)
-	{
-		x = 0;
-		m_game->ChangeScene(m_game->m_title);
-	}
+	if (Input::GetButtonDown(Pad::All, PAD_INPUT_1)) Game::ChangeScene(m_game->m_title);
 }
 
 void Ending::Draw()
 {
-	DrawString(0, 0, "Ending", GetColor(255, 255, 255));
+	DrawString(0, 0, "Endingシーン。ZキーでTitlerシーンに移る。", GetColor(255, 255, 255));
 }

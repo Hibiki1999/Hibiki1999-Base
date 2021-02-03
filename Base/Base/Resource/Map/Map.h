@@ -11,12 +11,12 @@
 #include <assert.h>
 #include <DxLib.h>
 
-#include "../../Library/MyLib/Screen.h"
-#include "../../Library/NotMyLib/DataCSV.h"
-#include "../../Library/NotMyLib/GameManager.h"
+#include "../../Library/Screen/Screen.h"
+#include "../../Library/NotChangingLibrary/DataCSV.h"
+#include "../../Library/Gamemanager/GameManager.h"
 #include "../../GameObject/Parent/GameObject.h"
 #include "../Image/Image.h"
-#include "../../Library/MyLib/Camera.h"
+#include "../../Library/Camera/Camera.h"
 
 struct CsvCell :public DataCSV
 {

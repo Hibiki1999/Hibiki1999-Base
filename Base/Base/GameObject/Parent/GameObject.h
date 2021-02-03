@@ -3,12 +3,12 @@
 
 #include <string>
 
-#include "../../Library/Mylib/MyMath.h"
-#include "../../Library/Mylib/Screen.h"
-#include "../../Library/Mylib/Input.h"
-#include "../../Library/NotMyLib/GameManager.h"
+#include "../../Library/MyMath/MyMath.h"
+#include "../../Library/Screen/Screen.h"
+#include "../../Library/Input/Input.h"
+#include "../../Library/GameManager/GameManager.h"
 #include"../../Resource/Image/Image.h"
-#include "../../Library/MyLib/MyRandom.h"
+#include "../../Library/MyRandom/MyRandom.h"
 
 class GameObject
 {
@@ -18,6 +18,8 @@ public:
 
 	float x = 0;
 	float y = 0;
+
+	float moveSpeed = 0;
 	float vx = 0;
 	float vy = 0;
 
@@ -58,7 +60,7 @@ public:
 	// 左端を指定することにより位置を設定する
 	virtual void SetLeft(float left)
 	{
-		x = left - hitboxOffsetLeft + rotaGraphShiftX;
+		x = (left - hitboxOffsetLeft + rotaGraphShiftX) - 1;
 	}
 
 	// 右端を取得
@@ -70,19 +72,19 @@ public:
 	// 右端を指定することにより位置を設定する
 	virtual void SetRight(float right)
 	{
-		x = right + hitboxOffsetRight - imageWidth + rotaGraphShiftX;
+		x = (right + hitboxOffsetRight - imageWidth + rotaGraphShiftX) + 1;
 	}
 
 	// 上端を取得
 	virtual float GetTop()
 	{
-		return (y - rotaGraphShiftY) + hitboxOffsetTop;
+		return y - rotaGraphShiftY + hitboxOffsetTop;
 	}
 
 	// 上端を指定することにより位置を設定する
 	virtual void SetTop(float top)
 	{
-		y = top - hitboxOffsetTop + rotaGraphShiftY;
+		y = (top + hitboxOffsetTop + rotaGraphShiftY) + 1;
 	}
 
 	// 下端を取得する
@@ -94,7 +96,7 @@ public:
 	// 下端を指定することにより位置を設定する
 	virtual void SetBottom(float bottom)
 	{
-		y = bottom + hitboxOffsetBottom - imageHeight + rotaGraphShiftY;
+		y = (bottom + hitboxOffsetBottom - imageHeight + rotaGraphShiftY) - 1;
 	}
 
 	// 雲に乗る系のための1フレーム前処理関数群

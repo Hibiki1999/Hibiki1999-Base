@@ -1,9 +1,12 @@
+#ifndef GAME_H_
+#define GAME_H_
+
 #include "Scene/Parent/Scene.h"
 #include <DxLib.h>
 #include "Resource/Image/Image.h"
 #include "Resource/Sound/Sound.h"
-#include "Library/MyLib/Input.h"
-#include "Library/MyLib/MyRandom.h"
+#include "Library/Input/Input.h"
+#include "Library/MyRandom/MyRandom.h"
 
 class Title;
 class Play;
@@ -32,3 +35,4 @@ public:
 private:
 
 };
+#endif // !GAME_H_
