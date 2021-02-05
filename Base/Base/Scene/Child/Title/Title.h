@@ -21,6 +21,7 @@ public:
 
 	void Draw() override;
 
+	static int test;
 private:
 
 	Game* m_game;//タイトルにゲームのシーン変え機能を使えるようにするために定義
