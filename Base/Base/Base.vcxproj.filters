@@ -42,9 +42,6 @@
     <ClCompile Include="Library\Input\Input.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Library\Screen\Screen.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Library\MyMath\MyMath.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

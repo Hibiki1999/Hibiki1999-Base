@@ -15,8 +15,8 @@ public:
 
 	static void LookAt(float targetX, float targetY)
 	{
-		x = targetX - Screen::Width / 2;
-		y = targetY - Screen::Height / 2;
+		x = targetX - SCREEN_WIDTH / 2;
+		y = targetY - SCREEN_Height / 2;
 	}
 
 	static void DrawRotaGraphF(float worldX, float worldY, double exRate, double angle, int handle, int reverseXFlag = false, int transFlag = true)

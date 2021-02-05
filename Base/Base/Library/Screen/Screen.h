@@ -1,16 +1,4 @@
-#ifndef SCREEN_H_
-#define SCREEN_H_
-
-#include <string>
-
-class Screen
-{
-public:
-	//âÊñ ÇÃÉTÉCÉY
-	static const int Width;
-	static const int Height;
-	static const bool FullScreen;
-	static const std::string Title;
-};
-
-#endif // !SCREEN_H_
+#define SCREEN_WIDTH 1280
+#define SCREEN_Height 720
+#define SCREEN_FullScreen false
+#define SCREEN_Title "Title"

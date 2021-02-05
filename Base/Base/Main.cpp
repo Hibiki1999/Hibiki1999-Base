@@ -38,13 +38,13 @@ static void GameDraw(Game &game)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
-	SetWaitVSyncFlag(GetRefreshRate() == TargetFPS ? TRUE : FALSE);
-	ChangeWindowMode(!Screen::FullScreen);//非全画面にセット
-	SetGraphMode(Screen::Width, Screen::Height, 32);//画面サイズ指定
-	SetMainWindowText(Screen::Title.c_str());
-	SetOutApplicationLogValidFlag(FALSE);//Log.txtを生成しないように設定
-	SetAlwaysRunFlag(TRUE);
+    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+    SetWaitVSyncFlag(GetRefreshRate() == TargetFPS ? TRUE : FALSE);
+    ChangeWindowMode(!SCREEN_FullScreen);//非全画面にセット
+    SetGraphMode(SCREEN_WIDTH, SCREEN_Height, 32);//画面サイズ指定
+    SetMainWindowText(SCREEN_Title);
+    SetOutApplicationLogValidFlag(FALSE);//Log.txtを生成しないように設定
+    SetAlwaysRunFlag(TRUE);
 
 	if (DxLib_Init() == 1) { return -1; }//初期化に失敗時にエラーを吐かせて終了
 	SetMouseDispFlag(TRUE);

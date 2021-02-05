@@ -156,7 +156,6 @@
     <ClCompile Include="Library\Input\Input.cpp" />
     <ClCompile Include="Library\MyMath\MyMath.cpp" />
     <ClCompile Include="Library\MyRandom\MyRandom.cpp" />
-    <ClCompile Include="Library\Screen\Screen.cpp" />
     <ClCompile Include="Scene\Child\Ending\Ending.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Resource\Image\Image.cpp" />
