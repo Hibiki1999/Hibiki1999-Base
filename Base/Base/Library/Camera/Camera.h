@@ -1,7 +1,8 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#include "../Screen/Screen.h"
+#include "../../Library/Screen/Screen.h"
+
 #include "DxLib.h"
 
 class Camera
@@ -13,10 +14,22 @@ public:
 	static float x;
 	static float y;
 
+	//空白の部分を表示させないようにの準備
+	static int MinCameraX;
+	static int MinCameraY;
+	static int MaxCameraX;
+	static int MaxCameraY;
+
 	static void LookAt(float targetX, float targetY)
 	{
 		x = targetX - SCREEN_WIDTH / 2;
 		y = targetY - SCREEN_Height / 2;
+
+		//空白部分を表示したい場合はこの下の四行をコメントアウト
+		if (x < MinCameraX) x = MinCameraX;
+		if (x > MaxCameraX) x = MaxCameraX;
+		if (y < MinCameraY) y = MinCameraY;
+		if (y > MaxCameraY) y = MaxCameraY;
 	}
 
 	static void DrawRotaGraphF(float worldX, float worldY, double exRate, double angle, int handle, int reverseXFlag = false, int transFlag = true)
@@ -27,10 +40,10 @@ public:
 	static void DrawSquareHitBox(float left, float top, float right, float bottom, unsigned int color)
 	{
 		DrawBox((int)left - x + 0.5f,
-				(int)(top - y + 0.5f),
-				(int)(right - x + 0.5f),
-				(int)(bottom - y + 0.5f),
-				color, 0);
+			(int)(top - y + 0.5f),
+			(int)(right - x + 0.5f),
+			(int)(bottom - y + 0.5f),
+			color, 0);
 	}
 };
 

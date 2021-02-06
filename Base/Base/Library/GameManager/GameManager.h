@@ -11,14 +11,12 @@
 //class Enemy;
 //class EnemyBullet;
 //class Explosion;
-class Map;
+//class Map;
 
 class GameManager :public Singleton<GameManager>
 {
 public:
 	friend class Singleton<GameManager>;
-
-	std::shared_ptr<Map> map{ nullptr };
 
 	/*std::shared_ptr<Map> map{ nullptr };
 

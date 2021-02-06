@@ -4,7 +4,6 @@
 Playing::Playing(Game* game)
 {
 	m_game = game;
-	gm.map = std::make_shared<Map>(0, "stage1");
 }
 
 void Playing::Init()

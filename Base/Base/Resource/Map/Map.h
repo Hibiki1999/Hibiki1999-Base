@@ -82,8 +82,13 @@ public:
 		positionX = startPosition;
 		positionY = startPosition;//Csvデータの読み取り開始位置
 
-		enemyData.Load(CellSize, "Resource/Map/MapFile/" + stageName + "_enemy.csv");
+		enemyData.Load(CellSize, "Resource/Map/MapFile/" + stageName + "_en1emy.csv");
 		terrain.Load(CellSize, "Resource/Map/MapFile/" + stageName + "_terrain.csv");
+
+		Camera::MinCameraX = 0;
+		Camera::MinCameraY = 0;
+		Camera::MaxCameraX = CellSize * terrain.Width - SCREEN_WIDTH;
+		Camera::MaxCameraY = CellSize * terrain.Height - SCREEN_Height;//関数を渡す
 
 		assert(spawnRangeX > 0 && spawnRangeY > 0);//敵出現射程を設定しなければ
 
@@ -116,7 +121,7 @@ public:
 				// ★ xの2乗 + yの2乗 < rならば楕円の内側
 				//楕円の内側なら辞書SpawnDic[(x,y)] = true;として登録
 				//【例】SpawnDic[(3,2)] = true;
-				if (x * x + y * y <= r2) {  }//SpawnDic[CellXY(x, y)] = true; 楕円の場合はこれを使って下の方をコメントアウト
+				if (x * x + y * y <= r2) {}//SpawnDic[CellXY(x, y)] = true; 楕円の場合はこれを使って下の方をコメントアウト
 				else SpawnDic[CellXY(x, y)] = true;	//【★四角形にしたいときはこちら】
 			}
 		}
@@ -230,9 +235,19 @@ public:
 
 	void DrawTerrain()
 	{
-		for (int cellX = 0; cellX < terrain.Width; cellX++)
+		int left = (int)(Camera::x / CellSize);
+		int top = (int)(Camera::y / CellSize);
+		int right = (int)((Camera::x + SCREEN_WIDTH - 1) / CellSize);
+		int bottom = (int)((Camera::y + SCREEN_Height - 1) / CellSize);
+
+		if (left < 0)left = 0;
+		if (top < 0)top = 0;
+		if (right >= terrain.Width)right = terrain.Width - 1;
+		if (bottom >= terrain.Height)bottom = terrain.Height - 1;
+
+		for (int cellX = left; cellX <= right; cellX++)
 		{
-			for (int cellY = 0; cellY < terrain.Height; cellY++)
+			for (int cellY = top; cellY <= bottom; cellY++)
 			{
 				float x = (float)(cellX * CellSize) + rotaGraphShiftX;
 				float y = (float)(cellY * CellSize) + rotaGraphShiftY;//位置を確定
@@ -242,6 +257,8 @@ public:
 				{
 					id = terrain[cellY][cellX];//二次元配列のデータを保存
 				}
+
+
 
 				Camera::DrawRotaGraphF(x, y, 1, 0, Image::mapChip.HandleArray[id]);//IDに従ってマップチップを描画
 			}
@@ -254,6 +271,7 @@ public:
 
 		return terrainID == Wall;
 	}
+
 };
 
 #endif // !MAP_H_
