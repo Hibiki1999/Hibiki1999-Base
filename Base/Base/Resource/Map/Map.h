@@ -173,8 +173,8 @@ public:
 					int mapX = 0, mapY = 0;
 					if (baseObj != NULL)
 					{  // 基準となるオブジェクトがあるならその位置を基準に
-						mapX = searchX + (int)(baseObj->x / CellSize);
-						mapY = searchY + (int)(baseObj->y / CellSize);
+						mapX = searchX + (int)(baseObj->vec2.x / CellSize);
+						mapY = searchY + (int)(baseObj->vec2.y / CellSize);
 					}
 					else
 					{  // 特に基準オブジェクトの指定がなければ現状ポジションを基準に

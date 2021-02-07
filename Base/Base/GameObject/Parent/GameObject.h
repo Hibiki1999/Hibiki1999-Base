@@ -9,6 +9,7 @@
 #include "../../Library/GameManager/GameManager.h"
 #include"../../Resource/Image/Image.h"
 #include "../../Library/MyRandom/MyRandom.h"
+#include "../../Library/Vec2/Vec2.h"
 
 class GameObject
 {
@@ -16,12 +17,10 @@ public:
 
 	std::string tag = "";
 
-	float x = 0;
-	float y = 0;
+	Vec2 vec2 = Vec2(0, 0);
 
 	float moveSpeed = 0;
-	float vx = 0;
-	float vy = 0;
+	Vec2 vvec2 = Vec2(0, 0);
 
 	bool isDead = false;
 
@@ -54,62 +53,62 @@ public:
 	// 当たり判定の左端を取得
 	virtual float GetLeft()
 	{
-		return (x - rotaGraphShiftX) + hitboxOffsetLeft;
+		return (vec2.x - rotaGraphShiftX) + hitboxOffsetLeft;
 	}
 
 	// 左端を指定することにより位置を設定する
 	virtual void SetLeft(float left)
 	{
-		x = (left - hitboxOffsetLeft + rotaGraphShiftX) - 1;
+		vec2.x = (left - hitboxOffsetLeft + rotaGraphShiftX) - 1;
 	}
 
 	// 右端を取得
 	virtual float GetRight()
 	{
-		return (x - rotaGraphShiftX) + imageWidth - hitboxOffsetRight;
+		return (vec2.x - rotaGraphShiftX) + imageWidth - hitboxOffsetRight;
 	}
 
 	// 右端を指定することにより位置を設定する
 	virtual void SetRight(float right)
 	{
-		x = (right + hitboxOffsetRight - imageWidth + rotaGraphShiftX) + 1;
+		vec2.x = (right + hitboxOffsetRight - imageWidth + rotaGraphShiftX) + 1;
 	}
 
 	// 上端を取得
 	virtual float GetTop()
 	{
-		return y - rotaGraphShiftY + hitboxOffsetTop;
+		return vec2.y - rotaGraphShiftY + hitboxOffsetTop;
 	}
 
 	// 上端を指定することにより位置を設定する
 	virtual void SetTop(float top)
 	{
-		y = (top + hitboxOffsetTop + rotaGraphShiftY) + 1;
+		vec2.y = (top + hitboxOffsetTop + rotaGraphShiftY) + 1;
 	}
 
 	// 下端を取得する
 	virtual float GetBottom()
 	{
-		return (y - rotaGraphShiftY) + imageHeight - hitboxOffsetBottom;
+		return (vec2.y - rotaGraphShiftY) + imageHeight - hitboxOffsetBottom;
 	}
 
 	// 下端を指定することにより位置を設定する
 	virtual void SetBottom(float bottom)
 	{
-		y = (bottom + hitboxOffsetBottom - imageHeight + rotaGraphShiftY) - 1;
+		vec2.y = (bottom + hitboxOffsetBottom - imageHeight + rotaGraphShiftY) - 1;
 	}
 
 	// 雲に乗る系のための1フレーム前処理関数群
 	// 1フレーム前からの移動量（x方向）
 	virtual float GetDeltaX()
 	{
-		return x - prevX;
+		return vec2.x - prevX;
 	}
 
 	// 1フレーム前からの移動量（y方向）
 	virtual float GetDeltaY()
 	{
-		return y - prevY;
+		return vec2.y - prevY;
 	}
 
 	// 1フレーム前の左端を取得する
@@ -139,8 +138,8 @@ public:
 	// 1フレーム前の場所と当たり判定を記憶する
 	virtual void StorePostionAndHitBox()
 	{
-		prevX = x;
-		prevY = y;
+		prevX = vec2.x;
+		prevY = vec2.y;
 		prevLeft = GetLeft();
 		prevRight = GetRight();
 		prevTop = GetTop();

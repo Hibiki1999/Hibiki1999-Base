@@ -113,5 +113,8 @@
     <ClInclude Include="Library\DataSave\DataSave.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Library\Vec2\Vec2.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
