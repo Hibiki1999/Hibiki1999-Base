@@ -10,13 +10,13 @@ std::string Sound::playingMusic;
 
 void Sound::Load()
 {
-	/*explo = LoadSoundMem("Resource/Sound/SE/bomb.wav");
+	/*explo = LoadSoundMem("ResourceFile/SoundFile/SE/bomb.wav");
 	assert(explo != -1);
 
-	hit = LoadSoundMem("Resource/Sound/SE/hit49.wav");
+	hit = LoadSoundMem("ResourceFile/SoundFile/SE/hit49.wav");
 	assert(hit != -1);
 
-	shut = LoadSoundMem("Resource/Sound/SE/shut.wav");
+	shut = LoadSoundMem("ResourceFile/SoundFile/SE/shut.wav");
 	assert(shut != -1);*/
 }
 

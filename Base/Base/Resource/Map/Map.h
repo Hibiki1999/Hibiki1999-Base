@@ -82,8 +82,8 @@ public:
 		positionX = startPosition;
 		positionY = startPosition;//Csvデータの読み取り開始位置
 
-		enemyData.Load(CellSize, "Resource/Map/MapFile/" + stageName + "_en1emy.csv");
-		terrain.Load(CellSize, "Resource/Map/MapFile/" + stageName + "_terrain.csv");
+		enemyData.Load(CellSize, "ResourceFile/MapFile/" + stageName + "_en1emy.csv");
+		terrain.Load(CellSize, "ResourceFile/MapFile/" + stageName + "_terrain.csv");
 
 		Camera::MinCameraX = 0;
 		Camera::MinCameraY = 0;
