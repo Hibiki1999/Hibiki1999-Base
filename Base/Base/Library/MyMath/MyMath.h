@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include "../Vec2/Vec2.h"
 
 // 数学関連クラス
 class MyMath
