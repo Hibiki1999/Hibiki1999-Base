@@ -56,6 +56,36 @@ public:
 	}
 
 	/// <summary>
+	/// 円形と四角が重なっているかを調べる
+	/// </summary>
+	/// <param name="circle">円の座標</param>
+	/// <param name="r">円の半径</param>
+	/// <param name="leftTop">四角の左上(x,y)</param>
+	/// <param name="rightBottom">四角の右下(x,y)</param>
+	/// <returns>重なっていればtrue</returns>
+	static bool CicleSquareIntersection(Vec2 circle, float r, Vec2 leftTop, Vec2 rightBottom)
+	{
+		bool a = ((circle.x > leftTop.x) && (circle.x < rightBottom.x) && (circle.y > (leftTop.y - r)) && (circle.y < (rightBottom.y + r)));
+		bool b = ((circle.x > (leftTop.x - r)) && (circle.x < (rightBottom.x + r)) && (circle.y > leftTop.y) && (circle.y < rightBottom.y));
+		bool c = (((leftTop.x - circle.x) * (leftTop.x - circle.x)) + ((leftTop.y - circle.y) * (leftTop.y - circle.y))) < (r * r);
+		bool d = (((rightBottom.x - circle.x) * (rightBottom.x - circle.x)) + ((leftTop.y - circle.y) * (leftTop.y - circle.y))) < (r * r);
+		bool e = (((rightBottom.x - circle.x) * (rightBottom.x - circle.x)) + ((rightBottom.y - circle.y) * (rightBottom.y - circle.y))) < (r * r);
+		bool f = (((leftTop.x - circle.x) * (leftTop.x - circle.x)) + ((rightBottom.y - circle.y) * (rightBottom.y - circle.y))) < (r * r);
+
+		if (a || b || c || d || e || f)return true;
+		//=============================使用例==========================//
+		//if (MyMath::CicleSquareIntersection(
+		//		Vec2(gm.player->x, gm.player->y),
+		//		gm.player->rotaGraphShiftX,
+		//		Vec2(gm.tobject->GetLeft(), gm.tobject->GetTop()),
+		//		Vec2(gm.tobject->GetRight(), gm.tobject->GetBottom())))
+		//	{
+		//	gm.player->OnCollisionSquare();
+		//	}
+		//===========================================================//
+	}
+
+	/// <summary>
 	/// 点から点への角度（ラジアン）を求める。
 	/// </summary>
 	/// <param name="fromX">始点x</param>
