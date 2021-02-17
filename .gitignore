@@ -31,3 +31,9 @@
 *.out
 *.app
 Base/Base/x64/Debug/input.obj.enc
+Base/Base/x64/
+Base/Debug/
+x64/
+Debug/
+Base/Base/Debug/
+Base/Base/Release/
