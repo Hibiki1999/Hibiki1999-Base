@@ -87,8 +87,8 @@ public:
 
 		Camera::MinCameraX = 0;
 		Camera::MinCameraY = 0;
-		Camera::MaxCameraX = CellSize * terrain.Width - SCREEN_WIDTH;
-		Camera::MaxCameraY = CellSize * terrain.Height - SCREEN_Height;//ŠÖ”‚ğ“n‚·
+		Camera::MaxCameraX = CellSize * terrain.Width - Screen::Width;
+		Camera::MaxCameraY = CellSize * terrain.Height - Screen::Height;//ŠÖ”‚ğ“n‚·
 
 		assert(spawnRangeX > 0 && spawnRangeY > 0);//“GoŒ»Ë’ö‚ğİ’è‚µ‚È‚¯‚ê‚Î
 
@@ -237,8 +237,8 @@ public:
 	{
 		int left = (int)(Camera::x / CellSize);
 		int top = (int)(Camera::y / CellSize);
-		int right = (int)((Camera::x + SCREEN_WIDTH - 1) / CellSize);
-		int bottom = (int)((Camera::y + SCREEN_Height - 1) / CellSize);
+		int right = (int)((Camera::x + Screen::Width - 1) / CellSize);
+		int bottom = (int)((Camera::y + Screen::Height - 1) / CellSize);
 
 		if (left < 0)left = 0;
 		if (top < 0)top = 0;

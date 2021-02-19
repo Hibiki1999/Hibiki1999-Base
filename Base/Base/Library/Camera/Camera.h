@@ -22,8 +22,8 @@ public:
 
 	static void LookAt(float targetX, float targetY)
 	{
-		x = targetX - SCREEN_WIDTH / 2;
-		y = targetY - SCREEN_Height / 2;
+		x = targetX - Screen::Width / 2;
+		y = targetY - Screen::Height / 2;
 
 		//空白部分を表示したい場合はこの下の四行をコメントアウト
 		if (x < MinCameraX) x = MinCameraX;

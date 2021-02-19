@@ -40,9 +40,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
     SetWaitVSyncFlag(GetRefreshRate() == TargetFPS ? TRUE : FALSE);
-    ChangeWindowMode(!SCREEN_FullScreen);//非全画面にセット
-    SetGraphMode(SCREEN_WIDTH, SCREEN_Height, 32);//画面サイズ指定
-    SetMainWindowText(SCREEN_Title);
+    ChangeWindowMode(!Screen::FullScreen);//非全画面にセット
+    SetGraphMode(Screen::Width, Screen::Height, 32);//画面サイズ指定
+    SetMainWindowText(Screen::Title.c_str());
     SetOutApplicationLogValidFlag(FALSE);//Log.txtを生成しないように設定
     SetAlwaysRunFlag(TRUE);
 
