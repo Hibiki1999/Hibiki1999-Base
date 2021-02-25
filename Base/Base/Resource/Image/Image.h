@@ -63,6 +63,7 @@ public:
 	static int LoadDivGraphs(const TCHAR* FileName, DivImage& divImage);
 	static void Init();
 	//‚±‚±‚Å’è‹`
+	static int suisui;
 
 	static DivImage mapChip;
 };

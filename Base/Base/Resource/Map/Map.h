@@ -258,8 +258,6 @@ public:
 					id = terrain[cellY][cellX];//二次元配列のデータを保存
 				}
 
-
-
 				Camera::DrawRotaGraphF(x, y, 1, 0, Image::mapChip.HandleArray[id]);//IDに従ってマップチップを描画
 			}
 		}

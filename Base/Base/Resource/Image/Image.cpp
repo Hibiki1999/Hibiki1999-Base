@@ -2,7 +2,7 @@
 #include <string>
 
 DivImage Image::mapChip{ 16, 16, 32, 32 };//Xの数、Yの数、Xのサイズ、Yのサイズ
-
+int Image::suisui{ -1 };
 
 void Image::Init()
 {
@@ -12,6 +12,9 @@ void Image::Init()
 	{   // 画像読込失敗
 		if (mapChip.HandleArray[i] == -1) assert("マップチップ" + std::to_string(i) + "番読込失敗" == "");
 	}
+
+	suisui = LoadGraph("ResourceFile/ImageFile/suisui.gif");
+	assert(suisui != -1);
 }
 
 int Image::LoadDivGraphs(const TCHAR* FileName, DivImage& divImage)

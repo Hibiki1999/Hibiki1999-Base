@@ -22,5 +22,8 @@ void Title::Update()
 void Title::Draw()
 {
 	DrawString(0, 0, "titleシーン。ZキーでPlayシーンの移る。", GetColor(255, 255, 255));
-	DrawString(0, 20, std::to_string(test).c_str(), GetColor(255, 255, 255));
+	DrawString(0, 20, std::to_string(test).c_str(), GetColor(255, 255, 255));	
+	//PlayMovieToGraph(Image::suisui);
+	//DrawExtendGraph(0, 0, 100, 100, Image::suisui, 1);
+	//PlayMovie("ResourceFile/ImageFile/suisui.gif", 1, DX_MOVIEPLAYTYPE_NORMAL);
 }
