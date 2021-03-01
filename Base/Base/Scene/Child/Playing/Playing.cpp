@@ -1,5 +1,6 @@
 #include "Playing.h"
 #include "../../../Game.h"
+#include "../../../Resource/Map/Map.h"
 
 Playing::Playing(Game* game)
 {
@@ -19,4 +20,5 @@ void Playing::Update()
 void Playing::Draw()
 {
 	DrawString(0, 0, "Playシーン。ZキーでEndingシーンに移る。", GetColor(255, 255, 255));
+
 }

@@ -1,9 +1,9 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#include "../../Library/Screen/Screen.h"
-
-#include "DxLib.h"
+#include "../Screen/Screen.h"
+#include "../Input/Input.h"
+#include <DxLib.h>
 
 class Camera
 {
@@ -13,6 +13,9 @@ public:
 
 	static float x;
 	static float y;
+
+	static int mouseX;
+	static int mouseY;
 
 	//空白の部分を表示させないようにの準備
 	static int MinCameraX;
@@ -24,12 +27,16 @@ public:
 	{
 		x = targetX - Screen::Width / 2;
 		y = targetY - Screen::Height / 2;
+		
 
 		//空白部分を表示したい場合はこの下の四行をコメントアウト
 		if (x < MinCameraX) x = MinCameraX;
 		if (x > MaxCameraX) x = MaxCameraX;
 		if (y < MinCameraY) y = MinCameraY;
 		if (y > MaxCameraY) y = MaxCameraY;
+
+		mouseX = x + Input::mouseX;
+		mouseY = y + Input::mouseY;
 	}
 
 	static void DrawRotaGraphF(float worldX, float worldY, double exRate, double angle, int handle, int reverseXFlag = false, int transFlag = true)

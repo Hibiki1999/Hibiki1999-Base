@@ -82,7 +82,7 @@ public:
 		positionX = startPosition;
 		positionY = startPosition;//Csvデータの読み取り開始位置
 
-		enemyData.Load(CellSize, "ResourceFile/MapFile/" + stageName + "_en1emy.csv");
+		enemyData.Load(CellSize, "ResourceFile/MapFile/" + stageName + "_enemy.csv");
 		terrain.Load(CellSize, "ResourceFile/MapFile/" + stageName + "_terrain.csv");
 
 		Camera::MinCameraX = 0;
@@ -261,6 +261,18 @@ public:
 				Camera::DrawRotaGraphF(x, y, 1, 0, Image::mapChip.HandleArray[id]);//IDに従ってマップチップを描画
 			}
 		}
+	}
+
+	void DrawMouseSetTerrain(int worldX,int worldY,int id)//カーソルの位置に置き換えるマップチップを表示
+	{
+		if (worldX < 0 || worldY < 0) return;//負の座標を無視
+
+		int mapX = (int)(worldX / CellSize);
+		int mapY = (int)(worldY / CellSize);
+
+		if (mapX >= terrain.Width || mapY >= terrain.Height) return;//範囲外も無視
+
+		Camera::DrawRotaGraphF(worldX, worldY, 1, 0, Image::mapChip.HandleArray[id]);
 	}
 
 	bool isWall(float worldX, float worldY)

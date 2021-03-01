@@ -11,7 +11,7 @@
 //class Enemy;
 //class EnemyBullet;
 //class Explosion;
-//class Map;
+class Map;
 
 class GameManager :public Singleton<GameManager>
 {
