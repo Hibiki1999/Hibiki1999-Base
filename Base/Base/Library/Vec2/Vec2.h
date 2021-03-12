@@ -93,7 +93,32 @@ struct Vec2
 
 	bool operator ==(const Vec2& other) //二つのベクトルが同じかどうかを判別するため
 	{
-		if (x == other.x && y == other.y) return true;
+		return ((int)x == (int)other.x && (int)y == (int)other.y);
+	}
+
+	bool operator !=(const Vec2& other) //二つのベクトルが同じじゃないかどうかを判別するため
+	{
+		return ((int)x != (int)other.x || (int)y != (int)other.y);
+	}
+
+	bool operator >=(const Vec2& other) //左が右より大きいか同じかどうかを判別するため
+	{
+		return ((int)x >= (int)other.x && (int)y >= (int)other.y);
+	}
+	
+	bool operator <=(const Vec2& other) //左が右より小さいか同じかどうかを判別するため
+	{
+		return ((int)x <= (int)other.x && (int)y <= (int)other.y);
+	}
+		
+	bool operator <(const Vec2& other) //左が右より小さいかどうかを判別するため
+	{
+		return ((int)x < (int)other.x || (int)y < (int)other.y);
+	}
+		
+	bool operator >(const Vec2& other) //左が右より大きいかどうかを判別するため
+	{
+		return ((int)x > (int)other.x || (int)y > (int)other.y);
 	}
 
 	Vec2 normalized() const // 正規化（長さを１にした）ベクトル

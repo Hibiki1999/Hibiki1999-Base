@@ -1,6 +1,7 @@
 #include "Title.h"
 #include "../../../Game.h"
 #include "../../../Library/DataSave/DataSave.h"
+#include "../../../Library/Vec2/Vec2.h"
 
 int Title::test{ 0 };
 
@@ -22,8 +23,5 @@ void Title::Update()
 void Title::Draw()
 {
 	DrawString(0, 0, "titleシーン。ZキーでPlayシーンの移る。", GetColor(255, 255, 255));
-	DrawString(0, 20, std::to_string(test).c_str(), GetColor(255, 255, 255));	
-	//PlayMovieToGraph(Image::suisui);
-	//DrawExtendGraph(0, 0, 100, 100, Image::suisui, 1);
-	//PlayMovie("ResourceFile/ImageFile/suisui.gif", 1, DX_MOVIEPLAYTYPE_NORMAL);
+	DrawString(0, 20, std::to_string(test).c_str(), GetColor(255, 255, 255));
 }

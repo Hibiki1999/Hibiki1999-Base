@@ -4,32 +4,33 @@
 //int Sound::explo{ -1 };
 //int Sound::shut{ -1 };
 //int Sound::hit{ -1 };
+//std::string Sound::bgm1{ "ResourceFile/SoundFile/BGM/1.mp3" };
 
-std::string Sound::playingMusic;
 
+#ifdef _DEBUG
 
-void Sound::Load()
+std::vector<std::string> Sound::checkPath{ "0" };
+int Sound::check{ -1 };
+
+void Sound::Init()
 {
-	/*explo = LoadSoundMem("ResourceFile/SoundFile/SE/bomb.wav");
-	assert(explo != -1);
-
-	hit = LoadSoundMem("ResourceFile/SoundFile/SE/hit49.wav");
-	assert(hit != -1);
-
-	shut = LoadSoundMem("ResourceFile/SoundFile/SE/shut.wav");
-	assert(shut != -1);*/
+	checkPath.clear();//リストを綺麗にする
+	LoadToList();//指定したパスをリストに入れる
+	for (int i = 0; i < checkPath.size(); i++)
+	{
+		check = LoadSoundMem(checkPath[i].c_str());//メモリにロードしてみる
+		assert(check != -1);//ロード失敗したらエラーが出る
+		DeleteSoundMem(check);//ロードした音源を削除
+		check = -1;//次のロードを準備
+	}
+	checkPath.clear();//リストのメモリを減らす
 }
 
-void Sound::Play(int handle,int Volume)
+void Sound::LoadToList()
 {
-	ChangeVolumeSoundMem(Volume, handle);
-	PlaySoundMem(handle, DX_PLAYTYPE_BACK);
+	//ここに確認したいパスを入れる
+	//checkPath.push_back(bgm1);
 }
 
-void Sound::PlayMusic(std::string file, int Volume, int PlayType)
-{
-	if (file == playingMusic)return;
-	DxLib::SetVolumeMusic(0);
-	playingMusic = file;
-	DxLib::PlayMusic(file.c_str(), PlayType);
-}
+#endif // _DEBUG
+

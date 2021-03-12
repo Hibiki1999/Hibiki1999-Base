@@ -55,6 +55,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//‚±‚±‚Å‰æ‘œE‰¹‚ğ“Ç‚İ‚İ
 	Game game;
 	game.Init();
+    DrawString(0, 100, std::to_string(CurrentFPS).c_str(), GetColor(255, 255, 255));
 
 	MyTimer& timer = MyTimer::GetInstance();
 	ScreenFlip();

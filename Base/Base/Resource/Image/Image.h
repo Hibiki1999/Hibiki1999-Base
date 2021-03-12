@@ -3,8 +3,8 @@
 
 #include <assert.h>
 #include <array>
-
-#include "DxLib.h"
+#include <vector>
+#include <DxLib.h>
 
 class DivImage
 {
@@ -63,9 +63,18 @@ public:
 	static int LoadDivGraphs(const TCHAR* FileName, DivImage& divImage);
 	static void Init();
 	//‚±‚±‚Å’è‹`
-	static int suisui;
-
+	//static int test;
+	
 	static DivImage mapChip;
+	
+	static std::vector<int> listImage;
+
+	static std::vector<std::vector<int>> tDiDIv;
+	static std::vector<int> sTDiDiv;
+private:
+	static void SaveToVector(int image);
+
+	static void SaveTotDiDiv(DivImage& traget);
 };
 
 #endif // !IMAGE_H_

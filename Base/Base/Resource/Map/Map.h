@@ -12,29 +12,11 @@
 #include <DxLib.h>
 
 #include "../../Library/Screen/Screen.h"
-#include "../../Library/NotChangingLibrary/DataCSV.h"
+#include "../../Library/NotChangingLibrary/CsvStruct.h"
 #include "../../Library/Gamemanager/GameManager.h"
 #include "../../GameObject/Parent/GameObject.h"
 #include "../Image/Image.h"
 #include "../../Library/Camera/Camera.h"
-
-struct CsvCell :public DataCSV
-{
-	int NoneData = -1;
-	int CellSize = 1;
-	CsvCell(int CellSize = 1, std::string filepath = "") :DataCSV(filepath)
-	{
-		assert(CellSize > 0 && "マス目サイズ指定CellSizeは1以上に設定してください！" != "");
-		this->CellSize = CellSize;
-	}
-	~CsvCell() { clear(); };
-
-	void Load(int CellSize, std::string filepath)
-	{
-		assert(filepath != "" && "ファイル名filepathを設定してください" != "");
-		DataCSV::Load(filepath);
-	}
-};
 
 class Map
 {
@@ -71,8 +53,8 @@ public:
 	float rotaGraphShiftX = CellSize / 2;
 	float rotaGraphShiftY = CellSize / 2;//中心から描画するので、拡径の画像の中心を特定する
 
-	CsvCell terrain;
-	CsvCell enemyData;
+	CsvInt terrain;
+	CsvInt enemyData;
 
 	float positionX = 0;
 	float positionY = 0;

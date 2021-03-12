@@ -7,6 +7,7 @@
 #include "Resource/Sound/Sound.h"
 #include "Library/Input/Input.h"
 #include "Library/MyRandom/MyRandom.h"
+#include "Library/GameManager/GameManager.h"
 
 class Title;
 class Play;
@@ -33,6 +34,6 @@ public:
 	Scene* m_ending;
 
 private:
-
+	GameManager& gm = GameManager::GetInstance();
 };
 #endif // !GAME_H_

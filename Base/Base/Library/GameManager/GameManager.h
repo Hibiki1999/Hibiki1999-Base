@@ -12,11 +12,17 @@
 //class EnemyBullet;
 //class Explosion;
 class Map;
+class BGM_Object;
+class SoundEffectObject;
 
 class GameManager :public Singleton<GameManager>
 {
 public:
 	friend class Singleton<GameManager>;
+
+	std::shared_ptr<BGM_Object> bgm{ nullptr };
+
+	std::vector < std::shared_ptr<SoundEffectObject>> soundEffects;
 
 	/*std::shared_ptr<Map> map{ nullptr };
 

@@ -2,6 +2,8 @@
 #include "Scene/Child/Title/Title.h"
 #include "Scene/Child/Playing/Playing.h"
 #include "Scene/Child/Ending/Ending.h"
+#include "Resource/Sound/BGM_Object/BGM_Object.h"
+#include "Resource/Sound/SoundEffect_Object/SoundEffectObject.h"
 
 Scene* scenes;
 
@@ -18,15 +20,26 @@ void Game::Init()
 	Input::Init();//ゲームパットを読み込む
 	MyRandom::Init();//乱数を読み込む
 	Image::Init();//画像を読み込む
-	Sound::Load();//サウンドを読み込む
 	Game::ChangeScene(m_title);
-	
+#ifdef _DEBUG
+
+	Sound::Init();//デバグ時のみ音源のパスを確認する
+
+#endif // _DEBUG
+
 }
 
 void Game::Update()
 {
+	if (gm.bgm != nullptr)	gm.bgm->Update();
 	Input::Update();
 	scenes->Update();//読み込まれるシーンの毎秒60回更新
+	for (const auto& se : gm.soundEffects)
+	{
+		se->Update();
+	}
+	gm.EraseRemoveIf(gm.soundEffects, [](std::shared_ptr<SoundEffectObject>& ptr) {return ptr->isDead; });
+
 }
 
 void Game::Draw()
