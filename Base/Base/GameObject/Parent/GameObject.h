@@ -98,6 +98,18 @@ public:
 		vec2.y = (bottom + hitboxOffsetBottom - imageHeight + rotaGraphShiftY) - 1;
 	}
 
+	//円対角形の当たり判定用の左上
+	virtual Vec2 GetLeftTop()
+	{
+		return (Vec2(GetLeft(), GetTop()));
+	}
+
+	//円対角形の当たり判定用の右下
+	virtual Vec2 GetRightBottom()
+	{
+		return (Vec2(GetRight(), GetBottom()));
+	}
+
 	// 雲に乗る系のための1フレーム前処理関数群
 	// 1フレーム前からの移動量（x方向）
 	virtual float GetDeltaX()

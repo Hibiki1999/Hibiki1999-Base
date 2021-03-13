@@ -1,7 +1,8 @@
 #include "Title.h"
 #include "../../../Game.h"
 #include "../../../Library/DataSave/DataSave.h"
-#include "../../../Library/Vec2/Vec2.h"
+#include "../../../Library/MyMath/MyMath.h"
+#include "../../../GameObject/Parent/GameObject.h"
 
 int Title::test{ 0 };
 
@@ -18,6 +19,7 @@ void Title::Init()
 void Title::Update()
 {
 	if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))Game::ChangeScene(m_game->m_play);
+
 }
 
 void Title::Draw()

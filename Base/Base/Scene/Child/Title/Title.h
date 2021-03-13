@@ -6,6 +6,9 @@
 
 #include "../../Parent/Scene.h"
 #include "../../../Library/GameManager/GameManager.h"
+#include "../../../Library/Screen/Screen.h"
+#include "../../../Library/Vec2/Vec2.h"
+#include "../../../Library/Input/Input.h"
 
 class Game;
 
@@ -26,6 +29,10 @@ public:
 private:
 	
 	Game* m_game;//タイトルにゲームのシーン変え機能を使えるようにするために定義
+
+	Vec2 testvec = Vec2(Screen::Width / 2, Screen::Height / 2);
+
+	float r = 64.0f;
 };
 
 #endif // !TITLE_H_
