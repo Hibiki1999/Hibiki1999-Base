@@ -12,7 +12,7 @@
 #include <DxLib.h>
 
 #include "../../Library/Screen/Screen.h"
-#include "../../Library/NotChangingLibrary/CsvStruct.h"
+#include "../../Library/Csv/CsvStruct.h"
 #include "../../Library/Gamemanager/GameManager.h"
 #include "../../GameObject/Parent/GameObject.h"
 #include "../Image/Image.h"

@@ -1,7 +1,7 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-#include "DxLib.h"
+#include <DxLib.h>
 #include <unordered_map>//«‘”z—ñ
 
 enum class Pad

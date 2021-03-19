@@ -2,7 +2,7 @@
 #define ENDING_H_
 
 #include "../../Parent/Scene.h"
-#include "DxLib.h"
+#include <DxLib.h>
 
 class Game;
 

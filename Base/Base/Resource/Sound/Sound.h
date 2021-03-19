@@ -1,7 +1,7 @@
 #ifndef SOUND_H_
 #define SOUND_H_
 
-#include "DxLib.h"
+#include <DxLib.h>
 #include <assert.h>
 #include <string>
 #include <vector>

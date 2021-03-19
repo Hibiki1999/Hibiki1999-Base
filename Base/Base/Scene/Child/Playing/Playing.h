@@ -2,7 +2,7 @@
 #define PLAYING_H_
 
 #include "../../Parent/Scene.h"
-#include "DxLib.h"
+#include <DxLib.h>
 #include "../../../Library/GameManager/GameManager.h"
 #include"../../../Resource/Map/Map.h"
 

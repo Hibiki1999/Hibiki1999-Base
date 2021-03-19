@@ -1,8 +1,9 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include "Scene/Parent/Scene.h"
 #include <DxLib.h>
+
+#include "Scene/Parent/Scene.h"
 #include "Resource/Image/Image.h"
 #include "Resource/Sound/Sound.h"
 #include "Library/Input/Input.h"

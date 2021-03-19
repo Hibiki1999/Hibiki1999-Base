@@ -175,7 +175,7 @@
     <ClInclude Include="Library\Input\Input.h" />
     <ClInclude Include="Library\MyMath\MyMath.h" />
     <ClInclude Include="Library\MyRandom\MyRandom.h" />
-    <ClInclude Include="Library\NotChangingLibrary\CsvStruct.h" />
+    <ClInclude Include="Library\Csv\CsvStruct.h" />
     <ClInclude Include="Library\NotChangingLibrary\DataCSV.h" />
     <ClInclude Include="Library\GameManager\GameManager.h" />
     <ClInclude Include="Library\NotChangingLibrary\json.hpp" />

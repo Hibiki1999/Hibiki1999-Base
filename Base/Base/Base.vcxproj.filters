@@ -107,9 +107,6 @@
     <ClInclude Include="Library\NotChangingLibrary\Singleton.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Library\NotChangingLibrary\DataCSV.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Library\GameManager\GameManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -122,12 +119,6 @@
     <ClInclude Include="Library\Vec2\Vec2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Library\NotChangingLibrary\StringDataCSV.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Library\NotChangingLibrary\CsvStruct.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Resource\Sound\BGM_Object\BGM_Object.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -135,6 +126,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Resource\Sound\SoundEffect_Object\SoundEffectObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Csv\CsvStruct.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\NotChangingLibrary\DataCSV.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\NotChangingLibrary\StringDataCSV.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
