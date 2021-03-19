@@ -105,17 +105,17 @@ struct Vec2
 	{
 		return ((int)x >= (int)other.x && (int)y >= (int)other.y);
 	}
-	
+
 	bool operator <=(const Vec2& other) //左が右より小さいか同じかどうかを判別するため
 	{
 		return ((int)x <= (int)other.x && (int)y <= (int)other.y);
 	}
-		
+
 	bool operator <(const Vec2& other) //左が右より小さいかどうかを判別するため
 	{
 		return ((int)x < (int)other.x || (int)y < (int)other.y);
 	}
-		
+
 	bool operator >(const Vec2& other) //左が右より大きいかどうかを判別するため
 	{
 		return ((int)x > (int)other.x || (int)y > (int)other.y);
@@ -136,6 +136,20 @@ struct Vec2
 	Vec2 lerp(const Vec2& vec1, const Vec2& vec2, float t) const
 	{
 		return Vec2(vec1.x + t * (vec2.x - vec1.x), vec1.y + t * (vec2.y - vec1.y));
+	}
+
+	/// <summary>
+	/// 両点の補間
+	/// </summary>
+	/// <param name="vec1">点1</param>
+	/// <param name="vec2">点2</param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	Vec2 lerp(const Vec2& destination, float t)
+	{
+		x = x + (destination.x - x) * t;
+		y = y + (destination.y - y) * t;
+		return *this;
 	}
 };
 

@@ -2,8 +2,7 @@
 
 float Camera::x = 0;
 float Camera::y = 0;
-int Camera::mouseX = 0;
-int Camera::mouseY = 0;
+Vec2 Camera::mouseLocation = Vec2(0, 0);
 
 int Camera::MinCameraX = 0;
 int Camera::MinCameraY = 0;

@@ -33,9 +33,8 @@ public:
 
 	float rotaGraphShiftX = 0;
 	float rotaGraphShiftY = 0;
-
-	float prevX = 0;
-	float prevY = 0;
+ 
+	Vec2 prevVev2 = Vec2(0, 0);
 
 	float prevLeft = 0;
 	float prevRight = 0;
@@ -111,16 +110,10 @@ public:
 	}
 
 	// 雲に乗る系のための1フレーム前処理関数群
-	// 1フレーム前からの移動量（x方向）
-	virtual float GetDeltaX()
+	// 1フレーム前からの移動量
+	virtual Vec2 GetDeltaVec()
 	{
-		return vec2.x - prevX;
-	}
-
-	// 1フレーム前からの移動量（y方向）
-	virtual float GetDeltaY()
-	{
-		return vec2.y - prevY;
+		return (vec2 - prevVev2);
 	}
 
 	// 1フレーム前の左端を取得する
@@ -150,8 +143,8 @@ public:
 	// 1フレーム前の場所と当たり判定を記憶する
 	virtual void StorePostionAndHitBox()
 	{
-		prevX = vec2.x;
-		prevY = vec2.y;
+		prevVev2.x = vec2.x;
+		prevVev2.y = vec2.y;
 		prevLeft = GetLeft();
 		prevRight = GetRight();
 		prevTop = GetTop();

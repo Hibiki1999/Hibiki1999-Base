@@ -3,6 +3,7 @@
 
 #include "../Screen/Screen.h"
 #include "../Input/Input.h"
+#include "../Vec2/Vec2.h"
 #include <DxLib.h>
 
 class Camera
@@ -14,8 +15,7 @@ public:
 	static float x;
 	static float y;
 
-	static int mouseX;
-	static int mouseY;
+	static Vec2 mouseLocation;
 
 	//空白の部分を表示させないようにの準備
 	static int MinCameraX;
@@ -27,7 +27,7 @@ public:
 	{
 		x = targetX - Screen::Width / 2;
 		y = targetY - Screen::Height / 2;
-		
+
 
 		//空白部分を表示したい場合はこの下の四行をコメントアウト
 		if (x < MinCameraX) x = MinCameraX;
@@ -35,8 +35,9 @@ public:
 		if (y < MinCameraY) y = MinCameraY;
 		if (y > MaxCameraY) y = MaxCameraY;
 
-		mouseX = x + Input::mouseX;
-		mouseY = y + Input::mouseY;
+
+		mouseLocation = Vec2(x + Input::mouseX, y + Input::mouseY);
+
 	}
 
 	static void DrawRotaGraphF(float worldX, float worldY, double exRate, double angle, int handle, int reverseXFlag = false, int transFlag = true)
