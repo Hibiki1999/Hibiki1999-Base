@@ -32,7 +32,8 @@ private:
 
 	Vec2 testvec = Vec2(Screen::Width / 2, Screen::Height / 2);
 
-	float r = 64.0f;
+	float r = 0.0f;
+	GameManager& gm = GameManager::GetInstance();
 };
 
 #endif // !TITLE_H_

@@ -33,7 +33,10 @@
 Base/Base/x64/Debug/input.obj.enc
 Base/Base/x64/
 Base/Debug/
-x64/
-Debug/
+Base/x64/
+Base/.vs/
+Base/Debug/
 Base/Base/Debug/
 Base/Base/Release/
+Base/Base/ResourceFile/SoundFile/SE/
+Base/Base/ResourceFile/SoundFile/BGM/

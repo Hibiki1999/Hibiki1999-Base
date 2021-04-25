@@ -3,6 +3,8 @@
 #include "../../../Library/DataSave/DataSave.h"
 #include "../../../Library/MyMath/MyMath.h"
 #include "../../../GameObject/Parent/GameObject.h"
+#include "../../../Resource/Sound/SoundEffect_Object/SoundEffectObject.h"
+#include "../../../Resource/Sound/BGM_Object/BGM_Object.h"
 
 int Title::test{ 0 };
 

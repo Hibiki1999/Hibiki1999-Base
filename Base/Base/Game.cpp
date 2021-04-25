@@ -20,6 +20,7 @@ void Game::Init()
 	Input::Init();//ゲームパットを読み込む
 	MyRandom::Init();//乱数を読み込む
 	Image::Init();//画像を読み込む
+	gm.bgm = std::make_shared<BGM_Object>();
 #ifdef _DEBUG
 
 	Sound::Init();//デバグ時のみ音源のパスを確認する

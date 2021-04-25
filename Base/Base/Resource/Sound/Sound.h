@@ -6,6 +6,9 @@
 #include <string>
 #include <vector>
 
+#include "BGM_Object/BGM_Object.h"
+#include "SoundEffect_Object/SoundEffectObject.h"
+
 class Sound
 {
 public:
