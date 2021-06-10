@@ -3,157 +3,75 @@
 
 #include <string>
 
-#include "../../Library/MyMath/MyMath.h"
+#include "../../Library/Collision/SphereCollision/SphereCollision.h"
 #include "../../Library/Screen/Screen.h"
 #include "../../Library/Input/Input.h"
 #include "../../Library/GameManager/GameManager.h"
 #include"../../Resource/Image/Image.h"
 #include "../../Library/MyRandom/MyRandom.h"
-#include "../../Library/Vec2/Vec2.h"
+#include "../../Library/Transform/Transform.h"
 
 class GameObject
 {
 public:
 
-	std::string tag = "";
+public:
+	//コンストラクタ
+	GameObject() = default;
+	//仮想デストラクタ
+	virtual ~GameObject() = default;
+	//更新
+	virtual void update();
+	//描画
+	virtual void draw() const;
+	//半透明の描画
+	virtual void draw_transparent() const;
+	//GUIの描画
+	virtual void draw_gui() const;
+	//衝突リアクション
+	virtual void react(GameObject& other);
+	//衝突判定
+	void collide(GameObject& other);
+	//死亡する
+	void die();
+	//衝突しているか？
+	bool is_collide(const GameObject& other) const;
+	//死亡しているか？
+	bool is_dead() const;
+	//名前を取得
+	const std::string& name() const;
+	//タグ名を取得
+	const std::string& tag() const;
+	//トランスフォームを取得(Const版)
+	const Transform& transform() const;
+	//トランスフォームを取得
+	Transform& transform();
+	//移動量を取得
+	Vec3 velocity() const;
+	//衝突判定データを取得
+	SphereCollision collider() const;
 
-	Vec2 vec2 = Vec2(0, 0);
+	//コピー禁止
+	GameObject(const GameObject& other) = delete;
+	GameObject& operator = (const GameObject& other) = delete;
 
-	float moveSpeed = 0;
-	Vec2 vvec2 = Vec2(0, 0);
+protected:
+	
+	//タグ名
+	std::string tag_;
+	//名前
+	std::string name_;
+	//トランスフォーム
+	Transform transform_;
+	//移動量
+	Vec3 velocity_{ 0.0f,0.0f,0.0f };
+	//衝突判定が有効か?
+	bool enable_collider_{ true };
+	//衝突判定
+	SphereCollision collider_;
+	//死亡フラグ
+	bool dead_{ false };
 
-	bool isDead = false;
-
-	int imageWidth = 0;
-	int imageHeight = 0;
-	int hitboxOffsetLeft = 0;
-	int hitboxOffsetRight = 0;
-	int hitboxOffsetTop = 0;
-	int hitboxOffsetBottom = 0;
-
-	float rotaGraphShiftX = 0;
-	float rotaGraphShiftY = 0;
- 
-	Vec2 prevVev2 = Vec2(0, 0);
-
-	float prevLeft = 0;
-	float prevRight = 0;
-	float prevTop = 0;
-	float prevBottom = 0;
-
-	GameObject()
-	{
-	}
-
-	virtual ~GameObject()
-	{
-	}
-
-	// 当たり判定の左端を取得
-	virtual float GetLeft()
-	{
-		return (vec2.x - rotaGraphShiftX) + hitboxOffsetLeft;
-	}
-
-	// 左端を指定することにより位置を設定する
-	virtual void SetLeft(float left)
-	{
-		vec2.x = (left - hitboxOffsetLeft + rotaGraphShiftX) - 1;
-	}
-
-	// 右端を取得
-	virtual float GetRight()
-	{
-		return (vec2.x - rotaGraphShiftX) + imageWidth - hitboxOffsetRight;
-	}
-
-	// 右端を指定することにより位置を設定する
-	virtual void SetRight(float right)
-	{
-		vec2.x = (right + hitboxOffsetRight - imageWidth + rotaGraphShiftX) + 1;
-	}
-
-	// 上端を取得
-	virtual float GetTop()
-	{
-		return vec2.y - rotaGraphShiftY + hitboxOffsetTop;
-	}
-
-	// 上端を指定することにより位置を設定する
-	virtual void SetTop(float top)
-	{
-		vec2.y = (top + hitboxOffsetTop + rotaGraphShiftY) + 1;
-	}
-
-	// 下端を取得する
-	virtual float GetBottom()
-	{
-		return (vec2.y - rotaGraphShiftY) + imageHeight - hitboxOffsetBottom;
-	}
-
-	// 下端を指定することにより位置を設定する
-	virtual void SetBottom(float bottom)
-	{
-		vec2.y = (bottom + hitboxOffsetBottom - imageHeight + rotaGraphShiftY) - 1;
-	}
-
-	//円対角形の当たり判定用の左上
-	virtual Vec2 GetLeftTop()
-	{
-		return (Vec2(GetLeft(), GetTop()));
-	}
-
-	//円対角形の当たり判定用の右下
-	virtual Vec2 GetRightBottom()
-	{
-		return (Vec2(GetRight(), GetBottom()));
-	}
-
-	// 雲に乗る系のための1フレーム前処理関数群
-	// 1フレーム前からの移動量
-	virtual Vec2 GetDeltaVec()
-	{
-		return (vec2 - prevVev2);
-	}
-
-	// 1フレーム前の左端を取得する
-	virtual float GetPrevLeft()
-	{
-		return prevLeft;
-	}
-
-	// 1フレーム前の右端を取得する
-	virtual float GetPrevRight()
-	{
-		return prevRight;
-	}
-
-	// 1フレーム前の上端を取得する
-	virtual float GetPrevTop()
-	{
-		return prevTop;
-	}
-
-	// 1フレーム前の下端を取得する
-	virtual float GetPrevBottom()
-	{
-		return prevBottom;
-	}
-
-	// 1フレーム前の場所と当たり判定を記憶する
-	virtual void StorePostionAndHitBox()
-	{
-		prevVev2.x = vec2.x;
-		prevVev2.y = vec2.y;
-		prevLeft = GetLeft();
-		prevRight = GetRight();
-		prevTop = GetTop();
-		prevBottom = GetBottom();
-	}
-
-	virtual void Update() = 0;
-
-	virtual void Draw() = 0;
 };
 
 #endif // !GAMEOBJECT_H_

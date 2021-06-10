@@ -151,6 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Library\GameManager\GameObjectManeger\GameObjectManager.cpp" />
+    <ClCompile Include="GameObject\Parent\GameObject.cpp" />
+    <ClCompile Include="Library\Collision\SphereCollision\SphereCollision.cpp" />
+    <ClCompile Include="Library\MyDraw\MyDraw.cpp" />
     <ClCompile Include="Resource\Sound\BGM_Object\BGM_Object.cpp" />
     <ClCompile Include="Library\Camera\Camera.cpp" />
     <ClCompile Include="Library\DataSave\DataSave.cpp" />
@@ -168,6 +172,12 @@
     <ClCompile Include="Resource\Sound\SoundEffect_Object\SoundEffectObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Library\GameManager\GameObjectManeger\GameObjectManager.h" />
+    <ClInclude Include="Library\Collision\SphereCollision\SphereCollision.h" />
+    <ClInclude Include="Library\Transform\Quaternion\Quaternion.h" />
+    <ClInclude Include="Library\Transform\Transform.h" />
+    <ClInclude Include="Library\Transform\Vec3\Vec3.h" />
+    <ClInclude Include="Library\MyDraw\MyDraw.h" />
     <ClInclude Include="Resource\Sound\BGM_Object\BGM_Object.h" />
     <ClInclude Include="GameObject\Parent\GameObject.h" />
     <ClInclude Include="Library\Camera\Camera.h" />
@@ -180,7 +190,7 @@
     <ClInclude Include="Library\GameManager\GameManager.h" />
     <ClInclude Include="Library\NotChangingLibrary\json.hpp" />
     <ClInclude Include="Library\NotChangingLibrary\StringDataCSV.h" />
-    <ClInclude Include="Library\Vec2\Vec2.h" />
+    <ClInclude Include="Library\Transform\Vec2\Vec2.h" />
     <ClInclude Include="Resource\Map\Map.h" />
     <ClInclude Include="Scene\Child\Ending\Ending.h" />
     <ClInclude Include="Game.h" />

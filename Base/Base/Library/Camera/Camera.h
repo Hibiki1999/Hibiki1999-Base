@@ -3,7 +3,7 @@
 
 #include "../Screen/Screen.h"
 #include "../Input/Input.h"
-#include "../Vec2/Vec2.h"
+#include "../Transform/Vec2/Vec2.h"
 #include <DxLib.h>
 
 class Camera

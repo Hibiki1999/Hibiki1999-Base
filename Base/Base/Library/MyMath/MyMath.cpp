@@ -1,4 +1,5 @@
 #include "MyMath.h"
+#include <cmath>
 
 const float MyMath::Sqrt2 = 1.41421356237f;//(floatは有効桁は実質7桁まで正確だがそれ以降は環境によって誤差出るよ)
 
@@ -15,3 +16,8 @@ const float MyMath::Deg2Rad = PI / 180;
 // cppで大丈夫なのはcppは実際の処理ベースで動くので【動的な動いてもよい数字となるから】(どの環境でも同じとは限らない)
 // 【勉強】以下サイトにC++のBjarneさんの説明を翻訳したものがある
 // https://qastack.jp/programming/9656941/why-cant-i-initialize-non-const-static-member-or-static-array-in-class
+
+float MyMath::Square(float a)
+{
+	return (float)std::pow(a,2);
+}

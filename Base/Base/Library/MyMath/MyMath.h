@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <vector>
-#include "../Vec2/Vec2.h"
+#include "../Transform/Vec2/Vec2.h"
 
 // 数学関連クラス
 class MyMath
@@ -20,6 +20,9 @@ public:
 	static const float PI;// = 3.14159265359f;
 
 	static const float Deg2Rad;//=PI/2;
+
+
+	static float Square(float a);
 
 	/// <summary>
 	/// 円と円が重なっているかを調べる
@@ -50,8 +53,6 @@ public:
 	{
 		return ((left1 < right2) && (right1 > left2) && (top1 < bottom2) && (bottom1 > top2));
 	}
-
-	
 
 	/// <summary>
 	/// 円形と四角が重なっているかを調べる
@@ -94,23 +95,6 @@ public:
 	static float PointToPointAngle(float fromX, float fromY, float toX, float toY)
 	{
 		return (float)atan2((float)(toY - fromY), (float)(toX - fromX));
-	}
-
-	/// <summary>
-	/// 点と点の距離を計算
-	/// </summary>
-	/// <param name="x1">点1のx</param>
-	/// <param name="y1">点1のy</param>
-	/// <param name="x2">点2のx</param>
-	/// <param name="y2">点2のy</param>
-	/// <returns></returns>
-	static float VetorLenght(float x1, float y1, float x2, float y2)
-	{
-		x1 -= x2;
-		y1 -= y2;
-		float lenght;
-		lenght = sqrtf(((x1 * x1) + (y2 * y2)));
-		return lenght;
 	}
 
 }; // 【注意】セミコロン抜けで【宣言が必要ですエラー】

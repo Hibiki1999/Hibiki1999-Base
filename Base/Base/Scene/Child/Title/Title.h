@@ -7,7 +7,6 @@
 #include "../../Parent/Scene.h"
 #include "../../../Library/GameManager/GameManager.h"
 #include "../../../Library/Screen/Screen.h"
-#include "../../../Library/Vec2/Vec2.h"
 #include "../../../Library/Input/Input.h"
 
 class Game;
@@ -30,12 +29,8 @@ private:
 	
 	Game* m_game;//タイトルにゲームのシーン変え機能を使えるようにするために定義
 
-	Vec2 testvec = Vec2(Screen::Width / 2, Screen::Height / 2);
-
-	//float r = 0.0f;
 	GameManager& gm = GameManager::GetInstance();
 
-	VECTOR CameraPos;
 };
 
 #endif // !TITLE_H_
