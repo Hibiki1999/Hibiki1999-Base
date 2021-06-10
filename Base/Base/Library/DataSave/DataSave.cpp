@@ -5,7 +5,7 @@ void DataSave::Save()
 {
     json j;
     //ここからセーブしたいデータを追加
-    j["titleTest"] = Title::test;
+   // j["titleTest"] = Title::test;
 
 
     //ここまで============================
@@ -18,5 +18,5 @@ void DataSave::Load()
     std::ifstream loadFile("SaveData/DATA.json");
     json jl = json::parse(loadFile);
     //ここからロードしたいデータを追加
-    Title::test = jl["titleTest"];
+    //Title::test = jl["titleTest"];
 }

@@ -43,6 +43,8 @@ public:
 	static void DrawRotaGraphF(float worldX, float worldY, double exRate, double angle, int handle, int reverseXFlag = false, int transFlag = true)
 	{
 		DxLib::DrawRotaGraphF(worldX - x, worldY - y, exRate, angle, handle, transFlag, reverseXFlag);
+
+		
 	}
 
 	static void DrawSquareHitBox(float left, float top, float right, float bottom, unsigned int color)

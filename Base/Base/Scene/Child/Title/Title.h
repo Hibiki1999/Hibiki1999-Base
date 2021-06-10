@@ -25,15 +25,17 @@ public:
 
 	void Draw() override;
 
-	static int test;
+
 private:
 	
 	Game* m_game;//タイトルにゲームのシーン変え機能を使えるようにするために定義
 
 	Vec2 testvec = Vec2(Screen::Width / 2, Screen::Height / 2);
 
-	float r = 0.0f;
+	//float r = 0.0f;
 	GameManager& gm = GameManager::GetInstance();
+
+	VECTOR CameraPos;
 };
 
 #endif // !TITLE_H_
