@@ -11,6 +11,8 @@ public:
 	void changeAnim(int animState);
 
 	bool loopEnded();
+
+	float animCurrentTime();
 private:
 
 	int prev_anim_state_ = -1;

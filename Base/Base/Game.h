@@ -38,3 +38,44 @@ private:
 	GameManager& gm = GameManager::GetInstance();
 };
 #endif // !GAME_H_
+
+//////////////
+//enum StateType
+//{
+//	RunAway,
+//	Patrtol,
+//	Attack,
+//};
+//
+//void Agent::UpdateState(StateType CurrentState) {
+//	switch (CurrentState) {
+//	case state_RunAway:
+//		EvadeEnemy();
+//		if (Safe()) {
+//			ChangeState(state_Patrol);
+//		}
+//		break;
+//
+//	case state_Patrol:
+//		FollowPatrolPath();
+//		if (Threatened()) {
+//			if (StrongerThanEnemy()) {
+//				ChangeState(state_Attack);
+//			}
+//			else {
+//				ChangeState(state_RunAway);
+//			}
+//		}
+//		break;
+//
+//	case state_Attack:
+//
+//		if (WeakerThanEnemy()) {
+//			ChanegState(state_RunAway);
+//		}
+//		else {
+//			BAshEnemyOverHead();
+//		}
+//		break;
+//	}
+//}

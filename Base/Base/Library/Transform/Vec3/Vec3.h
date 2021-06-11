@@ -59,9 +59,12 @@ struct Vec3
 
 	Vec3& operator /=(float s) // •¡‡‘ã“ü‰‰ŽZ /=
 	{
-		x /= s;
-		y /= s;
-		z /= s;
+		if (s != 0)
+		{
+			this->x /= s;
+			this->y /= s;
+			this->z /= s;
+		}
 		return *this;
 	}
 
@@ -120,9 +123,9 @@ struct Vec3
 		return v.Length();
 	}
 
-	Vec3 Normalized() const
+	Vec3 Normalized()
 	{
-		return { x / Length(), y / Length(), z / Length() };
+		return *this /= Length();
 	}
 
 	Vec3 Lerp(const Vec3& destination, float t)
@@ -132,6 +135,19 @@ struct Vec3
 		z = z + (destination.z - z) * t;
 
 		return *this;
+	}
+
+	float AngleForXZ()
+	{
+		float rad = (float)std::atan2((float)x, (float)z);
+		float deg = rad * (180.0f / 3.1415f);
+
+		return deg + 180.0f;
+	}
+
+	bool NotZero()
+	{
+		return *this != Vec3(0, 0, 0);
 	}
 };
 

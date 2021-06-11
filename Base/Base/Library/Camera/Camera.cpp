@@ -23,8 +23,8 @@ void Camera::update()
 		//注視点変更しないため他のどころに保存
 		Vec3 lookTarget = cameraPosition;
 		//プレイヤーの後ろ80px下がる
-		cameraPosition.z += 400;
-		cameraPosition.y += 300;
+		cameraPosition.z -= 400;
+		cameraPosition.y += 500;
 		lookTarget.y += 150;
 		//カメラ座標を導入
 		transform_.position(cameraPosition);

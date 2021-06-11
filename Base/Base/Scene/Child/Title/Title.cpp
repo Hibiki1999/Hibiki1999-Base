@@ -21,7 +21,7 @@ void Title::Init()
 	DataSave::Load();
 	gm.camera_ = std::make_shared<Camera>();
 	gm.map_ = std::make_shared<Map>(0, "Stage1");
-	gm.game_object_manager_->add(std::make_shared<Player>(Vec3(0, 0, 0)));
+	gm.game_object_manager_->add(std::make_shared<Player>(Vec3(100, 0, 100)));
 	gm.game_object_manager_->add(std::make_shared<Enemy>(Vec3(0,11, 0)));
 }
 
@@ -40,7 +40,6 @@ void Title::Draw()
 	gm.map_->DrawTerrain();
 	gm.camera_->draw();
 	gm.game_object_manager_->draw();
-	SetFontSize(64);
 	//DrawString(0, 0, "Title", GetColor(255, 255, 255));
 	//DrawTriangle3D(
 	//	VGet(0.0f,0.0f, 0.0f),

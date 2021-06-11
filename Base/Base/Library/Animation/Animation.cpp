@@ -49,3 +49,9 @@ bool Animation::loopEnded()
 	//Ä¶I‚í‚Á‚½‚©‚ğ•Ô‹p
 	return loop_end_notify_;
 }
+
+float Animation::animCurrentTime()
+{
+	//¡‚ÌÄ¶ó‹µ‚ğ•Ô‚·(‘«‰¹‚È‚Ç‚Ég‚¦‚»‚¤)
+	return anim_play_time_;
+}

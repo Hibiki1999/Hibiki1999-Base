@@ -23,7 +23,7 @@ void Game::Init()
 	Image::Init();//画像を読み込む
 	gm.bgm = std::make_shared<BGM_Object>();
 	gm.game_object_manager_ = std::make_shared<GameObjectManager>();
-
+	MyDraw::InitMyDraw();
 #ifdef _DEBUG
 
 	Sound::Init();//デバグ時のみ音源のパスを確認する
