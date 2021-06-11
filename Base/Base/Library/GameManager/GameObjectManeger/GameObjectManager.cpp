@@ -35,14 +35,15 @@ void GameObjectManager::collide()
 {
 	for (auto i = game_object_.begin(); i != game_object_.end(); i++) {
 		for (auto j = std::next(i); j != game_object_.end(); j++) {
-			(*i)->collide(**j);
+			(*i)->collide(*j);
+
 		}
 	}
 }
 
 void GameObjectManager::remove()
 {
-	for (auto i = game_object_.begin(); i != game_object_.end(); ) {
+	for (auto i = game_object_.begin(); i != game_object_.end();) {
 		if ((*i)->is_dead()) {
 			i = game_object_.erase(i);
 		}

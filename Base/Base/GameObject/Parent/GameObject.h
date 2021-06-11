@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "../../Library/MyDraw/MyDraw.h"
 #include "../../Library/Collision/SphereCollision/SphereCollision.h"
 #include "../../Library/Screen/Screen.h"
 #include "../../Library/Input/Input.h"
@@ -11,7 +12,7 @@
 #include "../../Library/MyRandom/MyRandom.h"
 #include "../../Library/Transform/Transform.h"
 
-class GameObject
+class GameObject :public std::enable_shared_from_this<GameObject>
 {
 public:
 
@@ -29,13 +30,13 @@ public:
 	//GUIの描画
 	virtual void draw_gui() const;
 	//衝突リアクション
-	virtual void react(GameObject& other);
+	virtual void react(std::shared_ptr<GameObject> other);
 	//衝突判定
-	void collide(GameObject& other);
+	void collide(std::shared_ptr<GameObject> other);
 	//死亡する
 	void die();
 	//衝突しているか？
-	bool is_collide(const GameObject& other) const;
+	bool is_collide(const std::shared_ptr<GameObject> other) ;
 	//死亡しているか？
 	bool is_dead() const;
 	//名前を取得
@@ -49,7 +50,7 @@ public:
 	//移動量を取得
 	Vec3 velocity() const;
 	//衝突判定データを取得
-	SphereCollision collider() const;
+	SphereCollision collider();
 
 	//コピー禁止
 	GameObject(const GameObject& other) = delete;

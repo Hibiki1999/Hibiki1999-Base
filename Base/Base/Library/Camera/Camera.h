@@ -1,60 +1,24 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#include "../Screen/Screen.h"
-#include "../Input/Input.h"
-#include "../Transform/Vec2/Vec2.h"
-#include <DxLib.h>
+#include "../../GameObject/Parent/GameObject.h"
 
-class Camera
+class Camera : public GameObject
 {
 public:
-	Camera() {};
-	~Camera() {};
+	Camera();
+	~Camera();
 
-	static float x;
-	static float y;
+	virtual void update() override;
 
-	static Vec2 mouseLocation;
+	virtual void draw() const override;
 
-	//空白の部分を表示させないようにの準備
-	static int MinCameraX;
-	static int MinCameraY;
-	static int MaxCameraX;
-	static int MaxCameraY;
+private:
 
-	static void LookAt(float targetX, float targetY)
-	{
-		x = targetX - Screen::Width / 2;
-		y = targetY - Screen::Height / 2;
+	GameManager& gm = GameManager::GetInstance();
 
-
-		//空白部分を表示したい場合はこの下の四行をコメントアウト
-		if (x < MinCameraX) x = MinCameraX;
-		if (x > MaxCameraX) x = MaxCameraX;
-		if (y < MinCameraY) y = MinCameraY;
-		if (y > MaxCameraY) y = MaxCameraY;
-
-
-		mouseLocation = Vec2(x + Input::mouseX, y + Input::mouseY);
-
-	}
-
-	static void DrawRotaGraphF(float worldX, float worldY, double exRate, double angle, int handle, int reverseXFlag = false, int transFlag = true)
-	{
-		DxLib::DrawRotaGraphF(worldX - x, worldY - y, exRate, angle, handle, transFlag, reverseXFlag);
-
-		
-	}
-
-	static void DrawSquareHitBox(float left, float top, float right, float bottom, unsigned int color)
-	{
-		DrawBox((int)left - x + 0.5f,
-			(int)(top - y + 0.5f),
-			(int)(right - x + 0.5f),
-			(int)(bottom - y + 0.5f),
-			color, 0);
-	}
+	Vec3 camera_location_ = Vec3(0, 0, 0);
+	Vec3 look_point_ = Vec3(0, 0, 0);
 };
 
 #endif // !CAMERA_H_

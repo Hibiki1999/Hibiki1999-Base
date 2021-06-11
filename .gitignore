@@ -30,6 +30,9 @@
 *.exe
 *.out
 *.app
+*.fbx
+*.fbm
+*.mv1
 Base/Base/x64/Debug/input.obj.enc
 Base/Base/x64/
 Base/Debug/

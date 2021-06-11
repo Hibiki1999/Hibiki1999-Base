@@ -67,11 +67,6 @@ public:
 		enemyData.Load(CellSize, "ResourceFile/MapFile/" + stageName + "_enemy.csv");
 		terrain.Load(CellSize, "ResourceFile/MapFile/" + stageName + "_terrain.csv");
 
-		Camera::MinCameraX = 0;
-		Camera::MinCameraY = 0;
-		Camera::MaxCameraX = CellSize * terrain.Width - Screen::Width;
-		Camera::MaxCameraY = CellSize * terrain.Height - Screen::Height;//関数を渡す
-
 		assert(spawnRangeX > 0 && spawnRangeY > 0);//敵出現射程を設定しなければ
 
 		InitSpawnDic(spawnRangeX, spawnRangeY);//初期化
@@ -217,19 +212,9 @@ public:
 
 	void DrawTerrain()
 	{
-		int left = (int)(Camera::x / CellSize);
-		int top = (int)(Camera::y / CellSize);
-		int right = (int)((Camera::x + Screen::Width - 1) / CellSize);
-		int bottom = (int)((Camera::y + Screen::Height - 1) / CellSize);
-
-		if (left < 0)left = 0;
-		if (top < 0)top = 0;
-		if (right >= terrain.Width)right = terrain.Width - 1;
-		if (bottom >= terrain.Height)bottom = terrain.Height - 1;
-
-		for (int cellX = left; cellX <= right; cellX++)
+		for (int cellX = 0; cellX <= terrain.Width - 1; cellX++)
 		{
-			for (int cellY = top; cellY <= bottom; cellY++)
+			for (int cellY = 0; cellY <= terrain.Height; cellY++)
 			{
 				float x = (float)(cellX * CellSize) + rotaGraphShiftX;
 				float y = (float)(cellY * CellSize) + rotaGraphShiftY;//位置を確定
@@ -240,12 +225,12 @@ public:
 					id = terrain[cellY][cellX];//二次元配列のデータを保存
 				}
 
-				Camera::DrawRotaGraphF(x, y, 1, 0, Image::mapChip.HandleArray[id]);//IDに従ってマップチップを描画
+				DrawRotaGraphF(x, y, 1, 0, Image::mapChip.HandleArray[id],1);//IDに従ってマップチップを描画
 			}
 		}
 	}
 
-	void DrawMouseSetTerrain(int worldX,int worldY,int id)//カーソルの位置に置き換えるマップチップを表示
+	void DrawMouseSetTerrain(int worldX, int worldY, int id)//カーソルの位置に置き換えるマップチップを表示
 	{
 		if (worldX < 0 || worldY < 0) return;//負の座標を無視
 
@@ -254,7 +239,7 @@ public:
 
 		if (mapX >= terrain.Width || mapY >= terrain.Height) return;//範囲外も無視
 
-		Camera::DrawRotaGraphF(worldX, worldY, 1, 0, Image::mapChip.HandleArray[id]);
+		//Camera::DrawRotaGraphF(worldX, worldY, 1, 0, Image::mapChip.HandleArray[id]);
 	}
 
 	bool isWall(float worldX, float worldY)

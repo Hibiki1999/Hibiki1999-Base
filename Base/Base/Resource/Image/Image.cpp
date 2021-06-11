@@ -2,9 +2,8 @@
 #include <string>
 
 DivImage Image::mapChip{ 16, 16, 32, 32 };//Xの数、Yの数、Xのサイズ、Yのサイズ
-std::vector<int> Image::listImage{ 0 };
-std::vector<std::vector<int>> Image::tDiDIv{ 0 };
-std::vector<int> Image::sTDiDiv{ 0 };
+int Image::ModelHandle{ -1 };
+int Image::sword{ -1 };
 
 void Image::Init()
 {
@@ -15,24 +14,18 @@ void Image::Init()
 		if (mapChip.HandleArray[i] == -1) assert("マップチップ" + std::to_string(i) + "番読込失敗" == "");
 	}
 
+
+	ModelHandle = MV1LoadModel("ResourceFile/ImageFile/mutant.mv1");
+	assert(ModelHandle != -1);
+
+	//sword = MV1LoadModel("ResourceFile/ImageFile/maria_prop_j_j_ong.mv1");
+	//assert(sword != -1);
+
+
 	//suisui = LoadGraph("ResourceFile/ImageFile/suisui.gif");
 	//assert(suisui != -1);
 }
 
-void Image::SaveToVector(int image)
-{
-	listImage.push_back(image);
-}
-
-void Image::SaveTotDiDiv(DivImage& traget)
-{
-	for (int i = 0; i < traget.AllNum; i++)
-	{
-		sTDiDiv.push_back(traget.HandleArray[i]);
-	}
-	tDiDIv.push_back(sTDiDiv);
-	sTDiDiv.clear();
-}
 
 int Image::LoadDivGraphs(const TCHAR* FileName, DivImage& divImage)
 {

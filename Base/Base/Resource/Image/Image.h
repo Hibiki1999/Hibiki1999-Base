@@ -67,14 +67,10 @@ public:
 	
 	static DivImage mapChip;
 	
-	static std::vector<int> listImage;
-
-	static std::vector<std::vector<int>> tDiDIv;
-	static std::vector<int> sTDiDiv;
+	static int ModelHandle;
+	static int sword;
 private:
-	static void SaveToVector(int image);
 
-	static void SaveTotDiDiv(DivImage& traget);
 };
 
 #endif // !IMAGE_H_

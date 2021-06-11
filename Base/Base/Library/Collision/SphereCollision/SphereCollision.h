@@ -13,12 +13,13 @@ public:
 	//平行移動
 	SphereCollision translate(const Vec3& position) const;
 	//座標
-	SphereCollision transform() const;
+	SphereCollision transform(const Vec3& position,float radius);
 	//重なっているか？
 	bool intersects(const SphereCollision& other) const;
 	//デバッグ表示
 	void draw() const;
 
+	float GetRadius() const;
 private:
 	//半径
 	float radius{ 0.0f };

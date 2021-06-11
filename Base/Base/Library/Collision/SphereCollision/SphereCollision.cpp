@@ -13,9 +13,9 @@ SphereCollision SphereCollision::translate(const Vec3& position) const
 	return SphereCollision{ radius,center + position };
 }
 
-SphereCollision SphereCollision::transform() const
+SphereCollision SphereCollision::transform(const Vec3& position, float _radius)
 {
-	return SphereCollision{ radius,center };
+	return SphereCollision{ this->radius = radius,this->center = position };
 }
 
 bool SphereCollision::intersects(const SphereCollision& other) const
@@ -27,6 +27,11 @@ void SphereCollision::draw() const
 {
 	MyDraw::DrawSphere3D(center, radius, GetColor(255, 0, 0), GetColor(255, 255, 255));
 
+}
+
+float SphereCollision::GetRadius() const
+{
+	return radius;
 }
 
 bool SphereCollision::SphereSphereCollision(const SphereCollision& other) const

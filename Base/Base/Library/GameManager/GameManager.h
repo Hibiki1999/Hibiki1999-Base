@@ -14,6 +14,8 @@
 class GameObjectManager;
 class BGM_Object;
 class SoundEffectObject;
+class Camera;
+class Map;
 
 class GameManager :public Singleton<GameManager>
 {
@@ -25,6 +27,11 @@ public:
 	std::vector < std::shared_ptr<SoundEffectObject>> soundEffects;
 
 	std::shared_ptr<GameObjectManager> game_object_manager_;
+
+	std::shared_ptr<Camera> camera_{ nullptr };
+
+	std::shared_ptr<Map> map_{ nullptr };
+
 	/*std::shared_ptr<Map> map{ nullptr };
 
 	std::shared_ptr<Player> player{ nullptr };
@@ -47,7 +54,7 @@ public:
 			v.end() //  «remove_if‚ÌˆÊ’u
 		);//—á.[¶][¶][€][€][€]© v.end()‚ÌˆÊ’u
 	};
-	
+
 protected:
 	GameManager() {};
 	virtual ~GameManager() {};

@@ -16,16 +16,16 @@ void GameObject::draw_gui() const
 {
 }
 
-void GameObject::react(GameObject& other)
+void GameObject::react(std::shared_ptr<GameObject> other)
 {
 }
 
-void GameObject::collide(GameObject& other)
+void GameObject::collide(std::shared_ptr<GameObject> other)
 {
-	if (enable_collider_ && other.enable_collider_) {
+	if (enable_collider_ && other->enable_collider_) {
 		if (is_collide(other)) {
 			react(other);
-			other.react(*this);
+			other->react(shared_from_this());
 		}
 	}
 }
@@ -35,9 +35,9 @@ void GameObject::die()
 	dead_ = true;
 }
 
-bool GameObject::is_collide(const GameObject& other) const
+bool GameObject::is_collide(const std::shared_ptr<GameObject> other)
 {
-	return collider().intersects(other.collider());
+	return collider().intersects(other->collider());
 }
 
 bool GameObject::is_dead() const
@@ -70,8 +70,7 @@ Vec3 GameObject::velocity() const
 	return velocity_;
 }
 
-SphereCollision GameObject::collider() const
+SphereCollision GameObject::collider() 
 {
-	return collider_.transform();
-
+	return collider_.transform(transform_.position(),collider_.GetRadius());
 }

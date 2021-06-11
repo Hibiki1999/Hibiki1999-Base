@@ -4,6 +4,7 @@
 #include "Scene/Child/Ending/Ending.h"
 #include "Resource/Sound/BGM_Object/BGM_Object.h"
 #include "Resource/Sound/SoundEffect_Object/SoundEffectObject.h"
+#include "Library/GameManager/GameObjectManeger/GameObjectManager.h"
 
 Scene* scenes;
 
@@ -21,6 +22,8 @@ void Game::Init()
 	MyRandom::Init();//乱数を読み込む
 	Image::Init();//画像を読み込む
 	gm.bgm = std::make_shared<BGM_Object>();
+	gm.game_object_manager_ = std::make_shared<GameObjectManager>();
+
 #ifdef _DEBUG
 
 	Sound::Init();//デバグ時のみ音源のパスを確認する
