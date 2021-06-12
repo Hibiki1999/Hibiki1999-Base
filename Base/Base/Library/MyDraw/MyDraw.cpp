@@ -90,7 +90,6 @@ int MyDraw::DrawDivRotaGraphF3D(Plane plane, float xf, float yf, float zf, doubl
 	//【テクスチャ反転処理】幅halfWidthと高さhalfHeightをマイナスにすることで反転
 	// ★ReverseXFlagとIsReverseX_Texture両方反転は【反転の反転で=反転しない!】
 	// 【反転の反転で=反転しない!】は★XOR【排他的論理和 ^ 演算子】
-	// [排他的論理和 ^ 演算子]http://www7b.biglobe.ne.jp/~robe/cpphtml/html01/cpp01047.html
 	if ((IsReverseX_Texture ^ (ReverseXFlag == TRUE))
 		&& (plane == Plane::Y || plane == Plane::Z))
 	{   // マイナス幅でテクスチャ反転
@@ -106,7 +105,7 @@ int MyDraw::DrawDivRotaGraphF3D(Plane plane, float xf, float yf, float zf, doubl
 		if (plane == Plane::X) halfWidth = -halfWidth;
 		if (plane == Plane::Y) halfHeight = -halfHeight;
 	}
-	// [頂点VERTEXは四角形は6個必要] https://dixq.net/rp/57.html
+
    // ★CGの【最小単位は三角形】2Dはドットの集合で描くが【CGは三角形の集合で描く】
 	VERTEX_3D Vertex[6]; // ポリゴン２枚なので、頂点は６個(三角3点×2)
 
