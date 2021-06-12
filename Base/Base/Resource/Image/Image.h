@@ -68,7 +68,7 @@ public:
 	static DivImage mapChip;
 	
 	static int ModelHandle;
-	static int sword;
+	static int sphere;
 private:
 
 };

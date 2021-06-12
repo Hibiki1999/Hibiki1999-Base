@@ -6,7 +6,8 @@ Player::Player(const Vec3 position)
 	this->tag_ = "PlayerTag";
 	transform_.position(position);
 	transform_.rotation(Quaternion(0.0f, 180.0f, 0.0f));
-	collider_ = SphereCollision(5.0f);
+	collider_ = SphereCollision(100.0f);
+	cube_collider_ = CubeCollision(80.0f, 16.0f);
 	anim.changeAnim(Anim::Idle);
 }
 
@@ -19,7 +20,8 @@ void Player::update()
 void Player::draw() const
 {
 	MyDraw::Draw3DModel(Image::ModelHandle, transform());
-	collider_.draw();
+	//collider_.draw();
+	cube_collider_.draw();
 }
 
 void Player::react(std::shared_ptr<GameObject> other)

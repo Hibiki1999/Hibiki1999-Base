@@ -2,6 +2,7 @@
 #define VEC3_H_
 
 #include <cmath>
+#include <DxLib.h>
 
 struct Vec3
 {
@@ -148,6 +149,23 @@ struct Vec3
 	bool NotZero()
 	{
 		return *this != Vec3(0, 0, 0);
+	}
+
+	VECTOR Conv()
+	{
+		VECTOR a;
+		a.x = x;
+		a.y = y;
+		a.z = z;
+		return a;
+	}
+
+	Vec3 ConvBack(VECTOR other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+		return *this;
 	}
 };
 

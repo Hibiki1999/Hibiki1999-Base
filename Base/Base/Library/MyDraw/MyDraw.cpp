@@ -21,14 +21,14 @@ int MyDraw::DrawSphere3D(Vec3 center, float r, unsigned int SpcColor, unsigned i
 
 int MyDraw::SetCameraPositionAndTarget_UpVecY(Vec3 position, Vec3 lookpoint)
 {
-	VECTOR cvrt_position = DxLib::VGet(position.x, position.y, position.z);
-	VECTOR cvrt_look_point = DxLib::VGet(lookpoint.x, lookpoint.y, lookpoint.z);
+	VECTOR cvrt_position = position.Conv();//DxLib::VGet(position.x, position.y, position.z);
+	VECTOR cvrt_look_point = lookpoint.Conv();//DxLib::VGet(lookpoint.x, lookpoint.y, lookpoint.z);
 	return DxLib::SetCameraPositionAndTarget_UpVecY(cvrt_position, cvrt_look_point);
 }
 
 int MyDraw::Draw3DModel(int Model, Transform transform_)
 {
-	DxLib::MV1SetRotationXYZ(Model, DxLib::VGet(transform_.rotation().pitch * (3.1415 / 180), transform_.rotation().yaw * (3.1415 / 180), transform_.rotation().roll * (3.1415 / 180)));
+	DxLib::MV1SetRotationXYZ(Model, DxLib::VGet(transform_.rotation().pitch * (3.1415f / 180.0f), transform_.rotation().yaw * (3.1415f / 180.0f), transform_.rotation().roll * (3.1415f / 180.0f)));
 	DxLib::MV1SetPosition(Model, DxLib::VGet(transform_.position().x, transform_.position().y, transform_.position().z));
 	DxLib::MV1SetScale(Model, DxLib::VGet(1.0f, 1.0f, 1.0f));
 	return DxLib::MV1DrawModel(Model);
@@ -36,22 +36,19 @@ int MyDraw::Draw3DModel(int Model, Transform transform_)
 
 void MyDraw::DrawDivRotaDivBoxF3D(float xf, float yf, float zf, double ExRate, Vec3 Angle, DivImage& divImage, int id, int TransFlag, int ReverseXFlag, int ReverseYFlag, int ReverseZFlag)
 {
-	Vec3 VAngle;
-	VAngle.x = Angle.x;
-	VAngle.y = Angle.y;
-	VAngle.z = Angle.z;
+
 	int imageWidth = divImage.XSize;
 	int imageHeight = divImage.YSize;
 	
 	//ÉTÉCÉRÉçÇÃ6ñ Çï`Ç≠
-	DrawDivRotaGraphF3D(Plane::Y, xf, yf - (imageHeight / 2), zf, ExRate, VAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
-	DrawDivRotaGraphF3D(Plane::Y, xf, yf + (imageHeight / 2), zf, ExRate, VAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::Y, xf, yf - (imageHeight / 2), zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::Y, xf, yf + (imageHeight / 2), zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
 	// Xï˚å¸ÇÃó†ë§ÇÕç∂âEîΩì]
-	DrawDivRotaGraphF3D(Plane::X, xf - (imageWidth / 2), yf, zf, ExRate, VAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, !ReverseZFlag);
-	DrawDivRotaGraphF3D(Plane::X, xf + (imageWidth / 2), yf, zf, ExRate, VAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
-	DrawDivRotaGraphF3D(Plane::Z, xf, yf, zf - (imageHeight / 2), ExRate, VAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::X, xf - (imageWidth / 2), yf, zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, !ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::X, xf + (imageWidth / 2), yf, zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::Z, xf, yf, zf - (imageHeight / 2), ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
 	// Zï˚å¸ÇÃó†ë§ÇÕç∂âEîΩì]
-	DrawDivRotaGraphF3D(Plane::Z, xf, yf, zf + (imageHeight / 2), ExRate, VAngle, divImage, id, TransFlag, !ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::Z, xf, yf, zf + (imageHeight / 2), ExRate, Angle, divImage, id, TransFlag, !ReverseXFlag, ReverseYFlag, ReverseZFlag);
 	//return;
 }
 

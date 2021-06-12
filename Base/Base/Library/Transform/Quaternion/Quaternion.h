@@ -11,128 +11,47 @@ struct Quaternion
 
 	Quaternion() = default;
 
-	Quaternion(float _pitch, float _yaw, float _roll) :pitch(_pitch), yaw(_yaw), roll(_roll) {}
+	Quaternion(float _pitch, float _yaw, float _roll);
 
-	Quaternion operator +(const Quaternion& other) const // 2項 +
-	{
-		return{ pitch + other.pitch, yaw + other.yaw,roll + other.roll };
-	}
+	Quaternion operator +(const Quaternion& other) const; // 2項 +
 
-	Quaternion operator -(const Quaternion& other) const // 2項 -
-	{
-		return{ pitch - other.pitch, yaw - other.yaw,roll - other.roll };
-	}
+	Quaternion operator -(const Quaternion& other) const; // 2項 -
 
-	Quaternion operator *(float s) const // 2項 *
-	{
-		return{ pitch * s, yaw * s,roll * s };
-	}
+	Quaternion operator *(float s) const; // 2項 *
 
-	Quaternion operator /(float s) const // 2項 /
-	{
-		return{ pitch / s, yaw / s ,roll / s };
-	}
+	Quaternion operator /(float s) const; // 2項 /
 
-	Quaternion& operator +=(const Quaternion& other) // 複合代入演算 +=
-	{
-		pitch += other.pitch;
-		yaw += other.yaw;
-		roll += other.roll;
-		return *this;
-	}
+	Quaternion& operator +=(const Quaternion& other); // 複合代入演算 +=
 
-	Quaternion& operator -=(const Quaternion& other) // 複合代入演算 -=
-	{
-		pitch -= other.pitch;
-		yaw -= other.yaw;
-		roll -= other.roll;
-		return *this;
-	}
+	Quaternion& operator -=(const Quaternion& other); // 複合代入演算 -=
 
-	Quaternion& operator *=(float s) // 複合代入演算 *=
-	{
-		pitch *= s;
-		yaw *= s;
-		roll *= s;
-		return *this;
-	}
+	Quaternion& operator *=(float s); // 複合代入演算 *=
 
-	Quaternion& operator /=(float s) // 複合代入演算 /=
-	{
-		pitch /= s;
-		yaw /= s;
-		roll /= s;
-		return *this;
-	}
+	Quaternion& operator /=(float s); // 複合代入演算 /=
 
-	bool operator ==(const Quaternion& other) //二つのベクトルが同じかどうかを判別するため
-	{
-		return ((int)pitch == (int)other.pitch && (int)yaw == (int)other.yaw && (int)roll == (int)other.roll);
-	}
+	bool operator ==(const Quaternion& other); //二つのベクトルが同じかどうかを判別するため
 
-	bool operator !=(const Quaternion& other) //二つのベクトルが同じじゃないかどうかを判別するため
-	{
-		return ((int)pitch != (int)other.pitch || (int)yaw != (int)other.yaw || (int)roll != (int)other.roll);
-	}
+	bool operator !=(const Quaternion& other); //二つのベクトルが同じじゃないかどうかを判別するため
 
-	bool operator >=(const Quaternion& other) //左が右より大きいか同じかどうかを判別するため
-	{
-		return ((int)pitch >= (int)other.pitch && (int)yaw >= (int)other.yaw && (int)roll >= (int)other.roll);
-	}
+	bool operator >=(const Quaternion& other); //左が右より大きいか同じかどうかを判別するため
 
-	bool operator <=(const Quaternion& other) //左が右より小さいか同じかどうかを判別するため
-	{
-		return ((int)pitch <= (int)other.pitch && (int)yaw <= (int)other.yaw && (int)roll <= (int)other.roll);
-	}
+	bool operator <=(const Quaternion& other); //左が右より小さいか同じかどうかを判別するため
 
-	bool operator <(const Quaternion& other) //左が右より小さいかどうかを判別するため
-	{
-		return ((int)pitch < (int)other.pitch || (int)yaw < (int)other.yaw || (int)roll < (int)other.roll);
-	}
+	bool operator <(const Quaternion& other); //左が右より小さいかどうかを判別するため
 
-	bool operator >(const Quaternion& other) //左が右より大きいかどうかを判別するため
-	{
-		return ((int)pitch > (int)other.pitch || (int)yaw > (int)other.yaw || (int)roll > (int)other.roll);
-	}
+	bool operator >(const Quaternion& other); //左が右より大きいかどうかを判別するため
 
-	float LengthSq() const
-	{
-		return pitch * pitch + yaw * yaw + roll * roll;
-	}
+	float LengthSq() const;
 
-	float Length() const
-	{
-		return sqrt(LengthSq());
-	}
+	float Length() const;
 
-	float dot(const Quaternion& other)const
-	{
-		return pitch * other.pitch + yaw * other.yaw + roll * other.roll;
-	}
+	float dot(const Quaternion& other)const;
 
-	float distanceFrom(const Quaternion& other)const
-	{
-		Quaternion v;
-		v.pitch = pitch - other.pitch;
-		v.yaw = yaw - other.yaw;
-		v.roll = roll - other.roll;
+	float distanceFrom(const Quaternion& other)const;
 
-		return v.Length();
-	}
+	Quaternion Normalized() const;
 
-	Quaternion Normalized() const
-	{
-		return { pitch / Length(), yaw / Length(), roll / Length() };
-	}
-
-	Quaternion Lerp(const Quaternion& destination, float t)
-	{
-		pitch = pitch + (destination.pitch - pitch) * t;
-		yaw = yaw + (destination.yaw - yaw) * t;
-		roll = roll + (destination.roll - roll) * t;
-
-		return *this;
-	}
+	Quaternion Lerp(const Quaternion& destination, float t);
 };
 
 #endif // !QUATERNION_H_

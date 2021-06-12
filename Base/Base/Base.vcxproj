@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Library\Collision\CubeCollision\CubeCollision.cpp" />
     <ClCompile Include="Library\Animation\Animation.cpp" />
     <ClCompile Include="GameObject\Child\Enemy\Enemy.cpp" />
     <ClCompile Include="Library\GameManager\GameObjectManeger\GameObjectManager.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="Library\Collision\SphereCollision\SphereCollision.cpp" />
     <ClCompile Include="Library\MyDraw\MyDraw.cpp" />
     <ClCompile Include="GameObject\Child\Player\Player.cpp" />
+    <ClCompile Include="Library\Transform\Quaternion\Quaternion.cpp" />
     <ClCompile Include="Resource\Map\Map.cpp" />
     <ClCompile Include="Resource\Sound\BGM_Object\BGM_Object.cpp" />
     <ClCompile Include="Library\Camera\Camera.cpp" />
@@ -176,6 +178,7 @@
     <ClCompile Include="Resource\Sound\SoundEffect_Object\SoundEffectObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Library\Collision\CubeCollision\CubeCollision.h" />
     <ClInclude Include="Library\Animation\Animation.h" />
     <ClInclude Include="GameObject\Child\Enemy\Enemy.h" />
     <ClInclude Include="Library\GameManager\GameObjectManeger\GameObjectManager.h" />

@@ -28,6 +28,7 @@ void GameObject::collide(std::shared_ptr<GameObject> other)
 			other->react(shared_from_this());
 		}
 	}
+	cube_collider_.transform(transform_.position());
 }
 
 void GameObject::die()

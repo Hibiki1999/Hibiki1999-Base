@@ -2,20 +2,25 @@
 #include "../../MyDraw/MyDraw.h"
 #include "../../MyMath/MyMath.h"
 
-SphereCollision::SphereCollision(float radius, const Vec3& center)
+SphereCollision::SphereCollision(float radius, const Vec3& position)
 {
 	this->radius = radius;
-	this->center = center;
+	this->position = position;
+	this->center = position;
+	this->center.y += radius;
 }
 
 SphereCollision SphereCollision::translate(const Vec3& position) const
 {
-	return SphereCollision{ radius,center + position };
+	return SphereCollision{ radius,position + position };
 }
 
 SphereCollision SphereCollision::transform(const Vec3& position, float _radius)
 {
-	return SphereCollision{ this->radius = radius,this->center = position };
+	this->position = position;
+	this->center = position;
+	this->center.y += radius;
+	return SphereCollision{ this->radius = radius,this->position };
 }
 
 bool SphereCollision::intersects(const SphereCollision& other) const
@@ -25,14 +30,15 @@ bool SphereCollision::intersects(const SphereCollision& other) const
 
 void SphereCollision::draw() const
 {
-	MyDraw::DrawSphere3D(center, radius, GetColor(255, 0, 0), GetColor(255, 255, 255));
-
+	
+	MyDraw::DrawSphere3D(center, radius, GetColor(255, 0, 0), GetColor(255, 0, 0));
 }
 
 float SphereCollision::GetRadius() const
 {
 	return radius;
 }
+
 
 bool SphereCollision::SphereSphereCollision(const SphereCollision& other) const
 {

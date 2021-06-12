@@ -3,7 +3,7 @@
 
 DivImage Image::mapChip{ 16, 16, 32, 32 };//Xの数、Yの数、Xのサイズ、Yのサイズ
 int Image::ModelHandle{ -1 };
-int Image::sword{ -1 };
+int Image::sphere{ -1 };
 
 void Image::Init()
 {
@@ -18,8 +18,8 @@ void Image::Init()
 	ModelHandle = MV1LoadModel("ResourceFile/ImageFile/mutant.mv1");
 	assert(ModelHandle != -1);
 
-	//sword = MV1LoadModel("ResourceFile/ImageFile/maria_prop_j_j_ong.mv1");
-	//assert(sword != -1);
+	sphere = MV1LoadModel("ResourceFile/ImageFile/sphere.mv1");
+	assert(sphere != -1);
 
 
 	//suisui = LoadGraph("ResourceFile/ImageFile/suisui.gif");

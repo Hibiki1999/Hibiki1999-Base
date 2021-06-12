@@ -5,6 +5,7 @@
 
 #include "../../Library/MyDraw/MyDraw.h"
 #include "../../Library/Collision/SphereCollision/SphereCollision.h"
+#include "../../Library/Collision/CubeCollision/CubeCollision.h"
 #include "../../Library/Screen/Screen.h"
 #include "../../Library/Input/Input.h"
 #include "../../Library/GameManager/GameManager.h"
@@ -70,6 +71,7 @@ protected:
 	bool enable_collider_{ true };
 	//Õ“Ë”»’è
 	SphereCollision collider_;
+	CubeCollision cube_collider_;
 	//€–Sƒtƒ‰ƒO
 	bool dead_{ false };
 

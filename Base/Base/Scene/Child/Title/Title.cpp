@@ -22,7 +22,7 @@ void Title::Init()
 	gm.camera_ = std::make_shared<Camera>();
 	gm.map_ = std::make_shared<Map>(0, "Stage1");
 	gm.game_object_manager_->add(std::make_shared<Player>(Vec3(100, 0, 100)));
-	gm.game_object_manager_->add(std::make_shared<Enemy>(Vec3(0,11, 0)));
+	gm.game_object_manager_->add(std::make_shared<Enemy>(Vec3(200,0, 200)));
 }
 
 void Title::Update()
@@ -33,6 +33,7 @@ void Title::Update()
 	clsDx();
 	gm.game_object_manager_->collide();
 	gm.game_object_manager_->remove();
+
 }
 
 void Title::Draw()
