@@ -7,7 +7,7 @@ Player::Player(const Vec3 position)
 	transform_.position(position);
 	transform_.rotation(Quaternion(0.0f, 180.0f, 0.0f));
 	collider_ = SphereCollision(100.0f);
-	cube_collider_ = CubeCollision(80.0f, 16.0f);
+	cube_collider_ = CubeCollision(110.0f, 154.0f);
 	anim.changeAnim(Anim::Idle);
 }
 
@@ -20,7 +20,7 @@ void Player::update()
 void Player::draw() const
 {
 	MyDraw::Draw3DModel(Image::ModelHandle, transform());
-	//collider_.draw();
+	collider_.draw(GetColor(0, 0, 255), GetColor(0, 0, 255));
 	cube_collider_.draw();
 }
 
@@ -68,10 +68,10 @@ void Player::InputHandle()
 	else {
 		animState = Anim::Idle;
 	}
-	
+
 	if (velocity.NotZero()) {
-	float angle = velocity.AngleForXZ();
-	transform_.rotation(Quaternion(0, angle, 0));
+		float angle = velocity.AngleForXZ();
+		transform_.rotation(Quaternion(0, angle, 0));
 	}
 
 	velocity_ = velocity.Normalized() * 10.0f;

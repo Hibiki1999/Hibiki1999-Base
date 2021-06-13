@@ -12,11 +12,11 @@ public:
 	//平行移動
 	SphereCollision translate(const Vec3& position) const;
 	//座標
-	SphereCollision transform(const Vec3& position,float radius);
+	SphereCollision transform(const Vec3& position, float radius);
 	//重なっているか？
 	bool intersects(const SphereCollision& other) const;
 	//デバッグ表示
-	void draw() const;
+	void draw(const unsigned int spcColor = GetColor(255, 0, 0), const unsigned int difColor = GetColor(255, 0, 0), int DivNum = 32, bool FillFlag = false) const;
 
 	float GetRadius() const;
 

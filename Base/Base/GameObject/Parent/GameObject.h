@@ -53,12 +53,14 @@ public:
 	//衝突判定データを取得
 	SphereCollision collider();
 
+	void WallCollide();
+
 	//コピー禁止
 	GameObject(const GameObject& other) = delete;
 	GameObject& operator = (const GameObject& other) = delete;
 
 protected:
-	
+
 	//タグ名
 	std::string tag_;
 	//名前
@@ -75,6 +77,9 @@ protected:
 	//死亡フラグ
 	bool dead_{ false };
 
+private:
+
+	GameManager& gm = GameManager::GetInstance();
 };
 
 #endif // !GAMEOBJECT_H_

@@ -28,10 +28,10 @@ bool SphereCollision::intersects(const SphereCollision& other) const
 	return SphereSphereCollision(other) == true;
 }
 
-void SphereCollision::draw() const
+void SphereCollision::draw(const unsigned int spcColor, const unsigned int difColor, int DivNum, bool FillFlag) const
 {
-	
-	MyDraw::DrawSphere3D(center, radius, GetColor(255, 0, 0), GetColor(255, 0, 0));
+
+	MyDraw::DrawSphere3D(center, radius, spcColor, difColor, DivNum, FillFlag);
 }
 
 float SphereCollision::GetRadius() const
