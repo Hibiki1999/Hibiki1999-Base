@@ -15,7 +15,7 @@ void Playing::Init()
 
 void Playing::Update()
 {
-	if (Input::GetButtonDown(Pad::All, PAD_INPUT_1)) Game::ChangeScene(m_game->m_ending);
+	//if (Input::GetButtonDown(Pad::All, PAD_INPUT_1)) Game::ChangeScene(m_game->m_ending);
 }
 
 void Playing::Draw()

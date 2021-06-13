@@ -30,7 +30,6 @@ void Title::Update()
 	//if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))Game::ChangeScene(m_game->m_play);
 	gm.game_object_manager_->update();
 	gm.camera_->update();
-	clsDx();
 	gm.game_object_manager_->collide();
 	gm.game_object_manager_->remove();
 

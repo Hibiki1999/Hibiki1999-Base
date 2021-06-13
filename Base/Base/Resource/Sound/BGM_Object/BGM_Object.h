@@ -33,15 +33,16 @@ private:
 
 	enum Bool
 	{
-		isBgm1FadeOutChange		= 1 << 0,
-		isBgm2FadeOutChange		= 1 << 1,
-		isBgm1FadeOutAndStop	= 1 << 2,
+		isBgm1FadeOutChange = 1 << 0,
+		isBgm2FadeOutChange = 1 << 1,
+		isBgm1FadeOutAndStop = 1 << 2,
 		isBgm1ContinueAndFadeIn = 1 << 3,
-		isBgm2FadeOutAndStop	= 1 << 4,
+		isBgm2FadeOutAndStop = 1 << 4,
 		isBgm2ContinueAndFadeIn = 1 << 5,
-		isBgm1FadeOutAndDelete	= 1 << 6,
-		isBgm2FadeOutAndDelete	= 1 << 7,
+		isBgm1FadeOutAndDelete = 1 << 6,
+		isBgm2FadeOutAndDelete = 1 << 7,
 	};
+
 	int allBool = 0;
 	void StandBool(Bool b) { allBool |= b; }
 	void BreakBool(Bool b) { allBool &= ~b; }

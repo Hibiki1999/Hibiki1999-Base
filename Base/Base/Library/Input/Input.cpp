@@ -1,17 +1,19 @@
 #include "Input.h"
+#include <string>
 
 int Input::prevStates[]; // 1フレーム前の状態
 int Input::currentStates[]; // 現在の状態
-int Input::mouseX{ 0 };//今のマウスのX座標
-int Input::mouseY{ 0 };//今のマウスのY座標
-int Input::prevMouseX{ 0 };//一フレーム前のマウスX座標
-int Input::prevMouseY{ 0 };//一フレーム前のマウスY座標
-int Input::prevMouseInput{ 0 };//一フレーム前のマウス入力状態
-int Input::mouseInput{ 0 };//今のマウスの入力状態
+//int Input::mouseX{ 0 };//今のマウスのX座標
+//int Input::mouseY{ 0 };//今のマウスのY座標
+//int Input::prevMouseX{ 0 };//一フレーム前のマウスX座標
+//int Input::prevMouseY{ 0 };//一フレーム前のマウスY座標
+//int Input::prevMouseInput{ 0 };//一フレーム前のマウス入力状態
+//int Input::mouseInput{ 0 };//今のマウスの入力状態
 
 XINPUT_STATE Input::stickInput[4];//スティックを取得したの保存先
 
 std::unordered_map<int, int> Input::padDic; // パッド番号からDXの定義への辞書
+std::vector<std::vector<std::string>> Input::buttonName; // パッド番号からDXの定義への辞書
 
 void Input::InitPadDictionary()
 {
@@ -22,6 +24,40 @@ void Input::InitPadDictionary()
 	padDic[(int)Pad::Four] = DX_INPUT_PAD4;
 }
 
+bool Input::isCurrentPressed(Pad pad, std::string action)
+{
+	std::vector<int> buttonId;
+	for (int i = 0; i < buttonName.size(); i++) {
+		if (buttonName[i][0] == action) {
+			buttonId.push_back(std::stoi(buttonName[i][1]));
+		}
+	}
+	bool isInput = false;
+	for (auto bi : buttonId) {
+		if ((currentStates[(int)pad] & bi) != 0) {
+			isInput = true;
+		}
+	}
+	return isInput;
+}
+
+bool Input::isPreviousPressed(Pad pad, std::string action)
+{
+	std::vector<int> buttonId;
+	for (int i = 0; i < buttonName.size(); i++) {
+		if (buttonName[i][0] == action) {
+			buttonId.push_back(std::stoi(buttonName[i][1]));
+		}
+	}
+	bool isInput = false;
+	for (auto bi : buttonId) {
+		if ((prevStates[(int)pad] & bi) != 0) {
+			isInput = true;
+		}
+	}
+	return isInput;
+}
+
 void Input::Init()
 {
 	InitPadDictionary();// パッドの辞書配列の初期化
@@ -30,6 +66,15 @@ void Input::Init()
 	for (int i = 0; i < (int)Pad::NUM; i++)
 		prevStates[i] = currentStates[i] = 0;
 
+}
+
+void Input::RegisterButton(std::string action, int button)
+{
+	std::vector<std::string> tempvec;
+	tempvec.push_back(action);
+	tempvec.push_back(std::to_string(button));
+	buttonName.push_back(tempvec);
+	tempvec.clear();
 }
 
 // 最新の入力状況に更新する処理。
@@ -45,79 +90,80 @@ void Input::Update()
 	for (int i = 0; i < (int)Pad::NUM; i++)
 		GetJoypadXInputState(padDic[i], &stickInput[i]);//パットのスティック状態を取得するための再読み込み
 
-	prevMouseX = mouseX;
-	prevMouseY = mouseY;//前一フレームのマウス座標を取得
-	GetMousePoint(&mouseX, &mouseY);//今のマウスの座標を取得
-	prevMouseInput = mouseInput;//前一フレームのマウス入力状態を記録
-	mouseInput = GetMouseInput();//今のマウス入力を取得
+	//prevMouseX = mouseX;
+	//prevMouseY = mouseY;//前一フレームのマウス座標を取得
+	//GetMousePoint(&mouseX, &mouseY);//今のマウスの座標を取得
+	//prevMouseInput = mouseInput;//前一フレームのマウス入力状態を記録
+	//mouseInput = GetMouseInput();//今のマウス入力を取得
 }
 
 // ボタンが押されているか？
-bool Input::GetButton(Pad pad, int buttonId)
+bool Input::GetButton(Pad pad, std::string action)
 {
 	if (pad == Pad::None) return false; // Noneなら判別不要
 	else if (pad == Pad::All) // All指定の時は全てのパッド
 	{    // GetButtonの中でGetButtonを呼ぶ【再起呼出し】テクニック
 		for (int i = 0; i < (int)Pad::NUM; i++)
-			if (GetButton((Pad)i, buttonId))
+			if (GetButton((Pad)i, action))
 				return true; //押されているPadを発見！
 		return false; // 一つも押されていなかった
 	}
 	// 今ボタンが押されているかどうかを返却
-	return (currentStates[(int)pad] & buttonId) != 0;
+
+	return isCurrentPressed(pad,action);
 }
 
 // ボタンが押された瞬間か？
-bool Input::GetButtonDown(Pad pad, int buttonId)
+bool Input::GetButtonDown(Pad pad, std::string action)
 {
 	if (pad == Pad::None) return false; // Noneなら判別不要
 	else if (pad == Pad::All) // All指定の時は全てのパッド
 	{    // 再起呼出しテクニック
 		for (int i = 0; i < (int)Pad::NUM; i++)
-			if (GetButtonDown((Pad)i, buttonId))
+			if (GetButtonDown((Pad)i, action))
 				return true; //押されているPadを発見！
 		return false; // 一つも押されていなかった
 	}
 	// 今は押されていて、かつ1フレーム前は押されていない場合はtrueを返却
-	return ((currentStates[(int)pad] & buttonId) & ~(prevStates[(int)pad] & buttonId)) != 0;
+	return ((isCurrentPressed(pad,action)) & !(isPreviousPressed(pad,action)));
 }
 
 // ボタンが離された瞬間か？
-bool Input::GetButtonUp(Pad pad, int buttonId)
+bool Input::GetButtonUp(Pad pad, std::string action)
 {
 	if (pad == Pad::None) return false; // Noneなら判別不要
 	else if (pad == Pad::All) // All指定の時は全てのパッド
 	{    // 再起呼出しテクニック
 		for (int i = 0; i < (int)Pad::NUM; i++)
-			if (GetButtonUp((Pad)i, buttonId))
+			if (GetButtonUp((Pad)i, action))
 				return true; //押されているPadを発見！
 		return false; // 一つも押されていなかった
 	}
 	// 1フレーム前は押されていて、かつ今は押されている場合はtrueを返却
-	return ((prevStates[(int)pad] & buttonId) & ~(currentStates[(int)pad] & buttonId)) != 0;
+	return ((isPreviousPressed(pad, action)) & !(isCurrentPressed(pad, action)));
 }
-
-bool Input::IsMouseMoving()
-{
-	return ((prevMouseX != mouseX) && (prevMouseY != mouseY));//動いてるならTrueを返す
-}
-
-bool Input::IsRStickMoving(Pad pad)
-{
-	return((stickInput[(int)pad].ThumbRX != 0) && (stickInput[(int)pad].ThumbRY != 0));//動いてるならTrueを返す
-}
-
-bool Input::GetMouse(int button)
-{
-	return(mouseInput & button);//押されるとTrue返す
-}
-
-bool Input::GetMouseDown(int button)
-{
-	return((mouseInput & button) & ~(prevMouseInput & button)) != 0;//押す瞬間True返す
-}
-
-bool Input::GetMouseUp(int button)
-{
-	return((prevMouseInput & button) & ~(mouseInput & button)) != 0;//放す瞬間True返す
-}
+//
+//bool Input::IsMouseMoving()
+//{
+//	return ((prevMouseX != mouseX) && (prevMouseY != mouseY));//動いてるならTrueを返す
+//}
+//
+//bool Input::IsRStickMoving(Pad pad)
+//{
+//	return((stickInput[(int)pad].ThumbRX != 0) && (stickInput[(int)pad].ThumbRY != 0));//動いてるならTrueを返す
+//}
+//
+//bool Input::GetMouse(int button)
+//{
+//	return(mouseInput & button);//押されるとTrue返す
+//}
+//
+//bool Input::GetMouseDown(int button)
+//{
+//	return((mouseInput & button) & ~(prevMouseInput & button)) != 0;//押す瞬間True返す
+//}
+//
+//bool Input::GetMouseUp(int button)
+//{
+//	return((prevMouseInput & button) & ~(mouseInput & button)) != 0;//放す瞬間True返す
+//}

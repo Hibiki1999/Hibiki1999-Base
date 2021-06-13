@@ -37,7 +37,7 @@ public:
 	//死亡する
 	void die();
 	//衝突しているか？
-	bool is_collide(const std::shared_ptr<GameObject> other) ;
+	bool is_collide(const std::shared_ptr<GameObject> other);
 	//死亡しているか？
 	bool is_dead() const;
 	//名前を取得
@@ -52,9 +52,11 @@ public:
 	Vec3 velocity() const;
 	//衝突判定データを取得
 	SphereCollision collider();
-
+	//壁の衝突判定
 	void WallCollide();
-
+	//重力
+	void gravity();
+	
 	//コピー禁止
 	GameObject(const GameObject& other) = delete;
 	GameObject& operator = (const GameObject& other) = delete;
@@ -71,15 +73,29 @@ protected:
 	Vec3 velocity_{ 0.0f,0.0f,0.0f };
 	//衝突判定が有効か?
 	bool enable_collider_{ true };
+	bool enable_wall_collider_{ false };
 	//衝突判定
 	SphereCollision collider_;
 	CubeCollision cube_collider_;
 	//死亡フラグ
 	bool dead_{ false };
+	//ジャンプ
+	void Jump(float jumpPower);
+	//重力に適用するか
+	bool enable_gravity_{ true };
+	//重力
+	float gravity_power_{ -3.1f };
+	//重力の強さ
+	float max_gravity_power_ = -30.0f;
+	//空中にいるのか？
+	bool isAir();
 
 private:
 
 	GameManager& gm = GameManager::GetInstance();
+
+	Vec3 gravity_velocity{ 0.0f,0.0f,0.0f };
+
 };
 
 #endif // !GAMEOBJECT_H_

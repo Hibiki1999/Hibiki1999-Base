@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include <algorithm>
 
 void GameObject::update()
 {
@@ -78,14 +79,51 @@ SphereCollision GameObject::collider()
 
 void GameObject::WallCollide()
 {
-	cube_collider_.transform(transform_.position());
-	Vec3 pos = transform_.position();
-	if (velocity_.z != 0) {
-		transform_.position(cube_collider_.IsFrontWall(gm.map_, pos));
+	//壁の当たり判定があれば
+	if (enable_wall_collider_) {
+		//オブジェクトの当たり判定位置更新
+		cube_collider_.transform(transform_.position());
+		//オブジェクトの位置を取得
+		Vec3 pos = transform_.position();
+		if (velocity_.z != 0) {
+			//z軸移動中だったら、移動してない時の処理を減らすため
+			transform_.position(cube_collider_.IsZWall(gm.map_, pos));
+		}
+		if (velocity_.x != 0) {
+			//x軸移動中だったら、移動してない時の処理を減らすため
+			transform_.position(cube_collider_.IsXWall(gm.map_, pos));
+		}
 	}
-	if (velocity_.x != 0) {
-		transform_.position(cube_collider_.IsLeftWall(gm.map_, pos));
+}
+
+void GameObject::gravity()
+{
+	if (enable_gravity_) {
+		if (transform_.position().y > 0) {
+			gravity_velocity.y += gravity_power_;
+			//重力の大きさを制限
+			gravity_velocity.y = min(max(gravity_velocity.y, max_gravity_power_), 600);
+		}
+		Vec3 position = transform_.position();
+		position += gravity_velocity;
+		transform_.position(position);
+		if (transform_.position().y < 0.0f) {
+			//0以下にならないように
+			gravity_velocity.y = 0;
+			Vec3 currentPos = transform_.position();
+			currentPos.y = 0;
+			transform_.position(currentPos);
+		}
 	}
-	//transform_.position(cube_collider_.IsBackWall(gm.map_, pos));
-	//transform_.position(cube_collider_.IsRightWall(gm.map_, pos));
+}
+
+void GameObject::Jump(float jumpPower)
+{
+	gravity_velocity.y = jumpPower;
+
+}
+
+bool GameObject::isAir()
+{
+	return (gravity_velocity.y != 0);
 }

@@ -13,7 +13,7 @@ void Ending::Init()
 
 void Ending::Update()
 {
-	if (Input::GetButtonDown(Pad::All, PAD_INPUT_1)) Game::ChangeScene(m_game->m_title);
+	//if (Input::GetButtonDown(Pad::All, PAD_INPUT_1)) Game::ChangeScene(m_game->m_title);
 }
 
 void Ending::Draw()

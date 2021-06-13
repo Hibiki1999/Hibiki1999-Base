@@ -15,6 +15,7 @@ void GameObjectManager::update()
 {
 	for (auto go : game_object_) {
 		go->update();
+		go->gravity();
 		go->WallCollide();
 	}
 }

@@ -36,6 +36,8 @@ public:
 
 private:
 	GameManager& gm = GameManager::GetInstance();
+
+	void RegisterButton();
 };
 #endif // !GAME_H_
 

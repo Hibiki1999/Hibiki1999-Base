@@ -4,6 +4,11 @@
 #include "../../Parent/GameObject.h"
 #include "../../../Library/Animation/Animation.h"	
 
+enum Anim {
+	Walk,
+	Idle,
+};
+
 class Player:public GameObject
 {
 public:
@@ -17,11 +22,6 @@ public:
 
 private:
 
-	enum Anim {
-		Walk,
-		Idle,
-	};
-
 	Anim animState = Idle;
 
 	Animation anim = Animation(Image::ModelHandle);
@@ -29,6 +29,10 @@ private:
 	void AnimUpdate();
 
 	void InputHandle();
+
+	Vec3 gravitypower={ 0.0f,-6.0f,0.0f };
+	float maxgravpower = -30.0f;
+	float jumppower = 60.0f;
 
 };
 #endif // !PLAYER_H_

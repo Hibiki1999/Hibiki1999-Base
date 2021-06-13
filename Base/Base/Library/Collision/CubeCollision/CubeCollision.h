@@ -19,10 +19,8 @@ public:
 
 	Vec3 GetScale();
 
-	Vec3 IsFrontWall(std::shared_ptr<Map> map, Vec3& position);
-	Vec3 IsBackWall(std::shared_ptr<Map> map, Vec3& position);
-	Vec3 IsLeftWall(std::shared_ptr<Map> map, Vec3& position);
-	Vec3 IsRightWall(std::shared_ptr<Map> map, Vec3& position);
+	Vec3 IsZWall(std::shared_ptr<Map> map, Vec3& position);
+	Vec3 IsXWall(std::shared_ptr<Map> map, Vec3& position);
 private:
 
 	float model_width_{ 0.0f };

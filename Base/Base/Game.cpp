@@ -14,6 +14,7 @@ Game::Game()
 	m_title = new Title(this);
 	m_play = new Playing(this);
 	m_ending = new Ending(this);
+	RegisterButton();
 }
 
 void Game::Init()
@@ -54,4 +55,39 @@ void Game::ChangeScene(Scene* scene)//シーンを変えるときに、他所に呼ばれる
 {
 	scenes = scene;//呼ばれ先の次のシーンを定義
 	scenes->Init();//読み込まれるシーンの初期化
+}
+
+void Game::RegisterButton()
+{
+	/*
+	* 
+	||===================================================================||
+	||使えるボタン													     ||
+	||PAD_INPUT_DOWN　	// ↓チェックマスク(下キー or テンキーの２キー)  ||
+	||PAD_INPUT_LEFT　	// ←チェックマスク(左キー or テンキーの４キー)  ||
+	||PAD_INPUT_RIGHT　	// →チェックマスク(右キー or テンキーの６キー)  ||
+	||PAD_INPUT_UP　	// ↑チェックマスク(上キー or テンキーの８キー)  ||
+	||PAD_INPUT_1　	    // 1ボタンチェックマスク(Ｚキー)				 ||
+	||PAD_INPUT_2　	    // 2ボタンチェックマスク(Ｘキー)				 ||
+	||PAD_INPUT_3　	    // 3ボタンチェックマスク(Ｃキー)				 ||
+	||PAD_INPUT_4　	    // 4ボタンチェックマスク(Ａキー)				 ||
+	||PAD_INPUT_5　	    // 5ボタンチェックマスク(Ｓキー)				 ||
+	||PAD_INPUT_6　	    // 6ボタンチェックマスク(Ｄキー)				 ||
+	||PAD_INPUT_7　	    // 7ボタンチェックマスク(Ｑキー)				 ||
+	||PAD_INPUT_8　	    // 8ボタンチェックマスク(Ｗキー)				 ||
+	||PAD_INPUT_9　	    // 9ボタンチェックマスク(ＥＳＣキー)			 ||
+	||PAD_INPUT_10　	// 10ボタンチェックマスク(スペースキー)			 ||
+	||===================================================================||
+	*
+	*/
+
+	Input::RegisterButton("Forward", PAD_INPUT_UP);
+	Input::RegisterButton("Forward", PAD_INPUT_8);
+	Input::RegisterButton("Backward", PAD_INPUT_DOWN);
+	Input::RegisterButton("Backward", PAD_INPUT_5);
+	Input::RegisterButton("ToLeft", PAD_INPUT_LEFT);
+	Input::RegisterButton("ToLeft", PAD_INPUT_4);
+	Input::RegisterButton("ToRight", PAD_INPUT_RIGHT);
+	Input::RegisterButton("ToRight", PAD_INPUT_6);
+	Input::RegisterButton("Jump", PAD_INPUT_10);
 }
