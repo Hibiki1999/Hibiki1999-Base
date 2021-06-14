@@ -2,14 +2,15 @@
 #define PLAYER_H_
 
 #include "../../Parent/GameObject.h"
-#include "../../../Library/Animation/Animation.h"	
+#include "../../../Library/Animation/Animation.h"
+#include "../../../Library/StateMachine/StateMachine.h"
 
 enum Anim {
 	Walk,
 	Idle,
 };
 
-class Player:public GameObject
+class Player :public GameObject
 {
 public:
 	Player(const Vec3 position);
@@ -20,19 +21,27 @@ public:
 
 	virtual void react(std::shared_ptr<GameObject> other)override;
 
+	//animStateMachinenÇÃä÷êî====================
+
+	int anim_state();
+
+	void set_anim(int anim);
+
+	StateMachine<Player>* get_anim_state_machine() const;
+
+	Animation* animclass();
+
+	//===========================================
+
 private:
 
-	Anim animState = Idle;
+	StateMachine<Player>* anim_state_machine_;
 
 	Animation anim = Animation(Image::ModelHandle);
 
-	void AnimUpdate();
+	int anim_state_ = -1;
 
 	void InputHandle();
-
-	Vec3 gravitypower={ 0.0f,-6.0f,0.0f };
-	float maxgravpower = -30.0f;
-	float jumppower = 60.0f;
 
 };
 #endif // !PLAYER_H_

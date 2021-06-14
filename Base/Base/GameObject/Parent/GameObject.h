@@ -56,7 +56,9 @@ public:
 	void WallCollide();
 	//重力
 	void gravity();
-	
+	//発射する物の重力
+	void projectile_gravity();
+
 	//コピー禁止
 	GameObject(const GameObject& other) = delete;
 	GameObject& operator = (const GameObject& other) = delete;

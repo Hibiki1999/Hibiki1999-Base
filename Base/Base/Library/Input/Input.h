@@ -60,6 +60,11 @@ public:
 	//static bool GetMouseUp(int button);//マウス放す瞬間
 
 private:
+	enum
+	{
+		ButtonAction,
+		ButtonId,
+	};
 	// ゲームパッドのナンバー
 	static XINPUT_STATE stickInput[4];
 

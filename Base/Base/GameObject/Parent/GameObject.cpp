@@ -1,5 +1,8 @@
 #include "GameObject.h"
 #include <algorithm>
+#include <string>
+
+#include "../../Library/MyMath/MyMath.h"
 
 void GameObject::update()
 {
@@ -98,11 +101,13 @@ void GameObject::WallCollide()
 
 void GameObject::gravity()
 {
+	printfDx(std::to_string(gravity_velocity.y).c_str());
+	printfDx("\n");
 	if (enable_gravity_) {
 		if (transform_.position().y > 0) {
 			gravity_velocity.y += gravity_power_;
 			//重力の大きさを制限
-			gravity_velocity.y = min(max(gravity_velocity.y, max_gravity_power_), 600);
+			gravity_velocity.y = MyMath::clamp(gravity_velocity.y, max_gravity_power_, 600.0f);
 		}
 		Vec3 position = transform_.position();
 		position += gravity_velocity;
@@ -114,6 +119,16 @@ void GameObject::gravity()
 			currentPos.y = 0;
 			transform_.position(currentPos);
 		}
+	}
+}
+
+void GameObject::projectile_gravity()
+{
+	//重力あるのみ実行
+	if (enable_gravity_) {
+		//重力二つあるためこちを代用
+		velocity_.y -= gravity_power_;
+		velocity_.y = MyMath::clamp(velocity_.y, max_gravity_power_, 600.0f);
 	}
 }
 

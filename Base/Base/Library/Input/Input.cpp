@@ -28,8 +28,8 @@ bool Input::isCurrentPressed(Pad pad, std::string action)
 {
 	std::vector<int> buttonId;
 	for (int i = 0; i < buttonName.size(); i++) {
-		if (buttonName[i][0] == action) {
-			buttonId.push_back(std::stoi(buttonName[i][1]));
+		if (buttonName[i][ButtonAction] == action) {
+			buttonId.push_back(std::stoi(buttonName[i][ButtonId]));
 		}
 	}
 	bool isInput = false;
@@ -45,8 +45,8 @@ bool Input::isPreviousPressed(Pad pad, std::string action)
 {
 	std::vector<int> buttonId;
 	for (int i = 0; i < buttonName.size(); i++) {
-		if (buttonName[i][0] == action) {
-			buttonId.push_back(std::stoi(buttonName[i][1]));
+		if (buttonName[i][ButtonAction] == action) {
+			buttonId.push_back(std::stoi(buttonName[i][ButtonId]));
 		}
 	}
 	bool isInput = false;

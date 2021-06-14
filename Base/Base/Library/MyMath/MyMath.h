@@ -21,8 +21,10 @@ public:
 
 	static const float Deg2Rad;//=PI/2;
 
-
 	static float Square(float a);
+
+	template <class T>
+	static T clamp(T v, T min, T max);
 
 	/// <summary>
 	/// 円と円が重なっているかを調べる
@@ -100,3 +102,10 @@ public:
 }; // 【注意】セミコロン抜けで【宣言が必要ですエラー】
 
 #endif // 【宣言が必要ですエラーは上のセミコロン抜け】
+
+template<class T>
+inline T MyMath::clamp(T v, T min, T max)
+{
+	return	v = min(max(v, min), max);
+}
+//gravity_velocity.y = min(max(gravity_velocity.y, max_gravity_power_), 600);

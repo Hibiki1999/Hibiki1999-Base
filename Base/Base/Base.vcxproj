@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Child\Player\AnimStateMachine\IdleAnim\IdleAnim.cpp" />
     <ClCompile Include="Library\Collision\CubeCollision\CubeCollision.cpp" />
     <ClCompile Include="Library\Animation\Animation.cpp" />
     <ClCompile Include="GameObject\Child\Enemy\Enemy.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Library\MyDraw\MyDraw.cpp" />
     <ClCompile Include="GameObject\Child\Player\Player.cpp" />
     <ClCompile Include="Library\Transform\Quaternion\Quaternion.cpp" />
+    <ClCompile Include="Library\StateMachine\MessageDispatcher\MessageDispatcher.cpp" />
     <ClCompile Include="Resource\Map\Map.cpp" />
     <ClCompile Include="Resource\Sound\BGM_Object\BGM_Object.cpp" />
     <ClCompile Include="Library\Camera\Camera.cpp" />
@@ -176,18 +178,24 @@
     <ClCompile Include="Scene\Child\Title\Title.cpp" />
     <ClCompile Include="Resource\Sound\Sound.cpp" />
     <ClCompile Include="Resource\Sound\SoundEffect_Object\SoundEffectObject.cpp" />
+    <ClCompile Include="GameObject\Child\Player\AnimStateMachine\WalkAnim\WalkAnim.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Child\Player\AnimStateMachine\IdleAnim\IdleAnim.h" />
     <ClInclude Include="Library\Collision\CubeCollision\CubeCollision.h" />
     <ClInclude Include="Library\Animation\Animation.h" />
     <ClInclude Include="GameObject\Child\Enemy\Enemy.h" />
     <ClInclude Include="Library\GameManager\GameObjectManeger\GameObjectManager.h" />
     <ClInclude Include="Library\Collision\SphereCollision\SphereCollision.h" />
+    <ClInclude Include="Library\StateMachine\State.h" />
+    <ClInclude Include="Library\StateMachine\StateMachine.h" />
+    <ClInclude Include="Library\StateMachine\Telegram\Telegram.h" />
     <ClInclude Include="Library\Transform\Quaternion\Quaternion.h" />
     <ClInclude Include="Library\Transform\Transform.h" />
     <ClInclude Include="Library\Transform\Vec3\Vec3.h" />
     <ClInclude Include="Library\MyDraw\MyDraw.h" />
     <ClInclude Include="GameObject\Child\Player\Player.h" />
+    <ClInclude Include="Library\StateMachine\MessageDispatcher\MessageDispatcher.h" />
     <ClInclude Include="Resource\Sound\BGM_Object\BGM_Object.h" />
     <ClInclude Include="GameObject\Parent\GameObject.h" />
     <ClInclude Include="Library\Camera\Camera.h" />
@@ -213,6 +221,7 @@
     <ClInclude Include="Scene\Child\Title\Title.h" />
     <ClInclude Include="Resource\Sound\Sound.h" />
     <ClInclude Include="Resource\Sound\SoundEffect_Object\SoundEffectObject.h" />
+    <ClInclude Include="GameObject\Child\Player\AnimStateMachine\WalkAnim\WalkAnim.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
