@@ -26,8 +26,8 @@ void Player::update()
 void Player::draw() const
 {
 	MyDraw::Draw3DModel(Image::ModelHandle, transform());
-	collider_.draw(GetColor(0, 0, 255), GetColor(0, 0, 255));
-	cube_collider_.draw();
+	//collider_.draw(GetColor(0, 0, 255), GetColor(0, 0, 255));
+	//cube_collider_.draw();
 }
 
 void Player::react(std::shared_ptr<GameObject> other)

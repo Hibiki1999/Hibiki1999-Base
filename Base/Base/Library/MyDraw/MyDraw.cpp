@@ -36,19 +36,20 @@ int MyDraw::Draw3DModel(int Model, Transform transform_)
 
 void MyDraw::DrawDivRotaDivBoxF3D(float xf, float yf, float zf, double ExRate, Vec3 Angle, DivImage& divImage, int id, int TransFlag, int ReverseXFlag, int ReverseYFlag, int ReverseZFlag)
 {
+	float imageWidth = (float)divImage.XSize * (float)ExRate;
+	float imageHeight = (float)divImage.YSize * (float)ExRate;
 
-	int imageWidth = divImage.XSize;
-	int imageHeight = divImage.YSize;
-	
+	float adjust_y_ = (((float)ExRate - 1.0f) * 16.0f);
+
 	//ƒTƒCƒRƒ‚Ì6–Ê‚ğ•`‚­
-	DrawDivRotaGraphF3D(Plane::Y, xf, yf - (imageHeight / 2), zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
-	DrawDivRotaGraphF3D(Plane::Y, xf, yf + (imageHeight / 2), zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::Y, xf, yf - (imageHeight / 2) + adjust_y_, zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::Y, xf, yf + (imageHeight / 2) + adjust_y_, zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
 	// X•ûŒü‚Ì— ‘¤‚Í¶‰E”½“]
-	DrawDivRotaGraphF3D(Plane::X, xf - (imageWidth / 2), yf, zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, !ReverseZFlag);
-	DrawDivRotaGraphF3D(Plane::X, xf + (imageWidth / 2), yf, zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
-	DrawDivRotaGraphF3D(Plane::Z, xf, yf, zf - (imageHeight / 2), ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::X, xf - (imageWidth / 2), yf + adjust_y_, zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, !ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::X, xf + (imageWidth / 2), yf + adjust_y_, zf, ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::Z, xf, yf + adjust_y_, zf - (imageHeight / 2), ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
 	// Z•ûŒü‚Ì— ‘¤‚Í¶‰E”½“]
-	DrawDivRotaGraphF3D(Plane::Z, xf, yf, zf + (imageHeight / 2), ExRate, Angle, divImage, id, TransFlag, !ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	DrawDivRotaGraphF3D(Plane::Z, xf, yf + adjust_y_, zf + (imageHeight / 2), ExRate, Angle, divImage, id, TransFlag, !ReverseXFlag, ReverseYFlag, ReverseZFlag);
 	//return;
 }
 
@@ -103,7 +104,7 @@ int MyDraw::DrawDivRotaGraphF3D(Plane plane, float xf, float yf, float zf, doubl
 		if (plane == Plane::Y) halfHeight = -halfHeight;
 	}
 
-   // šCG‚ÌyÅ¬’PˆÊ‚ÍOŠpŒ`z2D‚Íƒhƒbƒg‚ÌW‡‚Å•`‚­‚ªyCG‚ÍOŠpŒ`‚ÌW‡‚Å•`‚­z
+	// šCG‚ÌyÅ¬’PˆÊ‚ÍOŠpŒ`z2D‚Íƒhƒbƒg‚ÌW‡‚Å•`‚­‚ªyCG‚ÍOŠpŒ`‚ÌW‡‚Å•`‚­z
 	VERTEX_3D Vertex[6]; // ƒ|ƒŠƒSƒ“‚Q–‡‚È‚Ì‚ÅA’¸“_‚Í‚UŒÂ(OŠp3“_~2)
 
 	// š’¸“_î•ñ‚ÌƒZƒbƒg

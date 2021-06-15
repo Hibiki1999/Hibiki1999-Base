@@ -165,9 +165,9 @@ void Map::DrawTerrain()
 				id = terrain[cellY][cellX];//二次元配列のデータを保存
 			}
 			if (0 <= id && id < Image::mapChip.AllNum) {
-				MyDraw::DrawDivRotaFloorF3D(Plane::Y, x, 0, y, 1.0f, 0, Image::mapChip, id);
+				MyDraw::DrawDivRotaFloorF3D(Plane::Y, x, 0, y,2.0, 0, Image::mapChip, id);
 				if (id == 0) {
-					MyDraw::DrawDivRotaDivBoxF3D(x, -0, y, 1, MyDraw::VGet(0, 0, 0), Image::mapChip, id);
+					MyDraw::DrawDivRotaDivBoxF3D(x, -0, y, 2.0, MyDraw::VGet(0, 0, 0), Image::mapChip, id);
 				}
 			}
 

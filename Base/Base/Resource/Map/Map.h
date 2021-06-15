@@ -53,7 +53,7 @@ public:
 	CsvInt terrain;
 	CsvInt enemyData;
 
-	const int CellSize = 32;
+	const int CellSize = 64;
 
 private:
 

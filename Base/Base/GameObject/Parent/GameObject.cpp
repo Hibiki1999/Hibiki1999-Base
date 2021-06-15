@@ -101,8 +101,6 @@ void GameObject::WallCollide()
 
 void GameObject::gravity()
 {
-	printfDx(std::to_string(gravity_velocity.y).c_str());
-	printfDx("\n");
 	if (enable_gravity_) {
 		if (transform_.position().y > 0) {
 			gravity_velocity.y += gravity_power_;
