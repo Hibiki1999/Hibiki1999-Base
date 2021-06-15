@@ -50,7 +50,7 @@ void MyDraw::DrawDivRotaDivBoxF3D(float xf, float yf, float zf, double ExRate, V
 	DrawDivRotaGraphF3D(Plane::Z, xf, yf + adjust_y_, zf - (imageHeight / 2), ExRate, Angle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
 	// Zï˚å¸ÇÃó†ë§ÇÕç∂âEîΩì]
 	DrawDivRotaGraphF3D(Plane::Z, xf, yf + adjust_y_, zf + (imageHeight / 2), ExRate, Angle, divImage, id, TransFlag, !ReverseXFlag, ReverseYFlag, ReverseZFlag);
-	//return;
+	return;
 }
 
 int MyDraw::DrawDivRotaGraphF3D(Plane plane, float xf, float yf, float zf, double ExRate, Vec3 Angle, DivImage& divImage, int id, int TransFlag, int ReverseXFlag, int ReverseYFlag, int ReverseZFlag)

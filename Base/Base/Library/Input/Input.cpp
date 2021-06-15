@@ -110,8 +110,24 @@ bool Input::GetButton(Pad pad, std::string action)
 	}
 	// 今ボタンが押されているかどうかを返却
 
-	return isCurrentPressed(pad,action);
+	return isCurrentPressed(pad, action);
 }
+
+// ボタンが押されているか？
+bool Input::GetButton(Pad pad, int buttonId)
+{
+	if (pad == Pad::None) return false; // Noneなら判別不要
+	else if (pad == Pad::All) // All指定の時は全てのパッド
+	{    // GetButtonの中でGetButtonを呼ぶ【再起呼出し】テクニック
+		for (int i = 0; i < (int)Pad::NUM; i++)
+			if (GetButton((Pad)i, buttonId))
+				return true; //押されているPadを発見！
+		return false; // 一つも押されていなかった
+	}
+	// 今ボタンが押されているかどうかを返却
+	return (currentStates[(int)pad] & buttonId) != 0;
+}
+
 
 // ボタンが押された瞬間か？
 bool Input::GetButtonDown(Pad pad, std::string action)
@@ -125,7 +141,22 @@ bool Input::GetButtonDown(Pad pad, std::string action)
 		return false; // 一つも押されていなかった
 	}
 	// 今は押されていて、かつ1フレーム前は押されていない場合はtrueを返却
-	return ((isCurrentPressed(pad,action)) & !(isPreviousPressed(pad,action)));
+	return ((isCurrentPressed(pad, action)) & !(isPreviousPressed(pad, action)));
+}
+
+// ボタンが押された瞬間か？
+bool Input::GetButtonDown(Pad pad, int buttonId)
+{
+	if (pad == Pad::None) return false; // Noneなら判別不要
+	else if (pad == Pad::All) // All指定の時は全てのパッド
+	{    // 再起呼出しテクニック
+		for (int i = 0; i < (int)Pad::NUM; i++)
+			if (GetButtonDown((Pad)i, buttonId))
+				return true; //押されているPadを発見！
+		return false; // 一つも押されていなかった
+	}
+	// 今は押されていて、かつ1フレーム前は押されていない場合はtrueを返却
+	return ((currentStates[(int)pad] & buttonId) & ~(prevStates[(int)pad] & buttonId)) != 0;
 }
 
 // ボタンが離された瞬間か？
@@ -142,6 +173,22 @@ bool Input::GetButtonUp(Pad pad, std::string action)
 	// 1フレーム前は押されていて、かつ今は押されている場合はtrueを返却
 	return ((isPreviousPressed(pad, action)) & !(isCurrentPressed(pad, action)));
 }
+
+// ボタンが離された瞬間か？
+bool Input::GetButtonUp(Pad pad, int buttonId)
+{
+	if (pad == Pad::None) return false; // Noneなら判別不要
+	else if (pad == Pad::All) // All指定の時は全てのパッド
+	{    // 再起呼出しテクニック
+		for (int i = 0; i < (int)Pad::NUM; i++)
+			if (GetButtonUp((Pad)i, buttonId))
+				return true; //押されているPadを発見！
+		return false; // 一つも押されていなかった
+	}
+	// 1フレーム前は押されていて、かつ今は押されている場合はtrueを返却
+	return ((prevStates[(int)pad] & buttonId) & ~(currentStates[(int)pad] & buttonId)) != 0;
+}
+
 //
 //bool Input::IsMouseMoving()
 //{
