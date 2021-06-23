@@ -2,7 +2,9 @@
 #define TRANSFORM_H_
 
 #include "Vec3/Vec3.h"
+#include "Vec2/Vec2.h"
 #include "Quaternion/Quaternion.h"
+#include "../MyMath/MyMath.h"
 
 class Transform
 {
@@ -40,6 +42,65 @@ public:
 	void scale(const Vec3& scale)
 	{
 		scale_ = scale;
+	}
+
+	Vec3 front(Quaternion quart, float dis = 1.0f)
+	{
+		quart.yaw += 180;
+		Vec2 a = Vec2(
+			std::sin(quart.yaw * MyMath::Deg2Rad), std::cos(quart.yaw * MyMath::Deg2Rad));
+		Vec3 b;
+		b.x = a.x;
+		b.y = 0.0f;
+		b.z = a.y;
+
+		b *= dis;
+		b += position_;
+		return b;
+	}
+
+	Vec3 left(Quaternion quart, float dis = 1.0f)
+	{
+		quart.yaw += 90;
+		Vec2 a = Vec2(
+			std::sin(quart.yaw * MyMath::Deg2Rad), std::cos(quart.yaw * MyMath::Deg2Rad));
+		Vec3 b;
+		b.x = a.x;
+		b.y = 0.0f;
+		b.z = a.y;
+
+		b *= dis;
+		b += position_;
+		return b;
+	}
+
+	Vec3 right(Quaternion quart, float dis = 1.0f)
+	{
+		quart.yaw += 270;
+		Vec2 a = Vec2(
+			std::sin(quart.yaw * MyMath::Deg2Rad), std::cos(quart.yaw * MyMath::Deg2Rad));
+		Vec3 b;
+		b.x = a.x;
+		b.y = 0.0f;
+		b.z = a.y;
+
+		b *= dis;
+		b += position_;
+		return b;
+	}
+
+	Vec3 back(Quaternion quart, float dis = 1.0f)
+	{
+		Vec2 a = Vec2(
+			std::sin(quart.yaw * MyMath::Deg2Rad), std::cos(quart.yaw * MyMath::Deg2Rad));
+		Vec3 b;
+		b.x = a.x;
+		b.y = 0.0f;
+		b.z = a.y;
+
+		b *= dis;
+		b += position_;
+		return b;
 	}
 
 private:

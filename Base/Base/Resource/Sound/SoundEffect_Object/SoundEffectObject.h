@@ -1,27 +1,25 @@
 #ifndef SOUND_EFFECT_OBJECT_H_
 #define SOUND_EFFECT_OBJECT_H_
 
-#include "../Sound.h"
-#include "../../../Library/GameManager/GameManager.h"
+#include <string>
+#include <DxLib.h>
 
 class SoundEffectObject
 {
 public:
-	SoundEffectObject(std::string _SoundEffect, int Volume, int playType = DX_PLAYTYPE_BACK)
-	{
-		_Handle = LoadSoundMem(_SoundEffect.c_str());
-		ChangeVolumeSoundMem(Volume, _Handle);
-		PlaySoundMem(_Handle, playType);
-	};
+	SoundEffectObject(std::string _SoundEffect, int Volume, int playType = DX_PLAYTYPE_BACK);
+
 	~SoundEffectObject() {};
 
 	void Update();
 
 	bool isDead = false;
-private:
-	GameManager& gm = GameManager::GetInstance();
 
-	int _Handle;
+	std::string tag = "";
+private:
+
+
+	int _Handle = -1;
 };
 
 

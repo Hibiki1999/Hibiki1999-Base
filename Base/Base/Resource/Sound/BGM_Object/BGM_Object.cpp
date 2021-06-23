@@ -1,15 +1,20 @@
 #include "BGM_Object.h"
 
+#include <DxLib.h>
+#include <assert.h>
+
 void BGM_Object::PlayBGM1(std::string _BGM, int volume)
 {
 	if (_BGM1Name != _BGM)
 	{
 		_BGM1Name = _BGM;
 		DeleteSoundMem(_BGM1);
+		_BGM1 = -1;
 	}
 	else return;
 	std::string ads = "ResourceFile/SoundFile/BGM/" + _BGM1Name;
 	_BGM1 = LoadSoundMem(ads.c_str());
+	assert(_BGM1 != -1);
 	_BGM1Volume = volume;
 	_BGM1FadeOutVolume = volume;
 	ChangeVolumeSoundMem(_BGM1Volume, _BGM1);
@@ -67,10 +72,12 @@ void BGM_Object::PlayBGM2(std::string _BGM, int volume)
 	{
 		_BGM2Name = _BGM;
 		DeleteSoundMem(_BGM2);
+		_BGM2 = -1;
 	}
 	else return;
 	std::string ads = "ResourceFile/SoundFile/BGM/" + _BGM2Name;
 	_BGM2 = LoadSoundMem(ads.c_str());
+	assert(_BGM2 != -1);
 	_BGM2Volume = volume;
 	_BGM2FadeOutVolume = volume;
 	ChangeVolumeSoundMem(_BGM2Volume, _BGM2);
@@ -144,7 +151,9 @@ inline void BGM_Object::ForBgm1FadeOutChange()
 	else
 	{
 		DeleteSoundMem(_BGM1);
+		_BGM1 = -1;
 		std::string ads = "ResourceFile/SoundFile/BGM/" + _BGM1Name;
+		assert(_BGM1 != -1);
 		_BGM1 = LoadSoundMem(ads.c_str());
 		_BGM1FadeOutVolume = _BGM1Volume;
 		ChangeVolumeSoundMem(_BGM1Volume, _BGM1);
@@ -164,7 +173,9 @@ inline void BGM_Object::ForBgm2FadeOutChange()
 	else
 	{
 		DeleteSoundMem(_BGM2);
+		_BGM2 = -1;
 		std::string ads = "ResourceFile/SoundFile/BGM/" + _BGM2Name;
+		assert(_BGM2 != -1);
 		_BGM2 = LoadSoundMem(ads.c_str());
 		_BGM2FadeOutVolume = _BGM2Volume;
 		ChangeVolumeSoundMem(_BGM2Volume, _BGM2);

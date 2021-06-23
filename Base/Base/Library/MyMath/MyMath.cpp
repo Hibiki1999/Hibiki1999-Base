@@ -7,6 +7,8 @@ const float MyMath::PI = 3.14159265359f;
 
 const float MyMath::Deg2Rad = PI / 180;
 
+const float MyMath::Rad2Deg = 180 / PI;
+
 // 【ルールとして.hでfloatなどstatic小数などの初期化許さなかった理由】
 // 一言
 // 以下を一言でまとめると「.hヘッダはマシン環境によって変わるようなことは記述できない」
@@ -19,5 +21,5 @@ const float MyMath::Deg2Rad = PI / 180;
 
 float MyMath::Square(float a)
 {
-	return (float)std::pow(a,2);
+	return (float)std::pow(a, 2);
 }

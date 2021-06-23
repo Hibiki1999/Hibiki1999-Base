@@ -13,7 +13,7 @@
 //class Explosion;
 class GameObjectManager;
 class BGM_Object;
-class SoundEffectObject;
+class SoundEffectManager;
 class Camera;
 class Map;
 
@@ -24,7 +24,7 @@ public:
 
 	std::shared_ptr<BGM_Object> bgm{ nullptr };
 
-	std::vector < std::shared_ptr<SoundEffectObject>> soundEffects;
+	std::shared_ptr<SoundEffectManager> soundEffects;
 
 	std::shared_ptr<GameObjectManager> game_object_manager_;
 

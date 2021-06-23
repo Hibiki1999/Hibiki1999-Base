@@ -20,6 +20,7 @@ SphereCollision SphereCollision::transform(const Vec3& position, float _radius)
 	this->position = position;
 	this->center = position;
 	this->center.y += radius;
+	this->radius = radius;
 	return SphereCollision{ this->radius = radius,this->position };
 }
 

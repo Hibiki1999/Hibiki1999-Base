@@ -3,7 +3,7 @@
 #include "Scene/Child/Playing/Playing.h"
 #include "Scene/Child/Ending/Ending.h"
 #include "Resource/Sound/BGM_Object/BGM_Object.h"
-#include "Resource/Sound/SoundEffect_Object/SoundEffectObject.h"
+#include "Resource/Sound/SoundEffectManager.h"
 #include "Library/GameManager/GameObjectManeger/GameObjectManager.h"
 
 Scene* scenes;
@@ -24,26 +24,18 @@ void Game::Init()
 	Image::Init();//画像を読み込む
 	gm.bgm = std::make_shared<BGM_Object>();
 	gm.game_object_manager_ = std::make_shared<GameObjectManager>();
+	gm.soundEffects = std::make_shared<SoundEffectManager>();
 	MyDraw::InitMyDraw();
-#ifdef _DEBUG
-
-	Sound::Init();//デバグ時のみ音源のパスを確認する
-
-#endif // _DEBUG
 	Game::ChangeScene(m_title);
 }
 
 void Game::Update()
 {
-	if (gm.bgm != nullptr)	gm.bgm->Update();
 	Input::Update();
+	gm.soundEffects->update();
 	scenes->Update();//読み込まれるシーンの毎秒60回更新
-	for (const auto& se : gm.soundEffects)
-	{
-		se->Update();
-	}
-	gm.EraseRemoveIf(gm.soundEffects, [](std::shared_ptr<SoundEffectObject>& ptr) {return ptr->isDead; });
-
+	gm.bgm->Update();
+	gm.soundEffects->remove();
 }
 
 void Game::Draw()
@@ -60,7 +52,7 @@ void Game::ChangeScene(Scene* scene)//シーンを変えるときに、他所に呼ばれる
 void Game::RegisterButton()
 {
 	/*
-	* 
+	*
 	||===================================================================||
 	||使えるボタン													     ||
 	||PAD_INPUT_DOWN　	// ↓チェックマスク(下キー or テンキーの２キー)  ||

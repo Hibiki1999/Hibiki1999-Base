@@ -4,6 +4,8 @@
 #include <cmath>
 #include <DxLib.h>
 
+#include "../../MyMath/MyMath.h"
+
 struct Vec3
 {
 	float x = 0.0f;
@@ -58,6 +60,14 @@ struct Vec3
 		return *this;
 	}
 
+	Vec3& operator *=(Vec3 s) // •¡‡‘ã“ü‰‰Z *=
+	{
+		x *= s.x;
+		y *= s.y;
+		z *= s.z;
+		return *this;
+	}
+
 	Vec3& operator /=(float s) // •¡‡‘ã“ü‰‰Z /=
 	{
 		if (s != 0)
@@ -106,7 +116,7 @@ struct Vec3
 
 	float Length() const
 	{
-		return sqrt(LengthSq());
+		return std::sqrt(LengthSq());
 	}
 
 	float dot(const Vec3& other)const
@@ -141,7 +151,7 @@ struct Vec3
 	float AngleForXZ()
 	{
 		float rad = (float)std::atan2((float)x, (float)z);
-		float deg = rad * (180.0f / 3.1415f);
+		float deg = rad * MyMath::Rad2Deg;
 
 		return deg + 180.0f;
 	}

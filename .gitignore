@@ -33,7 +33,9 @@
 *.fbx
 *.fbm
 *.mv1
-Base/Base/x64/Debug/input.obj.enc
+*.blend1
+*.blend
+Base/Base/x64/Debug/
 Base/Base/x64/
 Base/Debug/
 Base/x64/

@@ -1,8 +1,6 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include "Telegram/Telegram.h"
-
 template <class T>
 class State
 {

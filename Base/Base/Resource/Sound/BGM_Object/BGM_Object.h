@@ -1,8 +1,7 @@
 #ifndef BGM_OBJECT_H_
 #define BGM_OBJECT_H_
 
-#include "../Sound.h"
-#include "../../../Library/GameManager/GameManager.h"
+#include <string>
 
 class BGM_Object
 {
@@ -29,7 +28,6 @@ public:
 	void Update();
 
 private:
-	GameManager& gm = GameManager::GetInstance();
 
 	enum Bool
 	{

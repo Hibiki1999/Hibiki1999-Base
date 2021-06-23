@@ -5,7 +5,6 @@
 
 #include "Scene/Parent/Scene.h"
 #include "Resource/Image/Image.h"
-#include "Resource/Sound/Sound.h"
 #include "Library/Input/Input.h"
 #include "Library/MyRandom/MyRandom.h"
 #include "Library/GameManager/GameManager.h"
