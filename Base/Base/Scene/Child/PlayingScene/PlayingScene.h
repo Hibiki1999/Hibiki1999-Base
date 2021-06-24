@@ -1,5 +1,5 @@
-#ifndef PLAYING_H_
-#define PLAYING_H_
+#ifndef PLAYING_SCENE_H_
+#define PLAYING_SCENE_H_
 
 #include "../../Parent/Scene.h"
 #include <DxLib.h>
@@ -9,14 +9,13 @@
 #include <algorithm>
 #include <memory>
 
-class Game;
 
-class Playing :public Scene
+class PlayingScene :public Scene
 {
 public:
-	Playing(Game* game);
+	PlayingScene();
 
-	~Playing() {};
+	~PlayingScene() {};
 
 	void Init() override;
 
@@ -24,11 +23,10 @@ public:
 
 	void Draw() override;
 
-	GameManager& gm = GameManager::GetInstance();
 
 private:
+	GameManager&  gm = GameManager::GetInstance();
 
-	Game* m_game;
 };
 #endif
 

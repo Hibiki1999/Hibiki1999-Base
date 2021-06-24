@@ -1,8 +1,6 @@
 #ifndef SCENE_H_
 #define SCENE_H_
 
-#include <stdio.h>
-
 class Scene
 {
 public:
@@ -16,6 +14,9 @@ public:
 
 	//更新したシーンを描画
 	virtual void Draw() = 0;
+
+	//シーンの終了処理
+	virtual void Finalize() {}
 };
 
 #endif // !SCENE_H_

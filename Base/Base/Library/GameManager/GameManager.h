@@ -16,6 +16,7 @@ class BGM_Object;
 class SoundEffectManager;
 class Camera;
 class Map;
+class DataSave;
 
 class GameManager :public Singleton<GameManager>
 {
@@ -32,17 +33,7 @@ public:
 
 	std::shared_ptr<Map> map_{ nullptr };
 
-	/*std::shared_ptr<Map> map{ nullptr };
-
-	std::shared_ptr<Player> player{ nullptr };
-
-	std::vector<std::shared_ptr < PlayerBullet >> playerbullets;
-
-	std::vector<std::shared_ptr < Enemy >> enemies;
-
-	std::vector<std::shared_ptr <EnemyBullet>> enemyBullets;
-
-	std::vector<std::shared_ptr <Explosion>> explosions;*/
+	std::shared_ptr<DataSave> data_save_{ nullptr };
 
 	// ★削除処理を共通テンプレート関数にする
   // [共通テンプレート関数]https://programming-place.net/ppp/contents/cpp/language/009.html#function_template

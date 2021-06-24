@@ -1,4 +1,4 @@
-#include "Title.h"
+#include "TitleScene.h"
 #include "../../../Game.h"
 #include "../../../Library/DataSave/DataSave.h"
 #include "../../../Library/MyMath/MyMath.h"
@@ -11,21 +11,19 @@
 #include "../../../Library/Camera/Camera.h"
 #include "../../../Resource/Map/Map.h"
 
-Title::Title(Game* game)
+TitleScene::TitleScene()
 {
-	m_game = game;//Œ»‘¶‚ÌGame‚ðƒ^ƒCƒgƒ‹‚É‘ã“ü
 }
 
-void Title::Init()
+void TitleScene::Init()
 {
-	DataSave::Load();
 	gm.camera_ = std::make_shared<Camera>();
 	gm.map_ = std::make_shared<Map>(0, "Stage1");
 	gm.game_object_manager_->add(std::make_shared<Player>(Vec3(100, 0, 100)));
 	//gm.game_object_manager_->add(std::make_shared<Enemy>(Vec3(200,0, 200)));
 }
 
-void Title::Update()
+void TitleScene::Update()
 {
 	//if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))Game::ChangeScene(m_game->m_play);
 	gm.game_object_manager_->update();
@@ -35,7 +33,7 @@ void Title::Update()
 
 }
 
-void Title::Draw()
+void TitleScene::Draw()
 {
 	gm.map_->DrawTerrain();
 	gm.camera_->draw();

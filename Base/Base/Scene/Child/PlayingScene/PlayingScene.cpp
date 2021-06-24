@@ -1,24 +1,23 @@
-#include "Playing.h"
+#include "PlayingScene.h"
 #include "../../../Game.h"
 #include "../../../Resource/Map/Map.h"
 #include "../../../Resource/Sound/SoundEffect_Object/SoundEffectObject.h"
 
-Playing::Playing(Game* game)
+PlayingScene::PlayingScene()
 {
-	m_game = game;
 }
 
-void Playing::Init()
+void PlayingScene::Init()
 {
 
 }
 
-void Playing::Update()
+void PlayingScene::Update()
 {
 	//if (Input::GetButtonDown(Pad::All, PAD_INPUT_1)) Game::ChangeScene(m_game->m_ending);
 }
 
-void Playing::Draw()
+void PlayingScene::Draw()
 {
 	DrawString(0, 0, "Playシーン。ZキーでEndingシーンに移る。", GetColor(255, 255, 255));
 }

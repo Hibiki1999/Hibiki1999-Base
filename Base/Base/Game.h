@@ -1,17 +1,8 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include <DxLib.h>
-
-#include "Scene/Parent/Scene.h"
-#include "Resource/Image/Image.h"
-#include "Library/Input/Input.h"
-#include "Library/MyRandom/MyRandom.h"
 #include "Library/GameManager/GameManager.h"
-
-class Title;
-class Play;
-class Ending;
+#include "Scene/SceneManager.h"
 
 class Game
 {
@@ -24,17 +15,9 @@ public:
 
 	void Draw();
 
-	static void ChangeScene(Scene* newScene);
-
-	//’Ç‰Á‚µ‚½ƒV[ƒ“‚Í‚±‚Ì‰º‚É’è‹`
-	Scene* m_title;
-
-	Scene* m_play;
-
-	Scene* m_ending;
-
 private:
 	GameManager& gm = GameManager::GetInstance();
+	SceneManager& sm = SceneManager::GetInstance();
 
 	void RegisterButton();
 };

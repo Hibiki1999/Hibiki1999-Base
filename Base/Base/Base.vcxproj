@@ -170,15 +170,16 @@
     <ClCompile Include="Library\MyMath\MyMath.cpp" />
     <ClCompile Include="Library\MyRandom\MyRandom.cpp" />
     <ClCompile Include="Library\Screen\Screen.cpp" />
-    <ClCompile Include="Scene\Child\Ending\Ending.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Resource\Image\Image.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Scene\Child\Playing\Playing.cpp" />
-    <ClCompile Include="Scene\Child\Title\Title.cpp" />
+    <ClCompile Include="Scene\Child\PlayingScene\PlayingScene.cpp" />
+    <ClCompile Include="Scene\Child\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Resource\Sound\SoundEffectManager.cpp" />
     <ClCompile Include="Resource\Sound\SoundEffect_Object\SoundEffectObject.cpp" />
     <ClCompile Include="GameObject\Child\Player\AnimStateMachine\WalkAnim\WalkAnim.cpp" />
+    <ClCompile Include="Scene\Parent\ParentNull\NullScene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Child\Player\AnimStateMachine\IdleAnim\IdleAnim.h" />
@@ -210,18 +211,19 @@
     <ClInclude Include="Library\NotChangingLibrary\StringDataCSV.h" />
     <ClInclude Include="Library\Transform\Vec2\Vec2.h" />
     <ClInclude Include="Resource\Map\Map.h" />
-    <ClInclude Include="Scene\Child\Ending\Ending.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Resource\Image\Image.h" />
-    <ClInclude Include="Scene\Child\Playing\Playing.h" />
+    <ClInclude Include="Scene\Child\PlayingScene\PlayingScene.h" />
+    <ClInclude Include="Scene\Parent\ParentNull\NullScene.h" />
     <ClInclude Include="Scene\Parent\Scene.h" />
     <ClInclude Include="Library\Screen\Screen.h" />
     <ClInclude Include="Library\NotChangingLibrary\Singleton.h" />
     <ClInclude Include="Library\NotChangingLibrary\Timer.h" />
-    <ClInclude Include="Scene\Child\Title\Title.h" />
+    <ClInclude Include="Scene\Child\TitleScene\TitleScene.h" />
     <ClInclude Include="Resource\Sound\SoundEffectManager.h" />
     <ClInclude Include="Resource\Sound\SoundEffect_Object\SoundEffectObject.h" />
     <ClInclude Include="GameObject\Child\Player\AnimStateMachine\WalkAnim\WalkAnim.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

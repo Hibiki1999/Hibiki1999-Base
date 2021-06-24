@@ -1,19 +1,19 @@
 #include "Game.h"
-#include "Scene/Child/Title/Title.h"
-#include "Scene/Child/Playing/Playing.h"
-#include "Scene/Child/Ending/Ending.h"
+#include "Scene/Child/TitleScene/TitleScene.h"
+#include "Scene/Child/PlayingScene/PlayingScene.h"
 #include "Resource/Sound/BGM_Object/BGM_Object.h"
 #include "Resource/Sound/SoundEffectManager.h"
 #include "Library/GameManager/GameObjectManeger/GameObjectManager.h"
-
-Scene* scenes;
+#include "Library/DataSave/DataSave.h"
+#include "Library/MyRandom/MyRandom.h"
+#include "Library/MyDraw/MyDraw.h"
+#include "Resource/Image/Image.h"
 
 Game::Game()
 {
 	//各シーンを読み込む
-	m_title = new Title(this);
-	m_play = new Playing(this);
-	m_ending = new Ending(this);
+	sm.register_scene("TitleScene", std::make_shared<TitleScene>());
+	sm.register_scene("PlayingScene", std::make_shared<PlayingScene>());
 	RegisterButton();
 }
 
@@ -22,31 +22,26 @@ void Game::Init()
 	Input::Init();//ゲームパットを読み込む
 	MyRandom::Init();//乱数を読み込む
 	Image::Init();//画像を読み込む
+	MyDraw::InitMyDraw();
 	gm.bgm = std::make_shared<BGM_Object>();
 	gm.game_object_manager_ = std::make_shared<GameObjectManager>();
 	gm.soundEffects = std::make_shared<SoundEffectManager>();
-	MyDraw::InitMyDraw();
-	Game::ChangeScene(m_title);
+	gm.data_save_ = std::make_shared<DataSave>();
+	sm.change_scene("TitleScene");
 }
 
 void Game::Update()
 {
 	Input::Update();
 	gm.soundEffects->update();
-	scenes->Update();//読み込まれるシーンの毎秒60回更新
+	sm.update();//読み込まれるシーンの毎秒60回更新
 	gm.bgm->Update();
 	gm.soundEffects->remove();
 }
 
 void Game::Draw()
 {
-	scenes->Draw();//更新したシーンの状況を更新
-}
-
-void Game::ChangeScene(Scene* scene)//シーンを変えるときに、他所に呼ばれる
-{
-	scenes = scene;//呼ばれ先の次のシーンを定義
-	scenes->Init();//読み込まれるシーンの初期化
+	sm.draw();//更新したシーンの状況を更新
 }
 
 void Game::RegisterButton()

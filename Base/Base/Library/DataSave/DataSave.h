@@ -2,6 +2,7 @@
 #define DATASAVE_H_
 
 #include "../NotChangingLibrary/json.hpp"
+#include "../GameManager/GameManager.h"
 #include <fstream>
 #include <iostream>
 
@@ -14,9 +15,12 @@ public:
 	DataSave() {};
 	~DataSave() {};
 
-	static void Save();
+	void Save();
 
-	static void Load();
+	void Load();
+
+private:
+	GameManager& gm = GameManager::GetInstance();
 };
 
 #endif // !DATASAVE_H_

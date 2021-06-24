@@ -1,5 +1,4 @@
 #include "DataSave.h"
-#include "../../Scene/Child/Title/Title.h"
 
 void DataSave::Save()
 {
@@ -9,8 +8,8 @@ void DataSave::Save()
 
 
     //‚±‚±‚Ü‚Å============================
-     std::ofstream outputFile("SaveData/DATA.json");
-     outputFile << j;
+    std::ofstream outputFile("SaveData/DATA.json");
+    outputFile << j;
 }
 
 void DataSave::Load()
