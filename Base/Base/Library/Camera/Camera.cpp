@@ -15,6 +15,8 @@ Camera::~Camera()
 
 void Camera::update()
 {
+	MyDraw::CameraAngleHRotate = GetCameraAngleHRotate();
+
 	//ƒvƒŒƒCƒ„[æ“¾
 	std::shared_ptr<GameObject> player = gm.game_object_manager_->find("Player");
 	if (player != nullptr) {

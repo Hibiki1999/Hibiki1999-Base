@@ -4,6 +4,7 @@
 #include "../../Parent/GameObject.h"
 #include "../../../Library/Animation/Animation.h"
 #include "../../../Library/StateMachine/StateMachine.h"
+#include "../../../Library/GameManager/GameManager.h"
 
 enum Anim {
 	Walk,
@@ -34,6 +35,7 @@ public:
 	//===========================================
 
 private:
+	GameManager& gm = GameManager::GetInstance();
 
 	StateMachine<Player>* anim_state_machine_;
 

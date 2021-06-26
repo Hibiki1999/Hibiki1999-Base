@@ -8,6 +8,7 @@
 #include "Library/MyRandom/MyRandom.h"
 #include "Library/MyDraw/MyDraw.h"
 #include "Resource/Image/Image.h"
+#include "Resource/Effect/Parents/EffectParent.h"
 
 Game::Game()
 {
@@ -37,11 +38,17 @@ void Game::Update()
 	sm.update();//読み込まれるシーンの毎秒60回更新
 	gm.bgm->Update();
 	gm.soundEffects->remove();
+	for (const auto& e : gm.effects) {
+		e->Update();
+	}
 }
 
 void Game::Draw()
 {
 	sm.draw();//更新したシーンの状況を更新
+	for (const auto& e : gm.effects) {
+		e->Draw();
+	}
 }
 
 void Game::RegisterButton()

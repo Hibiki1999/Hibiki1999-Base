@@ -2,6 +2,8 @@
 #include "AnimStateMachine/IdleAnim/IdleAnim.h"
 #include "AnimStateMachine/WalkAnim/WalkAnim.h"
 #include "../../../Library/StateMachine/State.h"
+//#include "../../../Resource/Effect/Parents/EffectParent.h"
+#include "../../../Resource/Effect/Child/Explo/Explo.h"
 
 Player::Player(const Vec3 position)
 {
@@ -16,16 +18,18 @@ Player::Player(const Vec3 position)
 	anim_state_machine_ = new StateMachine<Player>(this);
 	anim_state_machine_->set_current_state(IdleAnim::Instance());
 }
- 
+
 void Player::update()
 {
 	InputHandle();
 	anim_state_machine_->update();
+	if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))gm.effects.push_back(std::make_shared<Explo>(transform_.position()));
 }
 
 void Player::draw() const
 {
 	MyDraw::Draw3DModel(Image::ModelHandle, transform());
+	//MyDraw::DrawPlaneCharaRotaGraphF3D(transform_.position(), 1, 0, Image::Boss, 1);
 	//collider_.draw(GetColor(0, 0, 255), GetColor(0, 0, 255));
 	//cube_collider_.draw();
 }
@@ -53,7 +57,7 @@ StateMachine<Player>* Player::get_anim_state_machine() const
 	return anim_state_machine_;
 }
 
-Animation* Player::animclass() 
+Animation* Player::animclass()
 {
 	return &anim;
 }
@@ -87,7 +91,7 @@ void Player::InputHandle()
 	}
 
 	velocity_ = velocity.Normalized() * 10.0f;
-	
+
 	Vec3 position = transform_.position();
 	position += velocity_;
 	transform_.position(position);

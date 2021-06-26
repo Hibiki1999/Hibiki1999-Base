@@ -7,6 +7,7 @@ Vec3 MyDraw::XYZ_ARROW = VGet(1, -1, 1);
 bool MyDraw::IsReverseX_Texture{ false };
 bool MyDraw::IsReverseY_Texture{ false };
 bool MyDraw::IsReverseZ_Texture{ false };
+float MyDraw::CameraAngleHRotate{ 0.0f };
 
 void MyDraw::InitMyDraw()
 {
@@ -184,6 +185,15 @@ int MyDraw::DrawDivRotaFloorF3D(Plane plane, float xf, float yf, float zf, doubl
 	return DrawDivRotaGraphF3D(plane, xf, yf - imageHeight / 2, zf, ExRate, AngleVec, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
 }
 
+int MyDraw::DrawRotaGraphF3D(Plane plane, float xf, float yf, float zf, double ExRate, Vec3 Angle, int GrHandle, int TransFlag, int ReverseXFlag, int ReverseYFlag, int ReverseZFlag)
+{   // 1~1‚Ì’Pˆê‰æ‘œ‚Æ‚µ‚ÄGrHandle‚ğˆø‚«Œp‚¬
+	int imageWidth, imageHeight;
+	GetGraphSize(GrHandle, &imageWidth, &imageHeight);
+	DivImage divImage{ 1,1,imageWidth,imageHeight };
+	divImage.HandleArray[0] = GrHandle;
+	return DrawDivRotaGraphF3D(plane, xf, yf, zf, ExRate, Angle, divImage, 0, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+}   // «‚·‚®‰º‚Ìdiv‘Î‰”ÅŠÖ”‚Éˆø‚«Œp‚®
+
 Vec3 MyDraw::VGet(float x, float y, float z)
 {   // DXƒ‰ƒCƒuƒ‰ƒŠ‚Ì3D•`‰æÀ•WŒn‚É•ÏŠ·
 	if (XYZ_ARROW.x == 1 && XYZ_ARROW.y == 1 && XYZ_ARROW.z == 1)
@@ -215,4 +225,28 @@ Vec3 MyDraw::VecAngle(Plane plane, double Angle)
 
 	return AngleVec;
 }
+
+void MyDraw::DrawPlaneCharaRotaGraphF3D(Vec3 position, double EXRate, double Angle, int handle, int TransFlag)
+{   // •Û‘¶‚³‚ê‚½”ÂƒLƒƒƒ‰‚ÌŠp“x‚ğg‚¢”Âƒ|ƒŠƒSƒ“‚ªƒJƒƒ‰‚É–Ê‚ğŒü‚¯‚é‚æ‚¤‚É‚·‚é
+	float x = 0.0f;
+	float y = 0.0f;
+	GetGraphSizeF(handle, &x, &y);
+	Vec3 planeCharaAngle = Vec3(0, MyDraw::CameraAngleHRotate, (float)Angle);
+	MyDraw::DrawRotaGraphF3D(Plane::Z, position.x, position.y + (y / 2), position.z, 1, planeCharaAngle, handle, TRUE);
+}
+
+int MyDraw::DrawPlaneDivCharaRotaGraphF3D(Vec3 position, double EXRate, double Angle, DivImage& divImage, int id, int TransFlag, int ReverseXFlag, int ReverseYFlag, int ReverseZFlag)
+{
+	float y = (float)divImage.YSize * EXRate;
+
+	Vec3 planeCharaAngle = Vec3(0, MyDraw::CameraAngleHRotate, (float)Angle);
+	return DrawDivRotaGraphF3D(Plane::Z, position.x, position.y + y / 2.0f, position.z, EXRate, planeCharaAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+}
+
+//int MyDraw::DrawDivRotaGraphF3D(Plane plane, float xf, float yf, float zf, double ExRate, double Angle, DivImage& divImage, int id, int TransFlag, int ReverseXFlag, int ReverseYFlag, int ReverseZFlag)
+//{
+//	Vec3 AngleVec = VecAngle(plane, Angle);
+//	//                                              Šp“x‚¾‚¯«VECTOR‰»
+//	return DrawDivRotaGraphF3D(plane, xf, yf, zf, ExRate, AngleVec, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+//}
 

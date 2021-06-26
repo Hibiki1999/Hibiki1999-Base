@@ -10,6 +10,7 @@
 #include "../../../GameObject/Child/Enemy/Enemy.h"
 #include "../../../Library/Camera/Camera.h"
 #include "../../../Resource/Map/Map.h"
+#include "../../../Resource/Effect/Child/Explo/Explo.h"
 
 TitleScene::TitleScene()
 {
@@ -25,7 +26,7 @@ void TitleScene::Init()
 
 void TitleScene::Update()
 {
-	//if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))Game::ChangeScene(m_game->m_play);
+	
 	gm.game_object_manager_->update();
 	gm.camera_->update();
 	gm.game_object_manager_->collide();

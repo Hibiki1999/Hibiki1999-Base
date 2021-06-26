@@ -28,7 +28,7 @@ public:
 
 		int* ary = HandleArray;
 #ifdef _DEBUG 
-		ImagePowCheck((*this));
+		//ImagePowCheck((*this));
 #endif
 	};
 	~DivImage()
@@ -37,16 +37,16 @@ public:
 			delete[] this->HandleArray;
 	};
 #ifdef _DEBUG 
-	bool is_pow2(unsigned int x) // 2のべき乗か計算
-	{
-		return (x != 0) && (x & (x - 1)) == 0;
-	}
-	void ImagePowCheck(DivImage& divImage)
-	{
-		if (divImage.XSize > 0 && divImage.YSize > 0
-			&& is_pow2(divImage.XSize) && is_pow2(divImage.YSize)) return;
-		else assert("3Dに使うなら2のべき乗の画像サイズにしなきゃ" == "");
-	}
+	//bool is_pow2(unsigned int x) // 2のべき乗か計算
+	//{
+	//	return (x != 0) && (x & (x - 1)) == 0;
+	//}
+	//void ImagePowCheck(DivImage& divImage)
+	//{
+	//	if (divImage.XSize > 0 && divImage.YSize > 0
+	//		&& is_pow2(divImage.XSize) && is_pow2(divImage.YSize)) return;
+	//	else assert("3Dに使うなら2のべき乗の画像サイズにしなきゃ" == "");
+	//}
 #endif
 private:
 	DivImage(const DivImage& divImage) {};
@@ -66,9 +66,12 @@ public:
 	//static int test;
 	
 	static DivImage mapChip;
+	static DivImage Explo;
 	
 	static int ModelHandle;
 	static int sphere;
+
+	static int Boss;
 private:
 
 };

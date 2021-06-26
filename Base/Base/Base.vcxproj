@@ -162,6 +162,8 @@
     <ClCompile Include="GameObject\Child\Player\Player.cpp" />
     <ClCompile Include="Library\Transform\Quaternion\Quaternion.cpp" />
     <ClCompile Include="Library\StateMachine\MessageDispatcher\MessageDispatcher.cpp" />
+    <ClCompile Include="Resource\Effect\Child\Explo\Explo.cpp" />
+    <ClCompile Include="Resource\Effect\Parents\EffectParent.cpp" />
     <ClCompile Include="Resource\Map\Map.cpp" />
     <ClCompile Include="Resource\Sound\BGM_Object\BGM_Object.cpp" />
     <ClCompile Include="Library\Camera\Camera.cpp" />
@@ -197,6 +199,8 @@
     <ClInclude Include="Library\MyDraw\MyDraw.h" />
     <ClInclude Include="GameObject\Child\Player\Player.h" />
     <ClInclude Include="Library\StateMachine\MessageDispatcher\MessageDispatcher.h" />
+    <ClInclude Include="Resource\Effect\Child\Explo\Explo.h" />
+    <ClInclude Include="Resource\Effect\Parents\EffectParent.h" />
     <ClInclude Include="Resource\Sound\BGM_Object\BGM_Object.h" />
     <ClInclude Include="GameObject\Parent\GameObject.h" />
     <ClInclude Include="Library\Camera\Camera.h" />
