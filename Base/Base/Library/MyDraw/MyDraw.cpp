@@ -8,6 +8,7 @@ bool MyDraw::IsReverseX_Texture{ false };
 bool MyDraw::IsReverseY_Texture{ false };
 bool MyDraw::IsReverseZ_Texture{ false };
 float MyDraw::CameraAngleHRotate{ 0.0f };
+Vec3 MyDraw::CameraPos = { 0.0f,0.0f,0.0f };
 
 void MyDraw::InitMyDraw()
 {
@@ -237,16 +238,17 @@ void MyDraw::DrawPlaneCharaRotaGraphF3D(Vec3 position, double EXRate, double Ang
 
 int MyDraw::DrawPlaneDivCharaRotaGraphF3D(Vec3 position, double EXRate, double Angle, DivImage& divImage, int id, int TransFlag, int ReverseXFlag, int ReverseYFlag, int ReverseZFlag)
 {
-	float y = (float)divImage.YSize * EXRate;
-
+	float y = (float)divImage.YSize * (float)EXRate;
+	position.y += (y / 2.0f);
+	Vec3 toCameraAngle = (CameraPos - position).Normalized();
+	//toCameraAngle += 90;
 	Vec3 planeCharaAngle = Vec3(0, MyDraw::CameraAngleHRotate, (float)Angle);
-	return DrawDivRotaGraphF3D(Plane::Z, position.x, position.y + y / 2.0f, position.z, EXRate, planeCharaAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
+	return DrawDivRotaGraphF3D(Plane::Z, position.x, position.y, position.z, EXRate, toCameraAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
 }
 
-//int MyDraw::DrawDivRotaGraphF3D(Plane plane, float xf, float yf, float zf, double ExRate, double Angle, DivImage& divImage, int id, int TransFlag, int ReverseXFlag, int ReverseYFlag, int ReverseZFlag)
-//{
-//	Vec3 AngleVec = VecAngle(plane, Angle);
-//	//                                              äpìxÇæÇØÅ´VECTORâª
-//	return DrawDivRotaGraphF3D(plane, xf, yf, zf, ExRate, AngleVec, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
-//}
-
+int MyDraw::DrawEffect3D(Vec3 pos, float adjustZ, float size, float angle, int handle, int transFlag, int ReverseXFlag, int ReverseYFlag)
+{
+	VECTOR VPos = pos.Conv();
+	VPos.z -= adjustZ;
+	return DrawBillboard3D(VPos, 0.5f, 0.0f, size, angle, handle, transFlag, ReverseXFlag, ReverseYFlag);
+}

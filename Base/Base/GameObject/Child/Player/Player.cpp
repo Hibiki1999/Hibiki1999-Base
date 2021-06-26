@@ -2,7 +2,6 @@
 #include "AnimStateMachine/IdleAnim/IdleAnim.h"
 #include "AnimStateMachine/WalkAnim/WalkAnim.h"
 #include "../../../Library/StateMachine/State.h"
-//#include "../../../Resource/Effect/Parents/EffectParent.h"
 #include "../../../Resource/Effect/Child/Explo/Explo.h"
 
 Player::Player(const Vec3 position)

@@ -24,6 +24,7 @@ public:
 	static bool IsReverseZ_Texture;
 
 	static float CameraAngleHRotate;
+	static Vec3 CameraPos;
 
 	static void InitMyDraw();
 
@@ -48,8 +49,8 @@ public:
 	static void DrawPlaneCharaRotaGraphF3D(Vec3 position, double EXRate, double Angle, int handle, int TransFlag = TRUE);
 	static int DrawPlaneDivCharaRotaGraphF3D(Vec3 position, double EXRate, double Angle, DivImage& divImage, int id, int TransFlag = TRUE, int ReverseXFlag = false, int ReverseYFlag = false, int ReverseZFlag = false);
 
-	// 画像の回転描画( 座標指定が float 版 )【注意！】現状Angle回転機能は未対応
-	//static int DrawDivRotaGraphF3D(Plane plane, float xf, float yf, float zf, double ExRate, double Angle, DivImage& divImage, int id, int TransFlag = TRUE, int ReverseXFlag = FALSE, int ReverseYFlag = FALSE, int ReverseZFlag = FALSE);
+	//エフェクト描画
+	static int DrawEffect3D(Vec3 pos,float adjustZ, float size, float angle, int handle, int transFlag = true, int ReverseXFlag = false, int ReverseYFlag = false);
 
 
 	static Vec3 VGet(float x, float y, float z);

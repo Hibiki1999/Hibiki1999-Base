@@ -15,7 +15,6 @@ Camera::~Camera()
 
 void Camera::update()
 {
-	MyDraw::CameraAngleHRotate = GetCameraAngleHRotate();
 
 	//プレイヤー取得
 	std::shared_ptr<GameObject> player = gm.game_object_manager_->find("Player");
@@ -33,6 +32,8 @@ void Camera::update()
 		//カメラ注視点をプレイヤーにロック
 		look_point_ = lookTarget;
 	}
+	MyDraw::CameraAngleHRotate = GetCameraAngleHRotate();
+	MyDraw::CameraPos = transform_.position();
 }
 
 void Camera::draw() const

@@ -6,7 +6,7 @@ void Explo::Update()
 {
 	int max = Image::Explo.AllNum;
 	count++;
-	if (count == 5) {
+	if (count == 6) {
 		num++;
 		count = 0;
 	}
@@ -17,5 +17,5 @@ void Explo::Update()
 
 void Explo::Draw()
 {
-	MyDraw::DrawPlaneDivCharaRotaGraphF3D(position, 1, 0, Image::Explo, num);
+	MyDraw::DrawEffect3D(position, 80.0f, 256.0f, 0.0f, Image::Explo.HandleArray[num]);
 }
