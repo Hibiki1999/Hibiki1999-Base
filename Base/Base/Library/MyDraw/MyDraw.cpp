@@ -246,9 +246,12 @@ int MyDraw::DrawPlaneDivCharaRotaGraphF3D(Vec3 position, double EXRate, double A
 	return DrawDivRotaGraphF3D(Plane::Z, position.x, position.y, position.z, EXRate, toCameraAngle, divImage, id, TransFlag, ReverseXFlag, ReverseYFlag, ReverseZFlag);
 }
 
-int MyDraw::DrawEffect3D(Vec3 pos, float adjustZ, float size, float angle, int handle, int transFlag, int ReverseXFlag, int ReverseYFlag)
+void MyDraw::DrawEffect3D(Vec3 pos, float adjustZ, float size, float angle, int handle, int transFlag, int ReverseXFlag, int ReverseYFlag)
 {
 	VECTOR VPos = pos.Conv();
 	VPos.z -= adjustZ;
-	return DrawBillboard3D(VPos, 0.5f, 0.0f, size, angle, handle, transFlag, ReverseXFlag, ReverseYFlag);
+	SetUseZBuffer3D(false);
+	SetWriteZBuffer3D(false);
+	 DrawBillboard3D(VPos, 0.5f, 0.0f, size, angle, handle, transFlag, ReverseXFlag, ReverseYFlag);
+	 MyDraw::InitMyDraw();
 }

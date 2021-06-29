@@ -99,7 +99,7 @@ void Map::Scroll(float deltaX, float deltaY, std::shared_ptr<GameObject> baseObj
 				}
 
 				int objectID = -1;
-				if (0 <= mapY && 0 <= mapX && mapY < enemyData.size() && mapX < enemyData[mapY].size())
+				if (0 <= mapY && 0 <= mapX && mapY < (int)enemyData.size() && mapX < (int)enemyData[mapY].size())
 				{
 					objectID = enemyData[mapY][mapX];//データをアクセスできればIDを取得
 					enemyData[mapY][mapX] = -1;//取得済みデータを消す
@@ -160,7 +160,7 @@ void Map::DrawTerrain()
 			float y = (float)(cellY * CellSize) + rotaGraphShiftY;//位置を確定
 
 			int id = -1;
-			if (cellY < terrain.size() && cellX < terrain[cellY].size())//二次元配列範囲内のIDを読み取る
+			if (cellY < (int)terrain.size() && cellX < (int)terrain[cellY].size())//二次元配列範囲内のIDを読み取る
 			{
 				id = terrain[cellY][cellX];//二次元配列のデータを保存
 			}

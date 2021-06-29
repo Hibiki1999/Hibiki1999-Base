@@ -50,7 +50,7 @@ public:
 	static int DrawPlaneDivCharaRotaGraphF3D(Vec3 position, double EXRate, double Angle, DivImage& divImage, int id, int TransFlag = TRUE, int ReverseXFlag = false, int ReverseYFlag = false, int ReverseZFlag = false);
 
 	//エフェクト描画
-	static int DrawEffect3D(Vec3 pos,float adjustZ, float size, float angle, int handle, int transFlag = true, int ReverseXFlag = false, int ReverseYFlag = false);
+	static void DrawEffect3D(Vec3 pos,float adjustZ, float size, float angle, int handle, int transFlag = true, int ReverseXFlag = false, int ReverseYFlag = false);
 
 
 	static Vec3 VGet(float x, float y, float z);
