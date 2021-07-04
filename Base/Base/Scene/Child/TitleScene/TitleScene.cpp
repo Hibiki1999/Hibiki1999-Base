@@ -11,6 +11,8 @@
 #include "../../../Library/Camera/Camera.h"
 #include "../../../Resource/Map/Map.h"
 #include "../../../Resource/Effect/Child/Explo/Explo.h"
+#include "../../../Library/Screen/Screen.h"
+#include "../../../Library/Input/Input.h"
 
 TitleScene::TitleScene()
 {
@@ -26,19 +28,22 @@ void TitleScene::Init()
 
 void TitleScene::Update()
 {
-	
-	gm.game_object_manager_->update();
+	if (gm.input->GetPadDown("TEST")) {
+		num++;
+	}
+	/*gm.game_object_manager_->update();
 	gm.camera_->update();
 	gm.game_object_manager_->collide();
-	gm.game_object_manager_->remove();
+	gm.game_object_manager_->remove();*/
 
 }
 
 void TitleScene::Draw()
 {
-	gm.map_->DrawTerrain();
-	gm.camera_->draw();
-	gm.game_object_manager_->draw();
+	DrawString(10, 10, std::to_string(num).c_str(), GetColor(255, 255, 255));
+	//gm.map_->DrawTerrain();
+	//gm.camera_->draw();
+	//gm.game_object_manager_->draw();
 	//DrawString(0, 0, "Title", GetColor(255, 255, 255));
 	//DrawTriangle3D(
 	//	VGet(0.0f,0.0f, 0.0f),

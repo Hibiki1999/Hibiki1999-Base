@@ -18,6 +18,7 @@ class Camera;
 class Map;
 class DataSave;
 class EffectParent;
+class Input;
 
 class GameManager :public Singleton<GameManager>
 {
@@ -37,6 +38,8 @@ public:
 	std::shared_ptr<DataSave> data_save_{ nullptr };
 
 	std::vector<std::shared_ptr<EffectParent>> effects;
+
+	std::shared_ptr<Input> input{ nullptr };
 
 	// ★削除処理を共通テンプレート関数にする
   // [共通テンプレート関数]https://programming-place.net/ppp/contents/cpp/language/009.html#function_template

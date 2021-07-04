@@ -22,7 +22,7 @@ void Player::update()
 {
 	InputHandle();
 	anim_state_machine_->update();
-	if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))gm.effects.push_back(std::make_shared<Explo>(transform_.position()));
+	//if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))gm.effects.push_back(std::make_shared<Explo>(transform_.position()));
 }
 
 void Player::draw() const
@@ -63,36 +63,36 @@ Animation* Player::animclass()
 
 void Player::InputHandle()
 {
-	Vec3 velocity{ 0.0f,0.0f,0.0f };
-	if (Input::GetButton(Pad::All, "Forward")) {
-		velocity.z = 10.0f;
-		transform_.rotation(Quaternion(0.0f, 180.0f, 0.0f));
-	}
-	if (Input::GetButton(Pad::All, "Backward")) {
-		velocity.z = -10.0f;
-		transform_.rotation(Quaternion(0.0f, 0.0f, 0.0f));
-	}
-	if (Input::GetButton(Pad::All, "ToLeft")) {
-		velocity.x = -10.0f;
-		transform_.rotation(Quaternion(0.0f, 90.0f, 0.0f));
-	}
-	if (Input::GetButton(Pad::All, "ToRight")) {
-		velocity.x = 10.0f;
-		transform_.rotation(Quaternion(0.0f, 270.0f, 0.0f));
-	}
-	if (Input::GetButtonDown(Pad::All, "Jump")) {
-		Jump(40.0f);
-	}
+	//Vec3 velocity{ 0.0f,0.0f,0.0f };
+	//if (Input::GetButton(Pad::All, "Forward")) {
+	//	velocity.z = 10.0f;
+	//	transform_.rotation(Quaternion(0.0f, 180.0f, 0.0f));
+	//}
+	//if (Input::GetButton(Pad::All, "Backward")) {
+	//	velocity.z = -10.0f;
+	//	transform_.rotation(Quaternion(0.0f, 0.0f, 0.0f));
+	//}
+	//if (Input::GetButton(Pad::All, "ToLeft")) {
+	//	velocity.x = -10.0f;
+	//	transform_.rotation(Quaternion(0.0f, 90.0f, 0.0f));
+	//}
+	//if (Input::GetButton(Pad::All, "ToRight")) {
+	//	velocity.x = 10.0f;
+	//	transform_.rotation(Quaternion(0.0f, 270.0f, 0.0f));
+	//}
+	//if (Input::GetButtonDown(Pad::All, "Jump")) {
+	//	Jump(40.0f);
+	//}
 
-	if (velocity.NotZero()) {
-		float angle = velocity.AngleForXZ();
-		transform_.rotation(Quaternion(0, angle, 0));
-	}
+	//if (velocity.NotZero()) {
+	//	float angle = velocity.AngleForXZ();
+	//	transform_.rotation(Quaternion(0, angle, 0));
+	//}
 
-	velocity_ = velocity.Normalized() * 10.0f;
+	//velocity_ = velocity.Normalized() * 10.0f;
 
-	Vec3 position = transform_.position();
-	position += velocity_;
-	transform_.position(position);
+	//Vec3 position = transform_.position();
+	//position += velocity_;
+	//transform_.position(position);
 }
 

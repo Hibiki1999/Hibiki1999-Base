@@ -6,8 +6,7 @@
 
 #include "../../Parent/Scene.h"
 #include "../../../Library/GameManager/GameManager.h"
-#include "../../../Library/Screen/Screen.h"
-#include "../../../Library/Input/Input.h"
+
 
 class TitleScene :public Scene
 {
@@ -24,7 +23,9 @@ public:
 
 
 private:
-	
+
+	int num = 0;
+
 	GameManager& gm = GameManager::GetInstance();
 
 };
