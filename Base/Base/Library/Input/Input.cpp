@@ -1,4 +1,5 @@
 #include "Input.h"
+#include "../Screen/Screen.h"
 
 Input::Input(int pad)
 {
@@ -34,6 +35,23 @@ void Input::Update()
 	mouse_prev_state_ = mouse_current_state_;
 	//¡‚Ìƒ}ƒEƒX“ü—Í‚ğæ“¾
 	mouse_current_state_ = GetMouseInput();
+	if (mouse_current_position_.x < 0) {
+		mouse_current_position_.x = Screen::Width;
+		mouse_previos_position_ = mouse_current_position_;
+	}
+	else if (mouse_current_position_.x > Screen::Width) {
+		mouse_current_position_.x = 0;
+		mouse_previos_position_ = mouse_current_position_;
+	}
+	if (mouse_current_position_.y < 0) {
+		mouse_current_position_.y = Screen::Height;
+		mouse_previos_position_ = mouse_current_position_;
+	}
+	else if (mouse_current_position_.y > Screen::Height) {
+		mouse_current_position_.y = 0;
+		mouse_previos_position_ = mouse_current_position_;
+	}
+	SetMousePoint(mouse_current_position_.x, (int)mouse_current_position_.y);
 }
 
 bool Input::GetInput(std::string ActionName)

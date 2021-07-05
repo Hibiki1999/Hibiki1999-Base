@@ -52,6 +52,8 @@ struct Quaternion
 	Quaternion Normalized() const;
 
 	Quaternion Lerp(const Quaternion& destination, float t);
+
+	
 };
 
 #endif // !QUATERNION_H_

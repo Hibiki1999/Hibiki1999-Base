@@ -4,6 +4,7 @@
 #include "../../../Library/StateMachine/State.h"
 #include "../../../Resource/Effect/Child/Explo/Explo.h"
 #include "../../../Library/Input/Input.h"
+#include "../../../Library/Camera/Camera.h"
 
 Player::Player(const Vec3 position)
 {
@@ -92,6 +93,8 @@ void Player::InputHandle()
 
 	velocity_ = velocity.Normalized() * 10.0f;
 
+
+	//gm.camera_->look_point_ += velocity_;
 	Vec3 position = transform_.position();
 	position += velocity_;
 	transform_.position(position);
