@@ -7,6 +7,8 @@
 #include "../../Parent/Scene.h"
 #include "../../../Library/GameManager/GameManager.h"
 
+#include "../../../Library/Transform/Vec2/Vec2.h"
+	
 
 class TitleScene :public Scene
 {
@@ -23,8 +25,6 @@ public:
 
 
 private:
-
-	int num = 0;
 
 	GameManager& gm = GameManager::GetInstance();
 

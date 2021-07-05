@@ -28,22 +28,19 @@ void TitleScene::Init()
 
 void TitleScene::Update()
 {
-	if (gm.input->GetPadDown("TEST")) {
-		num++;
-	}
-	/*gm.game_object_manager_->update();
+	gm.game_object_manager_->update();
 	gm.camera_->update();
 	gm.game_object_manager_->collide();
-	gm.game_object_manager_->remove();*/
+	gm.game_object_manager_->remove();
 
 }
 
 void TitleScene::Draw()
 {
-	DrawString(10, 10, std::to_string(num).c_str(), GetColor(255, 255, 255));
-	//gm.map_->DrawTerrain();
-	//gm.camera_->draw();
-	//gm.game_object_manager_->draw();
+
+	gm.map_->DrawTerrain();
+	gm.camera_->draw();
+	gm.game_object_manager_->draw();
 	//DrawString(0, 0, "Title", GetColor(255, 255, 255));
 	//DrawTriangle3D(
 	//	VGet(0.0f,0.0f, 0.0f),
