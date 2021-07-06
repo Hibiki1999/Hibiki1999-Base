@@ -23,7 +23,7 @@ private:
 	float angle = 0;
 	float angleY = 0;
 
-	Vec3 euler(Vec3 vec);
+	void FollowCamera(Vec3 targetPos, float targetOffsetHight, float length,Vec3 *CameraPos,Vec3 *CameraLookPosition);
 };
 
 #endif // !CAMERA_H_

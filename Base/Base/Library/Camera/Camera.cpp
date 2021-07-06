@@ -18,31 +18,23 @@ void Camera::update()
 {
 	Vec2 mouseMovement;
 	gm.input->IsMouseMoving(&mouseMovement);
-	angle += mouseMovement.x * MyMath::Deg2Rad;
-	angleY += mouseMovement.y * MyMath::Deg2Rad;
+	angle -= mouseMovement.x * MyMath::Deg2Rad;
+	angleY -= mouseMovement.y * MyMath::Deg2Rad;
+
+	if (angleY > MyMath::PI / 2.3f)angleY = MyMath::PI / 2.3f;
+	else if (angleY < 0)angleY = 0;
 
 	//プレイヤー取得
 	std::shared_ptr<GameObject> player = gm.game_object_manager_->find("Player");
 	if (player != nullptr) {
-		Vec3 playerPosition = player->transform().position();
-		Vec3 cameraOffSet = Vec3(300, 200, 300);
-		Vec3 forward = Vec3(0.0f, 0.0f, 1.0f);
-		playerPosition = (playerPosition + cameraOffSet) + euler(Vec3(angle, angleY, 0)) * forward * 600.0f;
+		Vec3 playerPos = player->transform().position();
+		Vec3 CameraPosition;
+		Vec3 CameraLookAtPosition;
+		FollowCamera(playerPos, 120.0f, 600.0f, &CameraPosition, &CameraLookAtPosition);
 
-		transform_.position(playerPosition);
-		look_point_ = player->transform().position();
-		////プレイヤー位置取得
-		//Vec3 cameraPosition = player->transform().position();
-		////注視点変更しないため他のどころに保存
-		//Vec3 lookTarget = cameraPosition;
-		////プレイヤーの後ろ80px下がる
-		//cameraPosition.z -= 400;
-		//cameraPosition.y += 500;
-		//lookTarget.y += 150;
-		////カメラ座標を導入
-		//transform_.position(cameraPosition);
-		////カメラ注視点をプレイヤーにロック
-		//look_point_ = lookTarget;
+		transform_.position(CameraPosition);
+
+		look_point_ = CameraLookAtPosition;
 	}
 	MyDraw::CameraAngleHRotate = GetCameraAngleHRotate();
 	MyDraw::CameraPos = transform_.position();
@@ -54,18 +46,49 @@ void Camera::draw() const
 	MyDraw::SetCameraPositionAndTarget_UpVecY(transform_.position(), look_point_);
 }
 
-Vec3 Camera::euler(Vec3 vec)
+void Camera::FollowCamera(Vec3 targetPos, float targetOffsetHight, float length, Vec3* CameraPos, Vec3* CameraLookPosition)
 {
-	Vec3 v = vec;
-	float c1 = std::cos(v.x * 0.5f);
-	float c2 = std::cos(v.y * 0.5f);
-	float c3 = std::cos(v.z * 0.5f);
-	float s1 = std::sin(v.x * 0.5f);
-	float s2 = std::sin(v.y * 0.5f);
-	float s3 = std::sin(v.z * 0.5f);
-	float x = s1 * c2 * c3 + c1 * s2 * s3;
-	float y = c1 * s2 * c3 - s1 * c2 * s3;
-	float z = c1 * c2 * s3 - s1 * s2 * c3;
-	//float w = c1 * c2 * c3 + s1 * s2 * s3;
-	return Vec3(x, y, z);
+	Vec3  TempPosition1;
+	Vec3  TempPosition2;
+	Vec3  CameraPosition;
+	Vec3  CameraLookAtPosition;
+
+	CameraLookAtPosition = targetPos;
+	CameraLookAtPosition.y += targetOffsetHight;
+
+	TempPosition1.x = 0.0f;
+	TempPosition1.y = std::sin(angleY) * length;
+	TempPosition1.z = -(std::cos(angleY) * length);
+
+	float SinParam = std::sin(angle);
+	float CosParam = std::cos(angle);
+	TempPosition2.x = CosParam * TempPosition1.x - SinParam * TempPosition1.z;
+	TempPosition2.y = TempPosition1.y;
+	TempPosition2.z = SinParam * TempPosition1.x + CosParam * TempPosition1.z;
+
+	*CameraPos = TempPosition2 + CameraLookAtPosition;
+	*CameraLookPosition = CameraLookAtPosition;
 }
+
+//Vec3 cameraOffset = Vec3(
+//	std::sin(angle) * 600.0f,
+//	600.0f,
+//	std::cos(angle) * 600.0f
+//);
+
+//playerPos += cameraOffset;
+
+//transform_.position(playerPos);
+//look_point_ = player->transform().position();
+//////プレイヤー位置取得
+////Vec3 cameraPosition = player->transform().position();
+//////注視点変更しないため他のどころに保存
+////Vec3 lookTarget = cameraPosition;
+//////プレイヤーの後ろ80px下がる
+////cameraPosition.z -= 400;
+////cameraPosition.y += 500;
+////lookTarget.y += 150;
+//////カメラ座標を導入
+////transform_.position(cameraPosition);
+//////カメラ注視点をプレイヤーにロック
+////look_point_ = lookTarget;
