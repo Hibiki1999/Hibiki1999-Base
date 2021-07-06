@@ -13,11 +13,15 @@ public:
 
 	virtual void draw() const override;
 
-	Vec3 look_point_ = Vec3(0, 0, 0);
+	Vec3 front_vec();
+	Vec3 left_vec();
+	Vec3 front_vec_mute_y();
+	Vec3 left_vec_mute_y();
 private:
 
 	GameManager& gm = GameManager::GetInstance();
 
+	Vec3 look_point_ = Vec3(0, 0, 0);
 	Vec3 camera_location_ = Vec3(0, 0, 0);
 
 	float angle = 0;

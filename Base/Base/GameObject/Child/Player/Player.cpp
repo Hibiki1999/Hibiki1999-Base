@@ -11,6 +11,7 @@ Player::Player(const Vec3 position)
 	this->name_ = "Player";
 	this->tag_ = "PlayerTag";
 	this->enable_wall_collider_ = true;
+	this->enable_gravity_ = false;
 	transform_.position(position);
 	transform_.rotation(Quaternion(0.0f, 180.0f, 0.0f));
 	collider_ = SphereCollision(100.0f);
@@ -66,29 +67,42 @@ Animation* Player::animclass()
 void Player::InputHandle()
 {
 	Vec3 velocity{ 0.0f,0.0f,0.0f };
+	bool isMove = false;
 	if (gm.input->GetInput("Forward")) {
-		velocity.z = 10.0f;
-		transform_.rotation(Quaternion(0.0f, 180.0f, 0.0f));
+		isMove = true;
+		velocity += gm.camera_->front_vec_mute_y();
+		//velocity.z = 10.0f;
+		//transform_.rotation(Quaternion(0.0f, 180.0f, 0.0f));
 	}
 	if (gm.input->GetInput("Backward")) {
-		velocity.z = -10.0f;
-		transform_.rotation(Quaternion(0.0f, 0.0f, 0.0f));
+		isMove = true;
+		velocity += gm.camera_->front_vec_mute_y() * -1.0f;
+		//velocity.z = -10.0f;
+		//transform_.rotation(Quaternion(0.0f, 0.0f, 0.0f));
 	}
 	if (gm.input->GetInput("ToLeft")) {
-		velocity.x = -10.0f;
-		transform_.rotation(Quaternion(0.0f, 90.0f, 0.0f));
+		isMove = true;
+		velocity += gm.camera_->left_vec_mute_y();
+		//velocity.x = -10.0f;
+		//transform_.rotation(Quaternion(0.0f, 90.0f, 0.0f));
 	}
 	if (gm.input->GetInput("ToRight")) {
-		velocity.x = 10.0f;
-		transform_.rotation(Quaternion(0.0f, 270.0f, 0.0f));
-	}
-	if (gm.input->GetInput("Jump")) {
-		Jump(40.0f);
+		isMove = true;
+		velocity += gm.camera_->left_vec_mute_y() * -1.0f;
+		//velocity.x = 10.0f;
+		//transform_.rotation(Quaternion(0.0f, 270.0f, 0.0f));
 	}
 
-	if (velocity.NotZero()) {
-		float angle = velocity.AngleForXZ();
-		transform_.rotation(Quaternion(0, angle, 0));
+
+	float angle = gm.camera_->front_vec_mute_y().AngleForXZ();
+	transform_.rotation(Quaternion(0, angle, 0));
+
+
+	if (gm.input->GetInput("Jump")) {
+		velocity.y = 1.0f;
+	}
+	if (gm.input->GetKey(KEY_INPUT_LSHIFT)) {
+		velocity.y = -1.0f;
 	}
 
 	velocity_ = velocity.Normalized() * 10.0f;

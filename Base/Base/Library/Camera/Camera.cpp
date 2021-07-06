@@ -22,7 +22,7 @@ void Camera::update()
 	angleY -= mouseMovement.y * MyMath::Deg2Rad;
 
 	if (angleY > MyMath::PI / 2.3f)angleY = MyMath::PI / 2.3f;
-	else if (angleY < 0)angleY = 0;
+	else if (angleY < -1.4f)angleY = -1.4f;
 
 	//ƒvƒŒƒCƒ„[Žæ“¾
 	std::shared_ptr<GameObject> player = gm.game_object_manager_->find("Player");
@@ -45,6 +45,46 @@ void Camera::draw() const
 	SetUseLighting(false);
 	MyDraw::SetCameraPositionAndTarget_UpVecY(transform_.position(), look_point_);
 }
+
+Vec3 Camera::front_vec()
+{
+	VECTOR vec = GetCameraFrontVector();
+	Vec3 vvec;
+	vvec.ConvBack(vec);
+	return vvec;
+}
+
+Vec3 Camera::left_vec()
+{
+	VECTOR vec = GetCameraLeftVector();
+	Vec3 vvec;
+	vvec.ConvBack(vec);
+	return vvec;
+}
+
+Vec3 Camera::front_vec_mute_y()
+{
+	float angle = GetCameraAngleHRotate();
+	Vec3 front = Vec3(
+		std::sin(angle),
+		0.0f,
+		std::cos(angle)
+	);
+	return front;
+}
+
+Vec3 Camera::left_vec_mute_y()
+{
+	float angle = GetCameraAngleHRotate();
+	angle -= (MyMath::PI / 2);
+	Vec3 left = Vec3(
+		std::sin(angle),
+		0.0f,
+		std::cos(angle)
+	);
+	return left;
+}
+
 
 void Camera::FollowCamera(Vec3 targetPos, float targetOffsetHight, float length, Vec3* CameraPos, Vec3* CameraLookPosition)
 {
