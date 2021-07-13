@@ -1,5 +1,6 @@
 #include "GameObjectManager.h"
 #include "../../../GameObject/Parent/GameObject.h"
+#include "../../../Resource/Stage/Stage.h"
 
 GameObjectManager::~GameObjectManager()
 {
@@ -15,8 +16,8 @@ void GameObjectManager::update()
 {
 	for (auto go : game_object_) {
 		go->update();
-		go->gravity();
-		go->WallCollide();
+		if (go->is_gravity()) go->gravity();
+		if (go->is_wallcollide()) go->transform().position(gm.stage_->check_colli(go));//左のが3D地形　マップチップ地形は＞go->WallCollide();
 	}
 }
 

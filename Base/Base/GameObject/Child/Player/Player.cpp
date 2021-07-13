@@ -5,13 +5,14 @@
 #include "../../../Resource/Effect/Child/Explo/Explo.h"
 #include "../../../Library/Input/Input.h"
 #include "../../../Library/Camera/Camera.h"
+#include "../../../Resource/Stage/Stage.h"
 
 Player::Player(const Vec3 position)
 {
 	this->name_ = "Player";
 	this->tag_ = "PlayerTag";
 	this->enable_wall_collider_ = true;
-	this->enable_gravity_ = false;
+	this->enable_gravity_ = true;
 	transform_.position(position);
 	transform_.rotation(Quaternion(0.0f, 180.0f, 0.0f));
 	collider_ = SphereCollision(100.0f);
@@ -25,6 +26,8 @@ void Player::update()
 {
 	InputHandle();
 	anim_state_machine_->update();
+	bool fly = velocity_.y > 0.0f ? true : false;
+	//transform_.position(gm.stage_->check_colli(shared_from_this()));
 	//if (Input::GetButtonDown(Pad::All, PAD_INPUT_1))gm.effects.push_back(std::make_shared<Explo>(transform_.position()));
 }
 
@@ -98,14 +101,16 @@ void Player::InputHandle()
 	transform_.rotation(Quaternion(0, angle, 0));
 
 
-	if (gm.input->GetInput("Jump")) {
-		velocity.y = 1.0f;
+	if (gm.input->GetInputDown("Jump")) {
+		Jump(100.0f);
+		//velocity.y++;
 	}
-	if (gm.input->GetKey(KEY_INPUT_LSHIFT)) {
-		velocity.y = -1.0f;
-	}
+	//if (gm.input->GetKey(KEY_INPUT_LSHIFT)) {
 
-	velocity_ = velocity.Normalized() * 10.0f;
+	//	velocity.y--;
+	//}
+
+	velocity_ = velocity.Normalized() * 100.0f;
 
 
 	//gm.camera_->look_point_ += velocity_;

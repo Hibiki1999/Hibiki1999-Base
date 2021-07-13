@@ -182,6 +182,37 @@ struct Vec3
 		z = other.z;
 		return *this;
 	}
+
+#ifdef DX_LIB_H
+	// Vector3からDxLibのVECTORへの変換
+	VECTOR Vec3ToVec()
+	{
+		VECTOR Result;
+		Result.x = this->x;
+		Result.y = this->y;
+		Result.z = this->z;
+		return Result;
+	}
+
+	// 左辺値がDXのVECTOR型のときの=代入対応 VECTOR 左辺 = 右辺 Vector3 の場合の代入
+	inline operator VECTOR() const //左辺値がDXのVECTOR型のときのみという縛りを加えるため constを付けた
+	{
+		VECTOR Result;
+		Result.x = this->x;
+		Result.y = this->y;
+		Result.z = this->z;
+		return Result;
+	}
+
+	// 右辺値がDXのVECTOR型のときの=代入対応 Vector3 左辺 = 右辺 VECTOR の場合の代入
+	Vec3 operator=(const VECTOR& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		this->z = other.z;
+		return *this;
+	}
+#endif
 };
 
 

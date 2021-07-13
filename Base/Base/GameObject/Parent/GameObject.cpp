@@ -80,10 +80,16 @@ SphereCollision GameObject::collider()
 	return collider_.transform(transform_.position(), collider_.GetRadius());
 }
 
+float GameObject::height()
+{
+	float height = cube_collider_.GetScale().y;
+	return height;
+}
+
 void GameObject::WallCollide()
 {
 	//壁の当たり判定があれば
-	if (enable_wall_collider_) {
+	if (enable_wall_collider_ && gm.map_ != nullptr) {
 		//オブジェクトの当たり判定位置更新
 		cube_collider_.transform(transform_.position());
 		//オブジェクトの位置を取得
@@ -103,16 +109,16 @@ void GameObject::gravity()
 {
 	if (enable_gravity_) {
 		if (transform_.position().y > 0) {
-			gravity_velocity.y += gravity_power_;
+			gravity_velocity_.y += gravity_power_;
 			//重力の大きさを制限
-			gravity_velocity.y = MyMath::clamp(gravity_velocity.y, max_gravity_power_, 600.0f);
+			gravity_velocity_.y = MyMath::clamp(gravity_velocity_.y, max_gravity_power_, 600.0f);
 		}
 		Vec3 position = transform_.position();
-		position += gravity_velocity;
+		position += gravity_velocity_;
 		transform_.position(position);
 		if (transform_.position().y < 0.0f) {
 			//0以下にならないように
-			gravity_velocity.y = 0;
+			gravity_velocity_.y = 0;
 			Vec3 currentPos = transform_.position();
 			currentPos.y = 0;
 			transform_.position(currentPos);
@@ -130,13 +136,38 @@ void GameObject::projectile_gravity()
 	}
 }
 
+void GameObject::grounded()
+{
+	gravity_velocity_.y = 0;
+}
+
 void GameObject::Jump(float jumpPower)
 {
-	gravity_velocity.y = jumpPower;
+	gravity_velocity_.y = jumpPower;
 
 }
 
 bool GameObject::isAir()
 {
-	return (gravity_velocity.y != 0);
+	return (gravity_velocity_.y != 0);
+}
+
+Vec3 GameObject::gravity_velo()
+{
+	return gravity_velocity_;
+}
+
+void GameObject::minus_gravity_velo()
+{
+	gravity_velocity_ *= -1;
+}
+
+bool GameObject::is_gravity()
+{
+	return enable_gravity_;
+}
+
+bool GameObject::is_wallcollide()
+{
+	return enable_wall_collider_;
 }

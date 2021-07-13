@@ -10,6 +10,7 @@
 #include "../../../GameObject/Child/Enemy/Enemy.h"
 #include "../../../Library/Camera/Camera.h"
 #include "../../../Resource/Map/Map.h"
+#include "../../../Resource/Stage/Stage.h"
 #include "../../../Resource/Effect/Child/Explo/Explo.h"
 #include "../../../Library/Screen/Screen.h"
 #include "../../../Library/Input/Input.h"
@@ -21,8 +22,9 @@ TitleScene::TitleScene()
 void TitleScene::Init()
 {
 	gm.camera_ = std::make_shared<Camera>();
-	gm.map_ = std::make_shared<Map>(0, "Stage1");
-	gm.game_object_manager_->add(std::make_shared<Player>(Vec3(100, 0, 100)));
+	//gm.map_ = std::make_shared<Map>(0, "Stage1");
+	gm.stage_ = std::make_shared<Stage>("ColTestStage.mqo");
+	gm.game_object_manager_->add(std::make_shared<Player>(Vec3(100, 120, 100)));
 	//gm.game_object_manager_->add(std::make_shared<Enemy>(Vec3(200,0, 200)));
 }
 
@@ -37,8 +39,8 @@ void TitleScene::Update()
 
 void TitleScene::Draw()
 {
-
-	gm.map_->DrawTerrain();
+	/*gm.map_->DrawTerrain();*/
+	gm.stage_->draw();
 	gm.camera_->draw();
 	gm.game_object_manager_->draw();
 	//DrawString(0, 0, "Title", GetColor(255, 255, 255));

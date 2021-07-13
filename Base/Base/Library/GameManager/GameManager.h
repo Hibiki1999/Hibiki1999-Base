@@ -19,6 +19,7 @@ class Map;
 class DataSave;
 class EffectParent;
 class Input;
+class Stage;
 
 class GameManager :public Singleton<GameManager>
 {
@@ -34,6 +35,8 @@ public:
 	std::shared_ptr<Camera> camera_{ nullptr };
 
 	std::shared_ptr<Map> map_{ nullptr };
+
+	std::shared_ptr<Stage> stage_{ nullptr };
 
 	std::shared_ptr<DataSave> data_save_{ nullptr };
 

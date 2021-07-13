@@ -6,6 +6,7 @@
 #include <string>
 #include <memory>
 
+#include "../../GameManager/GameManager.h"
 class GameObject;
 
 class GameObjectManager
@@ -42,6 +43,8 @@ public:
 private:
 	//アクターリスト
 	std::list<std::shared_ptr<GameObject>> game_object_;
+
+	GameManager& gm = GameManager::GetInstance();
 
 };
 #endif // !GAME_OBJECT_MANAGER_H_

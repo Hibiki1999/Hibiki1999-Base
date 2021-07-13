@@ -182,6 +182,7 @@
     <ClCompile Include="GameObject\Child\Player\AnimStateMachine\WalkAnim\WalkAnim.cpp" />
     <ClCompile Include="Scene\Parent\ParentNull\NullScene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Resource\Stage\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Child\Player\AnimStateMachine\IdleAnim\IdleAnim.h" />
@@ -228,6 +229,7 @@
     <ClInclude Include="Resource\Sound\SoundEffect_Object\SoundEffectObject.h" />
     <ClInclude Include="GameObject\Child\Player\AnimStateMachine\WalkAnim\WalkAnim.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Resource\Stage\Stage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

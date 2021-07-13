@@ -51,12 +51,21 @@ public:
 	Vec3 velocity() const;
 	//衝突判定データを取得
 	SphereCollision collider();
+
+	float height();
 	//壁の衝突判定
 	void WallCollide();
 	//重力
 	void gravity();
 	//発射する物の重力
 	void projectile_gravity();
+	void grounded();
+	//空中にいるのか？
+	bool isAir();
+	Vec3 gravity_velo();
+	void minus_gravity_velo();
+	bool is_gravity(); 
+	bool is_wallcollide();
 
 	//コピー禁止
 	GameObject(const GameObject& other) = delete;
@@ -88,14 +97,12 @@ protected:
 	float gravity_power_{ -3.1f };
 	//重力の強さ
 	float max_gravity_power_ = -30.0f;
-	//空中にいるのか？
-	bool isAir();
 
 private:
 
 	GameManager& gm = GameManager::GetInstance();
 
-	Vec3 gravity_velocity{ 0.0f,0.0f,0.0f };
+	Vec3 gravity_velocity_{ 0.0f,0.0f,0.0f };
 
 };
 
