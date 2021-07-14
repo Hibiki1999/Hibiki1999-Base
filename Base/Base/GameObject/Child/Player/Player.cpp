@@ -102,7 +102,7 @@ void Player::InputHandle()
 
 
 	if (gm.input->GetInputDown("Jump")) {
-		Jump(100.0f);
+		Jump(150.0f);
 		//velocity.y++;
 	}
 	//if (gm.input->GetKey(KEY_INPUT_LSHIFT)) {
@@ -110,7 +110,7 @@ void Player::InputHandle()
 	//	velocity.y--;
 	//}
 
-	velocity_ = velocity.Normalized() * 100.0f;
+	velocity_ = velocity.Normalized() * 10.0f;
 
 
 	//gm.camera_->look_point_ += velocity_;

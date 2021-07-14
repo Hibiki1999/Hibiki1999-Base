@@ -23,7 +23,7 @@ void TitleScene::Init()
 {
 	gm.camera_ = std::make_shared<Camera>();
 	//gm.map_ = std::make_shared<Map>(0, "Stage1");
-	gm.stage_ = std::make_shared<Stage>("ColTestStage.mqo");
+	gm.stage_ = std::make_shared<Stage>("1.mv1");
 	gm.game_object_manager_->add(std::make_shared<Player>(Vec3(100, 120, 100)));
 	//gm.game_object_manager_->add(std::make_shared<Enemy>(Vec3(200,0, 200)));
 }
