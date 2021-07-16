@@ -59,12 +59,17 @@ public:
 	void gravity();
 	//発射する物の重力
 	void projectile_gravity();
+	//地面にいるか？
 	void grounded();
 	//空中にいるのか？
 	bool isAir();
+	//今のｙで加速
 	Vec3 gravity_velo();
+	//今のｙを-1を掛ける
 	void minus_gravity_velo();
-	bool is_gravity(); 
+	//重力に影響を受けるかを調べる
+	bool is_gravity();
+	//壁に当たり判定あるかどうか
 	bool is_wallcollide();
 
 	//コピー禁止

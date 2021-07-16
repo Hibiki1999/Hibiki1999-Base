@@ -6,7 +6,7 @@
 #include <string>
 #include <memory>
 
-#include "../../GameManager/GameManager.h"
+#include "..//GameManager.h"
 class GameObject;
 
 class GameObjectManager
