@@ -27,6 +27,7 @@ public:
 private:
 	GameManager& gm = GameManager::GetInstance();
 
+	int i = 0;
 };
 
 #endif // !TITLE_H_

@@ -35,6 +35,11 @@ void TitleScene::Update()
 	gm.game_object_manager_->collide();
 	gm.game_object_manager_->remove();
 
+	if (gm.input->AnyKeyDown()) {
+		i++;
+	}
+
+
 }
 
 void TitleScene::Draw()
@@ -43,7 +48,7 @@ void TitleScene::Draw()
 	gm.stage_->draw();
 	gm.camera_->draw();
 	gm.game_object_manager_->draw();
-	//DrawString(0, 0, "Title", GetColor(255, 255, 255));
+	DrawString(0, 0, std::to_string(i).c_str(), GetColor(255, 255, 255));
 	//DrawTriangle3D(
 	//	VGet(0.0f,0.0f, 0.0f),
 	//	VGet(-200.0f, 200.0f, 0.0f),

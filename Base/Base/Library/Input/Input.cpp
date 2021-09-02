@@ -35,7 +35,7 @@ void Input::Update()
 	mouse_prev_state_ = mouse_current_state_;
 	//今のマウス入力を取得
 	mouse_current_state_ = GetMouseInput();
-	if (mouse_current_position_.x < 0) {
+	/*if (mouse_current_position_.x < 0) {
 		mouse_current_position_.x = Screen::Width;
 		mouse_previos_position_ = mouse_current_position_;
 	}
@@ -51,7 +51,7 @@ void Input::Update()
 		mouse_current_position_.y = 0;
 		mouse_previos_position_ = mouse_current_position_;
 	}
-	SetMousePoint(mouse_current_position_.x, (int)mouse_current_position_.y);
+	SetMousePoint(mouse_current_position_.x, (int)mouse_current_position_.y);*/
 }
 
 bool Input::GetInput(std::string ActionName)
@@ -314,6 +314,57 @@ void Input::RegisterButton(std::string action, int buttonId, int inputType)
 	buttonName.push_back(tempvec);
 	//一時のリストをクリアする
 	tempvec.clear();
+}
+
+void Input::KeepCursorInScreen()
+{
+	if (mouse_current_position_.x < 0) {
+		mouse_current_position_.x = (float)Screen::Width;
+		mouse_previos_position_ = mouse_current_position_;
+	}
+	else if (mouse_current_position_.x > (float)Screen::Width) {
+		mouse_current_position_.x = 0;
+		mouse_previos_position_ = mouse_current_position_;
+	}
+	if (mouse_current_position_.y < 0) {
+		mouse_current_position_.y = (float)Screen::Height;
+		mouse_previos_position_ = mouse_current_position_;
+	}
+	else if (mouse_current_position_.y > (float)Screen::Height) {
+		mouse_current_position_.y = 0;
+		mouse_previos_position_ = mouse_current_position_;
+	}
+	SetMousePoint((int)mouse_current_position_.x, (int)mouse_current_position_.y);
+}
+
+void Input::IsShowCursor(bool b)
+{
+	SetMouseDispFlag(b);
+}
+
+bool Input::AnyKeyDown()
+{
+	bool pad_state_ = false;
+	bool key_state = false;
+	bool mouse_state = false;
+
+	for (int i = 0; i < (int)16; i++) {
+		if (GetPadDown(i) == 1) {
+			pad_state_ = 1;
+			break;
+		}
+	}
+	for (int i = 0; i < (int)256; i++) {
+		if (GetKeyDown(i) == 1) {
+			key_state = 1;
+			break;
+		}
+	}
+	if (mouse_current_state_ & ~mouse_prev_state_) {
+		mouse_state = 1;
+	}
+
+	return key_state || pad_state_ || mouse_state;
 }
 
 std::vector<int> Input::InputIdFromList(std::string action, int inputType)

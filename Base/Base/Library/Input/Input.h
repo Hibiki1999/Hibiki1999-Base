@@ -55,6 +55,12 @@ public:
 	Vec2 GetMousePosition();
 	//ボタンをstringに定義し、簡単で切り替えたりする
 	void RegisterButton(std::string action, int buttonId, int inputType);
+	//マウスを画面ないに固定
+	void KeepCursorInScreen();
+	//マウスを表示するか？
+	void IsShowCursor(bool b);
+	//任意キー
+	bool AnyKeyDown();
 
 private:
 
