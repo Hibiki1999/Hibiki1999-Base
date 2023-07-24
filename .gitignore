@@ -35,6 +35,7 @@
 *.mv1
 *.blend1
 *.blend
+*.zip
 Base/Base/x64/Debug/
 Base/Base/x64/
 Base/Debug/
@@ -45,3 +46,4 @@ Base/Base/Debug/
 Base/Base/Release/
 Base/Base/ResourceFile/SoundFile/SE/
 Base/Base/ResourceFile/SoundFile/BGM/
+Dx12/
