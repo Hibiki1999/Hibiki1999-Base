@@ -11,6 +11,9 @@
 #include <iostream>
 #endif // _DEBUG
 
+const int Window_Width = 1280;
+const int Window_Height = 720;
+
 void DebugOutputFormatString(const char* format, ...) {
 #ifdef _DEBUG
     va_list valist;
@@ -30,47 +33,6 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
     return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-const int Window_Width = 1280;
-const int Window_Height = 720;
-
-#ifdef _DEBUG
-int main() {
-#else
-int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
-#endif // _DEBUG
-    WNDCLASSEX w = {};
-
-    w.cbSize = sizeof(WNDCLASSEX);
-    w.lpfnWndProc = (WNDPROC)WindowProcedure;
-    w.lpszClassName = _T("DX12Sample");
-    w.hInstance = GetModuleHandle(nullptr);
-
-    RegisterClassEx(&w);
-
-    RECT wrc = {0, 0, 1280, 720};
-
-    AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
-
-    HWND hwnd = CreateWindow(w.lpszClassName, _T("DX12TEST"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, wrc.right - wrc.left, wrc.bottom - wrc.top, nullptr, nullptr, w.hInstance, nullptr);
-
-    ShowWindow(hwnd, SW_SHOW);
-
-    MSG msg = {};
-
-    while (true) {
-        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-
-        if (msg.message == WM_QUIT) {
-            break;
-        }
-    }
-
-    UnregisterClass(w.lpszClassName, w.hInstance);
-}
-
 void InitializeDirect3D() {
 
     ID3D12Device* _dev = nullptr;
@@ -78,7 +40,6 @@ void InitializeDirect3D() {
     IDXGIFactory6* _dxgiFactory = nullptr;
     IDXGISwapChain4* _swapchain = nullptr;
 
-#pragma region device
     const std::vector<D3D_FEATURE_LEVEL> levels
     {
         D3D_FEATURE_LEVEL_12_1,
@@ -91,6 +52,7 @@ void InitializeDirect3D() {
 
     std::vector<IDXGIAdapter*> adapters;
     IDXGIAdapter* tmpAdapter = nullptr;
+    auto result = CreateDXGIFactory1(IID_PPV_ARGS(&_dxgiFactory));
     for (auto i = 0; _dxgiFactory->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; ++i) {
         adapters.push_back(tmpAdapter);
     }
@@ -118,13 +80,6 @@ void InitializeDirect3D() {
             }
         }
     }
-#pragma endregion
-
-#pragma region Factory
-    auto result = CreateDXGIFactory1(IID_PPV_ARGS(&_dxgiFactory));
-
-#pragma endregion
-
 
 
     DXGI_SWAP_CHAIN_DESC1 swapchainDesc = {};
@@ -177,3 +132,42 @@ void SpawnDevice(ID3D12Device * _dev, D3D_FEATURE_LEVEL & featureLevel) {
     }
 }
 
+#ifdef _DEBUG
+int main() {
+#else
+int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
+#endif // _DEBUG
+    WNDCLASSEX w = {};
+
+    w.cbSize = sizeof(WNDCLASSEX);
+    w.lpfnWndProc = (WNDPROC)WindowProcedure;
+    w.lpszClassName = _T("DX12Sample");
+    w.hInstance = GetModuleHandle(nullptr);
+
+    InitializeDirect3D();
+
+    RegisterClassEx(&w);
+
+    RECT wrc = {0, 0, 1280, 720};
+
+    AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+
+    HWND hwnd = CreateWindow(w.lpszClassName, _T("DX12TEST"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, wrc.right - wrc.left, wrc.bottom - wrc.top, nullptr, nullptr, w.hInstance, nullptr);
+
+    ShowWindow(hwnd, SW_SHOW);
+
+    MSG msg = {};
+
+    while (true) {
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+
+        if (msg.message == WM_QUIT) {
+            break;
+        }
+    }
+
+    UnregisterClass(w.lpszClassName, w.hInstance);
+}
