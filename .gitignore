@@ -39,4 +39,5 @@
 *.suo
 Base/
 Dx12/Debug
+Dx12/.vs
 Dx12/Dx12/Debug
