@@ -5,14 +5,20 @@
 #include <dxgi1_2.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
+#include <functional>
+#include <iostream>
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #ifdef _DEBUG
 #include <iostream>
 #endif // _DEBUG
 
+using namespace std;
+
 const int Window_Width = 1280;
 const int Window_Height = 720;
+
+#define TEST_FUNTION 0
 
 void DebugOutputFormatString(const char* format, ...) {
 #ifdef _DEBUG
@@ -33,6 +39,31 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
     return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
+void SpawnDevice(ID3D12Device* _dev, D3D_FEATURE_LEVEL& featureLevel) {
+    const std::vector<D3D_FEATURE_LEVEL> levels
+    {
+        D3D_FEATURE_LEVEL_12_1,
+            D3D_FEATURE_LEVEL_12_0,
+            D3D_FEATURE_LEVEL_11_1,
+            D3D_FEATURE_LEVEL_11_0,
+            D3D_FEATURE_LEVEL_10_1,
+            D3D_FEATURE_LEVEL_10_0,
+    };
+
+
+    for (auto lv : levels) {
+        if (D3D12CreateDevice(nullptr, lv, IID_PPV_ARGS(&_dev)) == S_OK) {
+            featureLevel = lv;
+            break;
+        }
+        else {
+            if (lv == levels[levels.size() - 1]) {
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+}
+
 void InitializeDirect3D() {
 
     ID3D12Device* _dev = nullptr;
@@ -43,11 +74,11 @@ void InitializeDirect3D() {
     const std::vector<D3D_FEATURE_LEVEL> levels
     {
         D3D_FEATURE_LEVEL_12_1,
-        D3D_FEATURE_LEVEL_12_0,
-        D3D_FEATURE_LEVEL_11_1,
-        D3D_FEATURE_LEVEL_11_0,
-        D3D_FEATURE_LEVEL_10_1,
-        D3D_FEATURE_LEVEL_10_0,
+            D3D_FEATURE_LEVEL_12_0,
+            D3D_FEATURE_LEVEL_11_1,
+            D3D_FEATURE_LEVEL_11_0,
+            D3D_FEATURE_LEVEL_10_1,
+            D3D_FEATURE_LEVEL_10_0,
     };
 
     std::vector<IDXGIAdapter*> adapters;
@@ -74,13 +105,29 @@ void InitializeDirect3D() {
         if (D3D12CreateDevice(tmpAdapter, lv, IID_PPV_ARGS(&_dev)) == S_OK) {
             featureLevel = lv;
             break;
-        } else {
+        }
+        else {
             if (lv == levels[levels.size() - 1]) {
                 exit(EXIT_FAILURE);
             }
         }
     }
 
+    ID3D12CommandAllocator* _cmdAllocator = nullptr;
+    ID3D12GraphicsCommandList* _cmdList = nullptr;
+    ID3D12CommandQueue* _cmdQueue = nullptr;
+
+    result = _dev->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&_cmdAllocator));
+
+    result = _dev->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocator, nullptr, IID_PPV_ARGS(&_cmdList));
+
+    D3D12_COMMAND_QUEUE_DESC cmdQueueDesc = {};
+    cmdQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE; // タイムアウトなし
+    cmdQueueDesc.NodeMask = 0; // アダプターを一つしか使わない時は0
+    cmdQueueDesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL; // 特に指定なし
+    cmdQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT; // コマンドリストに合わせる
+
+    result = _dev->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(&_cmdQueue));
 
     DXGI_SWAP_CHAIN_DESC1 swapchainDesc = {};
 
@@ -108,30 +155,8 @@ void InitializeDirect3D() {
 
 }
 
-void SpawnDevice(ID3D12Device * _dev, D3D_FEATURE_LEVEL & featureLevel) {
-    const std::vector<D3D_FEATURE_LEVEL> levels
-    {
-        D3D_FEATURE_LEVEL_12_1,
-        D3D_FEATURE_LEVEL_12_0,
-        D3D_FEATURE_LEVEL_11_1,
-        D3D_FEATURE_LEVEL_11_0,
-        D3D_FEATURE_LEVEL_10_1,
-        D3D_FEATURE_LEVEL_10_0,
-    };
 
-
-    for (auto lv : levels) {
-        if (D3D12CreateDevice(nullptr, lv, IID_PPV_ARGS(&_dev)) == S_OK) {
-            featureLevel = lv;
-            break;
-        } else {
-            if (lv == levels[levels.size() - 1]) {
-                exit(EXIT_FAILURE);
-            }
-        }
-    }
-}
-
+#if !TEST_FUNTION
 #ifdef _DEBUG
 int main() {
 #else
@@ -171,3 +196,61 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
 
     UnregisterClass(w.lpszClassName, w.hInstance);
 }
+#endif
+
+#define TEST_FUNC 0
+#define TEST_POINTER 1
+
+#if TEST_FUNTION
+
+void Add(int& a) {
+    ++a;
+}
+
+template<typename T>
+void Print(T s) {
+    cout << s << endl;
+}
+
+int main() {
+#if TEST_FUNC
+    std::vector<std::function<void(void)>> commandList; // コマンドリストを模したもの
+
+    commandList.push_back([]() {
+        cout << "GPU Set RTV-1" << endl; // 命令1
+                          });
+
+    cout << "CPU Set Command-2" << endl;
+
+    commandList.push_back([]() {
+        cout << "GPU Clear RTV-3" << endl; // 命令2
+                          });
+
+    cout << "GPU Clear RTV-4" << endl;
+
+    commandList.push_back([]() {
+        cout << "GPU Close RTV-5" << endl; // 命令3
+                          });
+
+    cout << "GPU Close RTV-6" << endl;
+
+    cout << endl;
+
+    for (auto& cmd : commandList) {
+        cmd();
+    }
+
+    getchar();
+
+    return 0;
+#endif
+
+#if TEST_POINTER
+    int a = 0;
+    Print(a);
+    Add(a);
+    Print(a);
+    return 0;
+#endif
+}
+#endif
