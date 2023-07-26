@@ -39,7 +39,15 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
     return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-void SpawnDevice(ID3D12Device* _dev, D3D_FEATURE_LEVEL& featureLevel) {
+/// <summary>
+/// Create Dx12 device.
+/// </summary>
+/// <param name="tmpAdapter">Dx Adapter (Needed intialize before use.)</param>
+/// <param name="featureLevel">Return level that suitable for created device.(Needed pointer for Out.)</param>
+/// <returns>Created Dx12 device</returns>
+ID3D12Device* CreateD12Device(IDXGIAdapter* tmpAdapter, D3D_FEATURE_LEVEL& featureLevel) {
+    ID3D12Device* device = nullptr;
+
     const std::vector<D3D_FEATURE_LEVEL> levels
     {
         D3D_FEATURE_LEVEL_12_1,
@@ -50,9 +58,8 @@ void SpawnDevice(ID3D12Device* _dev, D3D_FEATURE_LEVEL& featureLevel) {
             D3D_FEATURE_LEVEL_10_0,
     };
 
-
     for (auto lv : levels) {
-        if (D3D12CreateDevice(nullptr, lv, IID_PPV_ARGS(&_dev)) == S_OK) {
+        if (D3D12CreateDevice(tmpAdapter, lv, IID_PPV_ARGS(&device)) == S_OK) {
             featureLevel = lv;
             break;
         }
@@ -62,27 +69,53 @@ void SpawnDevice(ID3D12Device* _dev, D3D_FEATURE_LEVEL& featureLevel) {
             }
         }
     }
+
+    return device;
 }
 
+/// <summary>
+/// Initialize Dx12 for Using.
+/// </summary>
 void InitializeDirect3D() {
+
+
+}
+
+
+
+#if !TEST_FUNTION
+#ifdef _DEBUG
+int main() {
+#else
+int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
+#endif // _DEBUG
+    WNDCLASSEX w = {};
 
     ID3D12Device* _dev = nullptr;
     D3D_FEATURE_LEVEL featureLevel;
     IDXGIFactory6* _dxgiFactory = nullptr;
     IDXGISwapChain4* _swapchain = nullptr;
-
-    const std::vector<D3D_FEATURE_LEVEL> levels
-    {
-        D3D_FEATURE_LEVEL_12_1,
-            D3D_FEATURE_LEVEL_12_0,
-            D3D_FEATURE_LEVEL_11_1,
-            D3D_FEATURE_LEVEL_11_0,
-            D3D_FEATURE_LEVEL_10_1,
-            D3D_FEATURE_LEVEL_10_0,
-    };
-
     std::vector<IDXGIAdapter*> adapters;
     IDXGIAdapter* tmpAdapter = nullptr;
+
+
+    w.cbSize = sizeof(WNDCLASSEX);
+    w.lpfnWndProc = (WNDPROC)WindowProcedure;
+    w.lpszClassName = _T("DX12Sample");
+    w.hInstance = GetModuleHandle(nullptr);
+
+    RegisterClassEx(&w);
+
+    //====================================
+    RECT wrc = {0, 0, 1280, 720};
+
+    AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+
+    HWND hwnd = CreateWindow(w.lpszClassName, _T("DX12TEST"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, wrc.right - wrc.left, wrc.bottom - wrc.top, nullptr, nullptr, w.hInstance, nullptr);
+
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
+    ShowWindow(hwnd, SW_SHOW);
+    //====================================
     auto result = CreateDXGIFactory1(IID_PPV_ARGS(&_dxgiFactory));
     for (auto i = 0; _dxgiFactory->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; ++i) {
         adapters.push_back(tmpAdapter);
@@ -100,18 +133,9 @@ void InitializeDirect3D() {
             break;
         }
     }
+    //====================================
 
-    for (auto lv : levels) {
-        if (D3D12CreateDevice(tmpAdapter, lv, IID_PPV_ARGS(&_dev)) == S_OK) {
-            featureLevel = lv;
-            break;
-        }
-        else {
-            if (lv == levels[levels.size() - 1]) {
-                exit(EXIT_FAILURE);
-            }
-        }
-    }
+    _dev = CreateD12Device(tmpAdapter, featureLevel);
 
     ID3D12CommandAllocator* _cmdAllocator = nullptr;
     ID3D12GraphicsCommandList* _cmdList = nullptr;
@@ -121,6 +145,7 @@ void InitializeDirect3D() {
 
     result = _dev->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocator, nullptr, IID_PPV_ARGS(&_cmdList));
 
+    //====================================
     D3D12_COMMAND_QUEUE_DESC cmdQueueDesc = {};
     cmdQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE; // タイムアウトなし
     cmdQueueDesc.NodeMask = 0; // アダプターを一つしか使わない時は0
@@ -128,6 +153,7 @@ void InitializeDirect3D() {
     cmdQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT; // コマンドリストに合わせる
 
     result = _dev->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(&_cmdQueue));
+    //====================================
 
     DXGI_SWAP_CHAIN_DESC1 swapchainDesc = {};
 
@@ -152,34 +178,36 @@ void InitializeDirect3D() {
     //ウィンドウとフルスクリーン霧か会え可能
     swapchainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
+    result = _dxgiFactory->CreateSwapChainForHwnd(_cmdQueue, hwnd, &swapchainDesc, nullptr, nullptr, (IDXGISwapChain1**)&_swapchain);
+    //====================================
 
-}
+    D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
 
+    heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+    heapDesc.NodeMask = 0;
+    heapDesc.NumDescriptors = 2;
+    heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 
-#if !TEST_FUNTION
-#ifdef _DEBUG
-int main() {
-#else
-int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
-#endif // _DEBUG
-    WNDCLASSEX w = {};
+    ID3D12DescriptorHeap* rtvHeaps = nullptr;
 
-    w.cbSize = sizeof(WNDCLASSEX);
-    w.lpfnWndProc = (WNDPROC)WindowProcedure;
-    w.lpszClassName = _T("DX12Sample");
-    w.hInstance = GetModuleHandle(nullptr);
+    result = _dev->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&rtvHeaps));
+    //====================================
 
-    InitializeDirect3D();
+    DXGI_SWAP_CHAIN_DESC swcDesc = {};
 
-    RegisterClassEx(&w);
+    result = _swapchain->GetDesc(&swcDesc);
 
-    RECT wrc = {0, 0, 1280, 720};
+    std::vector<ID3D12Resource*> _backBuffers(swcDesc.BufferCount);
+    for (int idx = 0; idx < swcDesc.BufferCount; ++idx) {
+        result = _swapchain->GetBuffer(idx, IID_PPV_ARGS(&_backBuffers[idx]));
 
-    AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+        _dev->CreateRenderTargetView(_backBuffers[idx], nullptr, rtvHeaps->GetCPUDescriptorHandleForHeapStart());
 
-    HWND hwnd = CreateWindow(w.lpszClassName, _T("DX12TEST"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, wrc.right - wrc.left, wrc.bottom - wrc.top, nullptr, nullptr, w.hInstance, nullptr);
+        D3D12_CPU_DESCRIPTOR_HANDLE handle = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
+        handle.ptr += idx * _dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-    ShowWindow(hwnd, SW_SHOW);
+        _dev->CreateRenderTargetView(_backBuffers[idx], nullptr, handle);
+    }
 
     MSG msg = {};
 
