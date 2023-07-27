@@ -81,7 +81,12 @@ void InitializeDirect3D() {
 
 }
 
-
+void EnableDebugLayer() {
+    ID3D12Debug* debugLayer = nullptr;
+    auto result = D3D12GetDebugInterface(IID_PPV_ARGS(&debugLayer));
+    debugLayer->EnableDebugLayer();
+    debugLayer->Release();
+}
 
 #if !TEST_FUNTION
 #ifdef _DEBUG
@@ -98,6 +103,9 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
     std::vector<IDXGIAdapter*> adapters;
     IDXGIAdapter* tmpAdapter = nullptr;
 
+    ID3D12CommandAllocator* _cmdAllocator = nullptr;
+    ID3D12GraphicsCommandList* _cmdList = nullptr;
+    ID3D12CommandQueue* _cmdQueue = nullptr;
 
     w.cbSize = sizeof(WNDCLASSEX);
     w.lpfnWndProc = (WNDPROC)WindowProcedure;
@@ -106,17 +114,22 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
 
     RegisterClassEx(&w);
 
-    //====================================
+
     RECT wrc = {0, 0, 1280, 720};
 
     AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 
     HWND hwnd = CreateWindow(w.lpszClassName, _T("DX12TEST"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, wrc.right - wrc.left, wrc.bottom - wrc.top, nullptr, nullptr, w.hInstance, nullptr);
+#ifdef _DEBUG
+    EnableDebugLayer();
+#endif
 
-    ShowWindow(GetConsoleWindow(), SW_HIDE);
-    ShowWindow(hwnd, SW_SHOW);
-    //====================================
+#ifdef _DEBUG
+    auto result = CreateDXGIFactory2(DXGI_CREATE_FACTORY_DEBUG, IID_PPV_ARGS(&_dxgiFactory));
+#else
     auto result = CreateDXGIFactory1(IID_PPV_ARGS(&_dxgiFactory));
+#endif // _DEBUG
+
     for (auto i = 0; _dxgiFactory->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; ++i) {
         adapters.push_back(tmpAdapter);
     }
@@ -133,30 +146,19 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
             break;
         }
     }
-    //====================================
-
     _dev = CreateD12Device(tmpAdapter, featureLevel);
 
-    ID3D12CommandAllocator* _cmdAllocator = nullptr;
-    ID3D12GraphicsCommandList* _cmdList = nullptr;
-    ID3D12CommandQueue* _cmdQueue = nullptr;
-
     result = _dev->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&_cmdAllocator));
-
     result = _dev->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocator, nullptr, IID_PPV_ARGS(&_cmdList));
 
-    //====================================
     D3D12_COMMAND_QUEUE_DESC cmdQueueDesc = {};
     cmdQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE; // タイムアウトなし
     cmdQueueDesc.NodeMask = 0; // アダプターを一つしか使わない時は0
     cmdQueueDesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL; // 特に指定なし
     cmdQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT; // コマンドリストに合わせる
-
     result = _dev->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(&_cmdQueue));
-    //====================================
 
     DXGI_SWAP_CHAIN_DESC1 swapchainDesc = {};
-
     swapchainDesc.Width = Window_Width;
     swapchainDesc.Height = Window_Height;
     swapchainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -165,49 +167,36 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
     swapchainDesc.SampleDesc.Quality = 0;
     swapchainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;
     swapchainDesc.BufferCount = 2;
-
-    //バッグバッファーは伸び縮み可能
-    swapchainDesc.Scaling = DXGI_SCALING_STRETCH;
-
-    //フリップ後は速やかに破棄
-    swapchainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-
-    //特に指定なし
-    swapchainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
-
-    //ウィンドウとフルスクリーン霧か会え可能
-    swapchainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+    swapchainDesc.Scaling = DXGI_SCALING_STRETCH; //バッグバッファーは伸び縮み可能
+    swapchainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;//フリップ後は速やかに破棄
+    swapchainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;//特に指定なし
+    swapchainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;//ウィンドウとフルスクリーン霧か会え可能
 
     result = _dxgiFactory->CreateSwapChainForHwnd(_cmdQueue, hwnd, &swapchainDesc, nullptr, nullptr, (IDXGISwapChain1**)&_swapchain);
-    //====================================
 
     D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
-
     heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
     heapDesc.NodeMask = 0;
     heapDesc.NumDescriptors = 2;
     heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-
     ID3D12DescriptorHeap* rtvHeaps = nullptr;
-
     result = _dev->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&rtvHeaps));
-    //====================================
-
     DXGI_SWAP_CHAIN_DESC swcDesc = {};
-
     result = _swapchain->GetDesc(&swcDesc);
-
     std::vector<ID3D12Resource*> _backBuffers(swcDesc.BufferCount);
+    D3D12_CPU_DESCRIPTOR_HANDLE handle = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
     for (int idx = 0; idx < swcDesc.BufferCount; ++idx) {
         result = _swapchain->GetBuffer(idx, IID_PPV_ARGS(&_backBuffers[idx]));
-
-        _dev->CreateRenderTargetView(_backBuffers[idx], nullptr, rtvHeaps->GetCPUDescriptorHandleForHeapStart());
-
-        D3D12_CPU_DESCRIPTOR_HANDLE handle = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
         handle.ptr += idx * _dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
         _dev->CreateRenderTargetView(_backBuffers[idx], nullptr, handle);
     }
+
+    ID3D12Fence* _fence = nullptr;
+    UINT64 _fenceVal = 0;
+    result = _dev->CreateFence(_fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&_fence));
+
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
+    ShowWindow(hwnd, SW_SHOW);
 
     MSG msg = {};
 
@@ -220,6 +209,51 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
         if (msg.message == WM_QUIT) {
             break;
         }
+
+        auto bbIdx = _swapchain->GetCurrentBackBufferIndex();
+
+        D3D12_RESOURCE_BARRIER BarrierDesc = {};
+        BarrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        BarrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+        BarrierDesc.Transition.pResource = _backBuffers[bbIdx];
+        BarrierDesc.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+        BarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+        BarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+        _cmdList->ResourceBarrier(1, &BarrierDesc);
+
+        auto rtvH = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
+        rtvH.ptr += bbIdx * _dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+        _cmdList->OMSetRenderTargets(1, &rtvH, true, nullptr);
+
+        float clearColor[] = {1.0f,1.0f,0.0f,1.0f};
+        _cmdList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
+
+        BarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+        BarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+        _cmdList->ResourceBarrier(1, &BarrierDesc);
+
+        _cmdList->Close();
+
+        ID3D12CommandList* cmdlists[] = {_cmdList};
+        _cmdQueue->ExecuteCommandLists(1, cmdlists);
+
+        _cmdQueue->Signal(_fence, ++_fenceVal);
+
+        if (_fence->GetCompletedValue() != _fenceVal) {
+            auto event = CreateEvent(nullptr, false, false, nullptr);
+
+            _fence->SetEventOnCompletion(_fenceVal, event);
+
+            WaitForSingleObject(event, INFINITE);
+
+            CloseHandle(event);
+        }
+
+        _cmdAllocator->Reset();
+        _cmdList->Reset(_cmdAllocator, nullptr);
+
+        _swapchain->Present(1, 0);
+
     }
 
     UnregisterClass(w.lpszClassName, w.hInstance);
