@@ -1,12 +1,15 @@
 ﻿#include <Windows.h>
 #include <tchar.h>
 #include <vector>
+#include <iterator>
 #include <dxgi.h>
 #include <dxgi1_2.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <functional>
+#include <algorithm>
 #include <iostream>
+#include <DirectXMath.h>
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #ifdef _DEBUG
@@ -14,6 +17,7 @@
 #endif // _DEBUG
 
 using namespace std;
+using namespace DirectX;
 
 const int Window_Width = 1280;
 const int Window_Height = 720;
@@ -29,6 +33,10 @@ void DebugOutputFormatString(const char* format, ...) {
 #endif // _DEBUG
 
 }
+
+struct Vector3 {
+    float x, y, z;
+};
 
 LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
     if (msg == WM_DESTROY) {
@@ -73,14 +81,6 @@ ID3D12Device* CreateD12Device(IDXGIAdapter* tmpAdapter, D3D_FEATURE_LEVEL& featu
     return device;
 }
 
-/// <summary>
-/// Initialize Dx12 for Using.
-/// </summary>
-void InitializeDirect3D() {
-
-
-}
-
 void EnableDebugLayer() {
     ID3D12Debug* debugLayer = nullptr;
     auto result = D3D12GetDebugInterface(IID_PPV_ARGS(&debugLayer));
@@ -106,6 +106,12 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
     ID3D12CommandAllocator* _cmdAllocator = nullptr;
     ID3D12GraphicsCommandList* _cmdList = nullptr;
     ID3D12CommandQueue* _cmdQueue = nullptr;
+
+    XMFLOAT3 Vertices[3] = {
+        {-1.0f,-1.0f,0.0f},
+        {-1.0f,1.0f,0.0f},
+        {1.0f,-1.0f,0.0f},
+    };
 
     w.cbSize = sizeof(WNDCLASSEX);
     w.lpfnWndProc = (WNDPROC)WindowProcedure;
@@ -198,6 +204,44 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
     ShowWindow(GetConsoleWindow(), SW_HIDE);
     ShowWindow(hwnd, SW_SHOW);
 
+    D3D12_HEAP_PROPERTIES heapprop = {};
+    heapprop.Type = D3D12_HEAP_TYPE_UPLOAD;
+    heapprop.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+    heapprop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+
+    D3D12_RESOURCE_DESC resdesc = {};
+
+    resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    resdesc.Width = sizeof(Vertices);
+    resdesc.Height = 1;
+    resdesc.DepthOrArraySize = 1;
+    resdesc.MipLevels = 1;
+    resdesc.Format = DXGI_FORMAT_UNKNOWN;
+    resdesc.SampleDesc.Count = 1;
+    resdesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+    resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+    ID3D12Resource* vertBuff = nullptr;
+
+    result = _dev->CreateCommittedResource(
+        &heapprop,
+        D3D12_HEAP_FLAG_NONE,
+        &resdesc,
+        D3D12_RESOURCE_STATE_GENERIC_READ,
+        nullptr,
+        IID_PPV_ARGS(&vertBuff)
+    );
+
+    XMFLOAT3* vertMap = nullptr;
+    result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+    std::copy(std::begin(Vertices), std::end(Vertices), vertMap);
+    vertBuff->Unmap(0, nullptr);
+
+    D3D12_VERTEX_BUFFER_VIEW vbView = {};
+    vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();//バッファの仮想アドレス
+    vbView.SizeInBytes = sizeof(Vertices);//全バイト数
+    vbView.StrideInBytes = sizeof(Vertices[0]);//1頂点あたりのバイト数
+
     MSG msg = {};
 
     while (true) {
@@ -231,6 +275,8 @@ int WINAPI WinMain(HINSTANCE, HISTANCE, LPSTR, int) {
         BarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
         BarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
         _cmdList->ResourceBarrier(1, &BarrierDesc);
+
+        _cmdList->IASetVertexBuffers(0, 1, &vbView);
 
         _cmdList->Close();
 
